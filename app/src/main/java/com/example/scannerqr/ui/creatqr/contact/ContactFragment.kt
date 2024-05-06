@@ -24,7 +24,6 @@ class ContactFragment : BaseFragmentWithBinding<FragmentContactBinding>() {
     }
 
 
-
     override fun init() {
 
     }

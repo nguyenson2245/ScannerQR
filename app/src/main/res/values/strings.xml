@@ -8,6 +8,15 @@
     <string name="time">14:25</string>
     <string name="general">General</string>
     <string name="title_share_app"><u>Use “Share” in other apps</u>></string>
+    <string name="fullname">Fullname</string>
+    <string name="company">Company</string>
+    <string name="phoneNumber">Phone number</string>
+    <string name="email">Email</string>
+    <string name="address">Address</string>
+    <string name="zipCode">ZIP code</string>
+    <string name="city">City</string>
+    <string name="region">Region</string>
+    <string name="nation">Nation</string>
 
 
 </resources>
