@@ -1,6 +1,10 @@
 package com.example.scannerqr.custom.barcodescanner.core;
 
+import static androidx.core.content.ContextCompat.getSystemService;
+
 import android.hardware.Camera;
+import android.hardware.camera2.CameraAccessException;
+import android.hardware.camera2.CameraManager;
 
 import java.util.List;
 

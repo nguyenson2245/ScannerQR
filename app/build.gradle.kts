@@ -69,4 +69,9 @@ dependencies {
     // optional - Guava support for Room, including Optional and ListenableFuture
     implementation("androidx.room:room-guava:$room_version")
     implementation ("androidmads.library.qrgenearator:QRGenearator:1.0.4")
+
+    implementation("com.karumi:dexter:6.2.3")
+    implementation("com.vanniktech:android-image-cropper:4.5.0")
+
+
 }

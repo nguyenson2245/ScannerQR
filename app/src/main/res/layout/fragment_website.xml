@@ -14,14 +14,30 @@
         android:layout_height="?actionBarSize"
         app:navigationIcon="@drawable/ic_back">
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Share in other apps"
+            android:orientation="horizontal">
+
+
+            <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Share in other apps"
             android:textColor="#21404F"
             android:textSize="18sp"
-
             android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/save"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginEnd="8dp"
+                android:padding="8dp"
+                android:src="@drawable/ic_check" />
+        </LinearLayout>
     </androidx.appcompat.widget.Toolbar>
 
     <TextView
@@ -42,6 +58,7 @@
         app:cardCornerRadius="12dp">
 
         <EditText
+            android:id="@+id/edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@null"

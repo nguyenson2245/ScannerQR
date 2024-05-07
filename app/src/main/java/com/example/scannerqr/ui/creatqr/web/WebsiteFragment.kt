@@ -1,14 +1,17 @@
 package com.example.scannerqr.ui.creatqr.web
 
-import androidx.fragment.app.viewModels
-import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.R.attr.bitmap
+import android.graphics.Color
+import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import androidmads.library.qrgenearator.QRGContents
+import androidmads.library.qrgenearator.QRGEncoder
+import androidx.fragment.app.viewModels
 import com.example.scannerqr.base.BaseFragmentWithBinding
-import com.scan.scannerqr.R
+import com.example.socialmedia.base.utils.click
+import com.google.zxing.WriterException
 import com.scan.scannerqr.databinding.FragmentWebsiteBinding
+
 
 class WebsiteFragment : BaseFragmentWithBinding<FragmentWebsiteBinding>() {
 
@@ -33,6 +36,9 @@ class WebsiteFragment : BaseFragmentWithBinding<FragmentWebsiteBinding>() {
     }
 
     override fun initAction() {
+        binding.save.click {
+
+        }
 
     }
 }
