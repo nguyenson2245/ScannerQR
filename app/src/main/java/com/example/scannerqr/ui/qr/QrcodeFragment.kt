@@ -7,6 +7,9 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import com.example.scannerqr.custom.ScannerView
 import com.example.scannerqr.base.BaseFragmentWithBinding
+import com.example.scannerqr.ui.creatqr.contact.ContactFragment
+import com.example.scannerqr.ui.creatqr.shareinotherapp.ShareInOtherAppsFragment
+import com.example.scannerqr.ui.qr.gallery.help.HelpAndFeedbackFragment
 import com.example.socialmedia.base.utils.checkPermission
 import com.example.socialmedia.base.utils.click
 import com.example.socialmedia.ui.home.post.gallery.GalleryImageFragment
@@ -65,6 +68,11 @@ class QrcodeFragment : BaseFragmentWithBinding<FragmentQrcodeBinding>(), Scanner
         binding.btnOpenLibrary.click {
             openFragment(GalleryImageFragment::class.java, null, true)
         }
+
+        binding.btnHelp.click {
+            openFragment(HelpAndFeedbackFragment::class.java, null, true)
+        }
+
     }
 
     override fun handleResult(rawResult: Result?) {

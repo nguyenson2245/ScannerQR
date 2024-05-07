@@ -17,6 +17,12 @@
     <string name="city">City</string>
     <string name="region">Region</string>
     <string name="nation">Nation</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="wifi">Wi-Fi</string>
+    <string name="networkName">Network name</string>
+    <string name="wPA_WPA2">WPA/WPA2</string>
+    <string name="password">Password</string>
 
 
 </resources>

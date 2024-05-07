@@ -21,6 +21,8 @@ class ShareInOtherAppsFragment : BaseFragmentWithBinding<FragmentShareInOtherApp
 
     override fun init() {
 
+
+
     }
 
     override fun initData() {
