@@ -30,7 +30,6 @@ class SettingsFragment : BaseFragmentWithBinding<FragmentSettingsBinding>() {
     }
 
     override fun initData() {
-        listSettings.add(Settings("General", R.drawable.ic_general))
     }
 
     override fun initAction() {

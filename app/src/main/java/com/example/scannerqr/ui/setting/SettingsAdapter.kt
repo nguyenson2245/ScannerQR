@@ -28,7 +28,6 @@ class SettingsAdapter : BaseRecyclerAdapter<Settings, SettingsAdapter.SettingsVi
             if (binding is ItemSettingSwitchBinding) {
                 binding.title.text = itemData?.title
                 binding.content.text = itemData?.description
-
                 binding.btnSwitch.visibility =
                     if (itemData?.showButtonSwitch == true) View.VISIBLE else View.GONE
                 binding.btnSwitch.isEnabled = itemData?.switchEnabled ?: false
