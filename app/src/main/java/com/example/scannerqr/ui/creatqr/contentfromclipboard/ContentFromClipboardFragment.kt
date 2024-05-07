@@ -1,14 +1,20 @@
 package com.example.scannerqr.ui.creatqr.contentfromclipboard
 
-import androidx.fragment.app.viewModels
-import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.content.ClipboardManager
+import android.content.ContentValues
+import android.content.Context
+import android.content.Context.CLIPBOARD_SERVICE
+import android.util.Log
+import android.util.TypedValue
 import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import androidmads.library.qrgenearator.QRGContents
+import androidmads.library.qrgenearator.QRGEncoder
+import androidx.core.content.ContextCompat.getSystemService
+import androidx.fragment.app.viewModels
 import com.example.scannerqr.base.BaseFragmentWithBinding
-import com.scan.scannerqr.R
+import com.google.zxing.WriterException
 import com.scan.scannerqr.databinding.FragmentContentFromClipboardBinding
+
 
 class ContentFromClipboardFragment : BaseFragmentWithBinding<FragmentContentFromClipboardBinding>() {
 
@@ -27,7 +33,19 @@ class ContentFromClipboardFragment : BaseFragmentWithBinding<FragmentContentFrom
 
     override fun init() {
 
+        val clipboard: ClipboardManager? = context?.getSystemService(CLIPBOARD_SERVICE) as ClipboardManager?
+        if (clipboard != null && clipboard.text != null) {
+            val qrgEncoder = QRGEncoder(clipboard.text.toString(), null, QRGContents.Type.TEXT, TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP, 300f, context?.getResources()?.getDisplayMetrics()).toInt() )
+            try {
+                val bitmap = qrgEncoder.getBitmap()
+                binding.qrImage.setImageBitmap(bitmap)
+            } catch (e: WriterException) {
+                Log.v(ContentValues.TAG, e.toString())
+            }
+        }else{
 
+        }
     }
 
     override fun initData() {

@@ -38,7 +38,7 @@ class WebsiteFragment : BaseFragmentWithBinding<FragmentWebsiteBinding>() {
 
     override fun initAction() {
         binding.save.click {
-            context?.let { it1 -> DialogCreateQr(it1).show() }
+            context?.let { it1 -> DialogCreateQr(it1, binding.editText.text.toString()).show() }
         }
 
     }
