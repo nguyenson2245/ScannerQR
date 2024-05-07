@@ -8,6 +8,7 @@ import androidmads.library.qrgenearator.QRGContents
 import androidmads.library.qrgenearator.QRGEncoder
 import androidx.fragment.app.viewModels
 import com.example.scannerqr.base.BaseFragmentWithBinding
+import com.example.scannerqr.ui.dialog.DialogCreateQr
 import com.example.socialmedia.base.utils.click
 import com.google.zxing.WriterException
 import com.scan.scannerqr.databinding.FragmentWebsiteBinding
@@ -37,7 +38,7 @@ class WebsiteFragment : BaseFragmentWithBinding<FragmentWebsiteBinding>() {
 
     override fun initAction() {
         binding.save.click {
-
+            context?.let { it1 -> DialogCreateQr(it1).show() }
         }
 
     }
