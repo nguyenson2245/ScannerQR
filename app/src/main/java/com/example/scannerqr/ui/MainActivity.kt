@@ -2,7 +2,7 @@ package com.example.scannerqr.ui
 
 import android.os.Build
 import android.view.LayoutInflater
-import com.example.scanqr.ui.mainfragment.MainFragment
+import com.example.scannerqr.ui.mainfragment.MainFragment
 import com.example.scanqr.ui.splash.SplashFragment
 import com.example.socialmedia.base.BaseActivity
 import com.scan.scannerqr.databinding.ActivityMainBinding

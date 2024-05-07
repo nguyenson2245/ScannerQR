@@ -67,6 +67,7 @@ class SettingsFragment : BaseFragmentWithBinding<FragmentSettingsBinding>() {
         listSettings.add(Settings(title = "Sound", showButtonSwitch = true))
         listSettings.add(Settings(title = "Copy to clipboard", showButtonSwitch = true))
         listSettings.add(Settings(title = "Product barcode", icon = R.drawable.ic_settings_barcode))
+
         listSettings.add(
             Settings(
                 title = "Country to search for products",
@@ -85,6 +86,7 @@ class SettingsFragment : BaseFragmentWithBinding<FragmentSettingsBinding>() {
         listSettings.add(Settings(title = "Open source license"))
         listSettings.add(Settings(title = "Privacy policy"))
         listSettings.add(Settings(title = "App version", description = "Version 1.1"))
+
         adapter.submitList(listSettings)
     }
 }

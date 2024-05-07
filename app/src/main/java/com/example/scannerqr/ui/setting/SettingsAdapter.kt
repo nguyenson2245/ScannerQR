@@ -22,15 +22,23 @@ class SettingsAdapter : BaseRecyclerAdapter<Settings, SettingsAdapter.SettingsVi
                 binding.content.text = itemData?.description
             }
             if (binding is ItemSettingsBinding) {
+
+
                 binding.title.text = itemData?.title
-              Glide.with(itemView).load(itemData?.icon).into(binding.imageView)
+
+                binding.imageView.visibility = if (itemData?.icon != 0 && itemData?.icon != null) View.VISIBLE else View.GONE
+
+                Glide.with(itemView).load(itemData?.icon).into(binding.imageView)
             }
             if (binding is ItemSettingSwitchBinding) {
                 binding.title.text = itemData?.title
                 binding.content.text = itemData?.description
+
+                binding.content.visibility = if (itemData?.description?.isNotEmpty() == true) View.VISIBLE else View.GONE
+
                 binding.btnSwitch.visibility =
                     if (itemData?.showButtonSwitch == true) View.VISIBLE else View.GONE
-                binding.btnSwitch.isEnabled = itemData?.switchEnabled ?: false
+                binding.btnSwitch.isChecked = itemData?.switchEnabled ?: false
             }
         }
     }
@@ -51,7 +59,7 @@ class SettingsAdapter : BaseRecyclerAdapter<Settings, SettingsAdapter.SettingsVi
             TYPE_CONTENT_SWITCH
         } else if (item.title.isNotEmpty()) {
             TYPE_HEADER
-        }else 4
+        } else 4
 
     }
 

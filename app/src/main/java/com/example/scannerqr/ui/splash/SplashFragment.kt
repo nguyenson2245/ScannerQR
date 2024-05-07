@@ -5,7 +5,7 @@ import android.os.Handler
 import android.os.Looper
 import android.view.LayoutInflater
 
-import com.example.scanqr.ui.mainfragment.MainFragment
+import com.example.scannerqr.ui.mainfragment.MainFragment
 import com.example.scannerqr.base.BaseFragmentWithBinding
 import com.scan.scannerqr.databinding.FragmentSplashBinding
 

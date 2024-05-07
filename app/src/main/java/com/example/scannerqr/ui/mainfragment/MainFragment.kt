@@ -1,4 +1,4 @@
-package com.example.scanqr.ui.mainfragment
+package com.example.scannerqr.ui.mainfragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,10 +7,10 @@ import androidx.fragment.app.viewModels
 import androidx.viewpager.widget.ViewPager
 import com.example.scannerqr.ui.creatqr.CreateQrFragment
 import com.example.scannerqr.ui.history.HistoryFragment
-import com.example.scannerqr.ui.mainfragment.PagerAdapter
 import com.example.scannerqr.ui.setting.SettingsFragment
 import com.example.scanqr.ui.qr.QrcodeFragment
 import com.example.scannerqr.base.BaseFragmentWithBinding
+import com.example.scanqr.ui.mainfragment.MainViewModel
 import com.scan.scannerqr.R
 import com.scan.scannerqr.databinding.FragmentMainBinding
 
