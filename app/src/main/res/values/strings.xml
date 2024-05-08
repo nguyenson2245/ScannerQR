@@ -27,6 +27,8 @@
     <string name="eventTitle">Event title</string>
     <string name="wap">WAP</string>
     <string name="tru">_</string>
+    <string name="title">Title</string>
+    <string name="website">Website</string>
 
 
 </resources>

@@ -45,4 +45,5 @@ class CreateQrViewModel : BaseViewModel() {
         )
         listCreateQRLiveData.postValue(listCreateQR)
     }
+
 }

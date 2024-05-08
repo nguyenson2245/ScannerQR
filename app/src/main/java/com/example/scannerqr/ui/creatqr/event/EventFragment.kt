@@ -23,6 +23,7 @@ class EventFragment : BaseFragmentWithBinding<FragmentEventBinding>() {
     }
 
     override fun initAction() {
+
     }
 
 

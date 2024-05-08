@@ -1,13 +1,10 @@
 package com.example.scannerqr.ui.creatqr.contact
 
-import androidx.fragment.app.viewModels
-import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import com.example.scannerqr.base.BaseFragmentWithBinding
-import com.scan.scannerqr.R
+import com.example.scannerqr.ui.dialog.DialogCreateQr
+import com.example.socialmedia.base.utils.click
 import com.scan.scannerqr.databinding.FragmentContactBinding
 
 class ContactFragment : BaseFragmentWithBinding<FragmentContactBinding>() {
@@ -29,8 +26,23 @@ class ContactFragment : BaseFragmentWithBinding<FragmentContactBinding>() {
     }
 
     override fun initData() {
+
     }
 
     override fun initAction() {
+        binding.save.click {
+            val vCardData = "Full Name:${binding.fullName.text}" + "\n" +
+                    "Company:" + binding.company.text + "\n" +
+                    "Title:" + binding.title.text + "\n" +
+                    "Phone number:" + binding.phoneNumber.text + "\n" +
+                    "email:" + binding.email.text + "\n" +
+                    "Address:" + binding.address.text + "\n" +
+                    "Zip:" + binding.zipCode.text + "\n" +
+                    "Country:" + binding.city.text + "\n" +
+                    "Region:" + binding.region.text + "\n" +
+                    "Nation" + binding.nation.text + "\n" +
+                    "Website:" + binding.web.text
+            context?.let { it1 -> DialogCreateQr(it1, vCardData).show() }
+        }
     }
 }

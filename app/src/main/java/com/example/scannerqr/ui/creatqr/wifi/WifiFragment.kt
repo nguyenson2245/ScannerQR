@@ -31,6 +31,7 @@ class WifiFragment : BaseFragmentWithBinding<FragmentWifiBinding>() {
 
     }
 
+
     private fun showPopUp()=
         CustomPopup.showPopupMenu(requireContext(), binding.imgDropdow, binding.imgDropdow, getString(R.string.wPA_WPA2),
             R.drawable.ic_control,

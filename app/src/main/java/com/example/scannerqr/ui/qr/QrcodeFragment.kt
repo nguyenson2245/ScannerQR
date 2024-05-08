@@ -94,6 +94,4 @@ class QrcodeFragment : BaseFragmentWithBinding<FragmentQrcodeBinding>(), Scanner
         super.onPause()
     }
 
-
-
 }
