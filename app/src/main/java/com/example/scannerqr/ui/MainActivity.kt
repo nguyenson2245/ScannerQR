@@ -2,6 +2,7 @@ package com.example.scannerqr.ui
 
 import android.os.Build
 import android.view.LayoutInflater
+import androidx.activity.viewModels
 import com.example.scannerqr.ui.mainfragment.MainFragment
 import com.example.scanqr.ui.splash.SplashFragment
 import com.example.socialmedia.base.BaseActivity
@@ -13,6 +14,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         return ActivityMainBinding.inflate(inflater)
     }
 
+    private val viewModel : MainViewModel by viewModels()
     override fun init() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S_V2)
             openFragment(SplashFragment::class.java, null, false)

@@ -2,11 +2,13 @@ package com.example.socialmedia.ui.home.post.gallery
 
 import android.annotation.SuppressLint
 import android.content.ContentValues.TAG
+import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.scannerqr.base.PermissionFragment
+import com.example.scannerqr.ui.qr.cropimage.CropImageFragment
 import com.example.socialmedia.base.utils.click
 import com.scan.scannerqr.databinding.FragmentGalleryImageBinding
 
@@ -24,7 +26,9 @@ class GalleryImageFragment : PermissionFragment<FragmentGalleryImageBinding>() {
 
     override fun init() {
         galleryAdapter = GalleryAdapter() {
-
+            val bundle = Bundle()
+            bundle.putString("uri", it.uri)
+            openFragment(CropImageFragment::class.java, bundle, true)
         }
         binding.rcvView.adapter = galleryAdapter
         binding.rcvView.layoutManager = GridLayoutManager(context, 3, GridLayoutManager.VERTICAL, false)

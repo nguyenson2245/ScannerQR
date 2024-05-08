@@ -349,5 +349,25 @@ public abstract class BarcodeScannerView extends FrameLayout implements Camera.P
         int displayOrientation = mPreview.getDisplayOrientation();
         return displayOrientation / 90;
     }
+
+    public void zoom(int zoom) {
+        Camera.Parameters params = mCameraWrapper.mCamera.getParameters();
+        try {
+
+
+        if(params.isZoomSupported()){
+            params.setZoom(zoom);
+            mCameraWrapper.mCamera.setParameters(params);
+        }
+        }catch ( Throwable throwable){
+//
+        }
+    }
+    public int getMaxZoom() {
+       return mCameraWrapper.mCamera.getParameters().getMaxZoom();
+    }
+    public int getZoom() {
+        return  mCameraWrapper.mCamera.getParameters().getZoom();
+    }
 }
 
