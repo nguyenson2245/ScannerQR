@@ -29,6 +29,16 @@
     <string name="tru">_</string>
     <string name="title">Title</string>
     <string name="website">Website</string>
+    <string name="startDay">Start day</string>
+    <string name="startTime">Start time</string>
+    <string name="endDate">End day</string>
+    <string name="endTime">End time</string>
+    <string name="eventLocation">Event location</string>
+    <string name="describe">Describe</string>
+    <string name="allDayEvent">All day event</string>
+    <string name="helpAndFeedbackFragment">Help and feedback</string>
+    <string name="addQRCodeFragment">Add QR Code</string>
+    <string name="document">Document</string>
 
 
 </resources>

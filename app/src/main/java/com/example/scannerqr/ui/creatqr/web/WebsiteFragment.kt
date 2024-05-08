@@ -40,6 +40,9 @@ class WebsiteFragment : BaseFragmentWithBinding<FragmentWebsiteBinding>() {
         binding.save.click {
             context?.let { it1 -> DialogCreateQr(it1, binding.editText.text.toString()).show() }
         }
+        binding.toolbar.click {
+            onBackPressed()
+        }
 
     }
 }

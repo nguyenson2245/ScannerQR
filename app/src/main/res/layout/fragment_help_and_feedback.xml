@@ -2,13 +2,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
-    tools:context="com.example.scannerqr.ui.qr.gallery.help.HelpAndFeedbackFragment">
+    android:orientation="vertical"
+    tools:context="com.example.scannerqr.ui.qr.help.HelpAndFeedbackFragment">
 
 
-    <TextView
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="?actionBarSize"
+        app:navigationIcon="@drawable/ic_back">
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/helpAndFeedbackFragment"
+            android:textColor="#21404F"
+            android:textSize="18sp"
+
+            android:textStyle="bold" />
+    </androidx.appcompat.widget.Toolbar>
 </LinearLayout>

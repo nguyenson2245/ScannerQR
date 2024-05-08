@@ -3,6 +3,7 @@ package com.example.scannerqr.ui.creatqr.shareinotherapp
 import android.view.LayoutInflater
 import androidx.fragment.app.viewModels
 import com.example.scannerqr.base.BaseFragmentWithBinding
+import com.example.socialmedia.base.utils.click
 import com.scan.scannerqr.databinding.FragmentShareInOtherAppsBinding
 
 class ShareInOtherAppsFragment : BaseFragmentWithBinding<FragmentShareInOtherAppsBinding>() {
@@ -26,6 +27,9 @@ class ShareInOtherAppsFragment : BaseFragmentWithBinding<FragmentShareInOtherApp
     }
 
     override fun initData() {
+        binding.toolbar.click {
+            onBackPressed()
+        }
     }
 
     override fun initAction() {

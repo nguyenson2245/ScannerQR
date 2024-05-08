@@ -12,11 +12,13 @@ import androidmads.library.qrgenearator.QRGEncoder
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.viewModels
 import com.example.scannerqr.base.BaseFragmentWithBinding
+import com.example.socialmedia.base.utils.click
 import com.google.zxing.WriterException
 import com.scan.scannerqr.databinding.FragmentContentFromClipboardBinding
 
 
-class ContentFromClipboardFragment : BaseFragmentWithBinding<FragmentContentFromClipboardBinding>() {
+class ContentFromClipboardFragment :
+    BaseFragmentWithBinding<FragmentContentFromClipboardBinding>() {
 
     companion object {
         fun newInstance() = ContentFromClipboardFragment()
@@ -30,20 +32,23 @@ class ContentFromClipboardFragment : BaseFragmentWithBinding<FragmentContentFrom
     }
 
 
-
     override fun init() {
 
-        val clipboard: ClipboardManager? = context?.getSystemService(CLIPBOARD_SERVICE) as ClipboardManager?
+        val clipboard: ClipboardManager? =
+            context?.getSystemService(CLIPBOARD_SERVICE) as ClipboardManager?
         if (clipboard != null && clipboard.text != null) {
-            val qrgEncoder = QRGEncoder(clipboard.text.toString(), null, QRGContents.Type.TEXT, TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP, 300f, context?.getResources()?.getDisplayMetrics()).toInt() )
+            val qrgEncoder = QRGEncoder(
+                clipboard.text.toString(), null, QRGContents.Type.TEXT, TypedValue.applyDimension(
+                    TypedValue.COMPLEX_UNIT_DIP, 300f, context?.getResources()?.getDisplayMetrics()
+                ).toInt()
+            )
             try {
                 val bitmap = qrgEncoder.getBitmap()
                 binding.qrImage.setImageBitmap(bitmap)
             } catch (e: WriterException) {
                 Log.v(ContentValues.TAG, e.toString())
             }
-        }else{
+        } else {
 
         }
     }
@@ -52,5 +57,8 @@ class ContentFromClipboardFragment : BaseFragmentWithBinding<FragmentContentFrom
     }
 
     override fun initAction() {
+        binding.toolbar.click {
+            onBackPressed()
+        }
     }
 }
