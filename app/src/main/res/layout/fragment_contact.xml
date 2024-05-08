@@ -39,6 +39,7 @@
                     android:src="@drawable/phonebook" />
 
                 <ImageView
+                    android:id="@+id/save"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_marginStart="18dp"
@@ -61,6 +62,7 @@
         app:cardCornerRadius="12dp">
 
         <EditText
+            android:id="@+id/full_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@null"
@@ -79,11 +81,30 @@
         app:cardCornerRadius="12dp">
 
         <EditText
+            android:id="@+id/company"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@null"
             android:padding="16dp"
             android:hint="@string/company"
+            android:textColor="@color/black" />
+    </androidx.cardview.widget.CardView>
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:backgroundTint="@color/white"
+        app:cardCornerRadius="12dp">
+
+        <EditText
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:padding="16dp"
+            android:hint="@string/title"
             android:textColor="@color/black" />
     </androidx.cardview.widget.CardView>
 
@@ -97,6 +118,7 @@
         app:cardCornerRadius="12dp">
 
         <EditText
+            android:id="@+id/phone_number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@null"
@@ -115,6 +137,7 @@
         app:cardCornerRadius="12dp">
 
         <EditText
+            android:id="@+id/email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@null"
@@ -133,6 +156,7 @@
         app:cardCornerRadius="12dp">
 
         <EditText
+            android:id="@+id/address"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@null"
@@ -157,6 +181,7 @@
             app:cardCornerRadius="12dp">
 
             <EditText
+                android:id="@+id/zip_code"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@null"
@@ -180,6 +205,7 @@
             app:cardCornerRadius="12dp">
 
             <EditText
+                android:id="@+id/city"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@null"
@@ -206,6 +232,7 @@
             app:cardCornerRadius="12dp">
 
             <EditText
+                android:id="@+id/region"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@null"
@@ -229,15 +256,34 @@
             app:cardCornerRadius="12dp">
 
             <EditText
-                android:layout_width="match_parent"
+                android:id="@+id/nation"
+                android:layout_width="161dp"
                 android:layout_height="wrap_content"
                 android:background="@null"
-                android:padding="16dp"
                 android:hint="@string/nation"
+                android:padding="16dp"
                 android:textColor="@color/black" />
         </androidx.cardview.widget.CardView>
 
     </LinearLayout>
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:backgroundTint="@color/white"
+        app:cardCornerRadius="12dp">
+
+        <EditText
+            android:id="@+id/web"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:padding="16dp"
+            android:hint="@string/website"
+            android:textColor="@color/black" />
+    </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
