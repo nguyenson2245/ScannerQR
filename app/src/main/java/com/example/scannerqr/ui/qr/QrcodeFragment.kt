@@ -1,19 +1,29 @@
 package com.example.scanqr.ui.qr
 
 import android.Manifest
+import android.graphics.Bitmap
 import android.os.Handler
 import android.view.LayoutInflater
+import android.widget.SeekBar
 import android.widget.Toast
-import androidx.fragment.app.viewModels
-import com.example.scannerqr.custom.ScannerView
+import androidx.fragment.app.activityViewModels
 import com.example.scannerqr.base.BaseFragmentWithBinding
-import com.example.scannerqr.ui.creatqr.contact.ContactFragment
-import com.example.scannerqr.ui.creatqr.shareinotherapp.ShareInOtherAppsFragment
+import com.example.scannerqr.custom.ScannerView
+import com.example.scannerqr.ui.MainViewModel
 import com.example.scannerqr.ui.qr.gallery.help.HelpAndFeedbackFragment
 import com.example.socialmedia.base.utils.checkPermission
 import com.example.socialmedia.base.utils.click
 import com.example.socialmedia.ui.home.post.gallery.GalleryImageFragment
+import com.google.zxing.BinaryBitmap
+import com.google.zxing.ChecksumException
+import com.google.zxing.FormatException
+import com.google.zxing.LuminanceSource
+import com.google.zxing.MultiFormatReader
+import com.google.zxing.NotFoundException
+import com.google.zxing.RGBLuminanceSource
+import com.google.zxing.Reader
 import com.google.zxing.Result
+import com.google.zxing.common.HybridBinarizer
 import com.permissionx.guolindev.PermissionX
 import com.scan.scannerqr.databinding.FragmentQrcodeBinding
 
@@ -25,14 +35,14 @@ class QrcodeFragment : BaseFragmentWithBinding<FragmentQrcodeBinding>(), Scanner
     }
 
 
-
-    private val viewModel: QrcodeViewModel by viewModels()
+    private val viewModel: MainViewModel by activityViewModels()
     private var flashLightStatus : Boolean = false
     override fun getViewBinding(inflater: LayoutInflater): FragmentQrcodeBinding {
        return FragmentQrcodeBinding.inflate(inflater)
     }
 
     override fun init() {
+
 
     }
 
@@ -57,9 +67,36 @@ class QrcodeFragment : BaseFragmentWithBinding<FragmentQrcodeBinding>(), Scanner
     }
 
     override fun initData() {
+        viewModel.bitmap.observe(viewLifecycleOwner) {
+            if (it != null){
+                Toast.makeText(requireContext(),readQRImage(it), Toast.LENGTH_SHORT).show()
+                viewModel.bitmap.postValue(null)
+            }
 
+        }
     }
 
+   private fun readQRImage(bMap: Bitmap): String? {
+        var contents: String? = null
+        val intArray = IntArray(bMap.getWidth() * bMap.getHeight())
+        //copy pixel data from the Bitmap into the 'intArray' array
+        bMap.getPixels(intArray, 0, bMap.getWidth(), 0, 0, bMap.getWidth(), bMap.getHeight())
+        val source: LuminanceSource =
+            RGBLuminanceSource(bMap.getWidth(), bMap.getHeight(), intArray)
+        val bitmap = BinaryBitmap(HybridBinarizer(source))
+        val reader: Reader = MultiFormatReader() // use this otherwise ChecksumException
+        try {
+            val result: Result = reader.decode(bitmap)
+            contents = result.text
+        } catch (e: NotFoundException) {
+            e.printStackTrace()
+        } catch (e: ChecksumException) {
+            e.printStackTrace()
+        } catch (e: FormatException) {
+            e.printStackTrace()
+        }
+        return contents
+    }
     override fun initAction() {
         binding.openFlash.click {
             binding.scannerView.flash = !flashLightStatus
@@ -71,6 +108,25 @@ class QrcodeFragment : BaseFragmentWithBinding<FragmentQrcodeBinding>(), Scanner
 
         binding.btnHelp.click {
             openFragment(HelpAndFeedbackFragment::class.java, null, true)
+        }
+        binding.btnZoomIn.setOnClickListener {
+            binding.seekBar.progress = binding.seekBar.progress + 10
+        }
+
+        binding.seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                binding.scannerView.zoom(progress)
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {
+            }
+
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+            }
+
+        })
+        binding.btnZoomOut.setOnClickListener {
+            binding.seekBar.progress = binding.seekBar.progress - 10
         }
 
     }

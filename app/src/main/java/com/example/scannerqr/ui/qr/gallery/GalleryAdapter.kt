@@ -10,8 +10,7 @@ import com.scan.scannerqr.R
 import com.scan.scannerqr.databinding.ItemGallareyBinding
 
 
-class GalleryAdapter(val itemClick: ()-> Unit) : BaseRecyclerAdapter<ImageModel,GalleryAdapter.ViewHolder>() {
-    var listItemSelected: ArrayList<ImageModel> = arrayListOf()
+class GalleryAdapter(val itemClick: (ImageModel)-> Unit) : BaseRecyclerAdapter<ImageModel,GalleryAdapter.ViewHolder>() {
     inner  class ViewHolder (val binding : ViewDataBinding) : BaseViewHolder<ImageModel>(binding){
         override fun bind(itemData: ImageModel?) {
             super.bind(itemData)
@@ -19,8 +18,9 @@ class GalleryAdapter(val itemClick: ()-> Unit) : BaseRecyclerAdapter<ImageModel,
                 Glide.with(itemView.context).load(itemData?.uri).into(binding.image)
             }
             onItemClickListener {
-                notifyItemChanged(adapterPosition)
-                itemClick.invoke()
+                if (itemData != null) {
+                    itemClick.invoke(itemData)
+                }
             }
         }
     }
