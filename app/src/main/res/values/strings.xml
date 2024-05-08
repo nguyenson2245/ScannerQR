@@ -23,6 +23,10 @@
     <string name="networkName">Network name</string>
     <string name="wPA_WPA2">WPA/WPA2</string>
     <string name="password">Password</string>
+    <string name="event">Event</string>
+    <string name="eventTitle">Event title</string>
+    <string name="wap">WAP</string>
+    <string name="tru">_</string>
 
 
 </resources>

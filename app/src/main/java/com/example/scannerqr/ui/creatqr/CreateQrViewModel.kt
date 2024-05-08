@@ -4,8 +4,10 @@ import androidx.lifecycle.MutableLiveData
 import com.example.scannerqr.model.CreateQR
 import com.example.scannerqr.ui.creatqr.contact.ContactFragment
 import com.example.scannerqr.ui.creatqr.contentfromclipboard.ContentFromClipboardFragment
+import com.example.scannerqr.ui.creatqr.event.EventFragment
 import com.example.scannerqr.ui.creatqr.shareinotherapp.ShareInOtherAppsFragment
 import com.example.scannerqr.ui.creatqr.web.WebsiteFragment
+import com.example.scannerqr.ui.creatqr.wifi.WifiFragment
 import com.example.scannerqr.ui.history.HistoryFragment
 import com.example.scanqr.ui.qr.QrcodeFragment
 import com.example.socialmedia.base.BaseViewModel
@@ -31,8 +33,8 @@ class CreateQrViewModel : BaseViewModel() {
         )
         listCreateQR.add(CreateQR("Website", R.drawable.ic_web, WebsiteFragment::class.java))
         listCreateQR.add(CreateQR("Contact", R.drawable.ic_contact, ContactFragment::class.java))
-        listCreateQR.add(CreateQR("Wifi", R.drawable.ic_wifi, QrcodeFragment::class.java))
-        listCreateQR.add(CreateQR("Event", R.drawable.ic_event, QrcodeFragment::class.java))
+        listCreateQR.add(CreateQR("Wi-Fi", R.drawable.ic_wifi, WifiFragment::class.java))
+        listCreateQR.add(CreateQR("Event", R.drawable.ic_event, EventFragment::class.java))
         listCreateQR.add(CreateQR("Add QR code", R.drawable.ic_add_qr, QrcodeFragment::class.java))
         listCreateQR.add(
             CreateQR(

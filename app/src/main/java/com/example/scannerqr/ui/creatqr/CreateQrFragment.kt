@@ -14,7 +14,6 @@ class CreateQrFragment : BaseFragmentWithBinding<FragmentCreatQrBinding>() {
     private val viewModel: CreateQrViewModel by viewModels()
     private lateinit var adapter: CreateQrAdapter
 
-
     override fun getViewBinding(inflater: LayoutInflater): FragmentCreatQrBinding {
         return FragmentCreatQrBinding.inflate(inflater)
     }
@@ -24,6 +23,7 @@ class CreateQrFragment : BaseFragmentWithBinding<FragmentCreatQrBinding>() {
             openFragment(it, null, true)
             toast(it.name)
         }
+
         binding.rvView.adapter = adapter
         binding.rvView.setHasFixedSize(true)
     }

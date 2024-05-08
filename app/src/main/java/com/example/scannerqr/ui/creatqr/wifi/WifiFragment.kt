@@ -1,14 +1,15 @@
 package com.example.scannerqr.ui.creatqr.wifi
 
-import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.Manifest
+import android.content.Intent
+import android.os.Build
+import android.provider.MediaStore
 import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import com.example.scannerqr.base.BaseFragmentWithBinding
+import com.example.scannerqr.popup.CustomPopup
+import com.example.scannerqr.popup.PopUpOnClickListener
 import com.scan.scannerqr.R
 import com.scan.scannerqr.databinding.FragmentWifiBinding
-
 
 class WifiFragment : BaseFragmentWithBinding<FragmentWifiBinding>() {
     override fun getViewBinding(inflater: LayoutInflater): FragmentWifiBinding {
@@ -24,7 +25,26 @@ class WifiFragment : BaseFragmentWithBinding<FragmentWifiBinding>() {
     }
 
     override fun initAction() {
+      binding.imgDropdow.setOnClickListener {
+          showPopUp()
+      }
 
     }
+
+    private fun showPopUp()=
+        CustomPopup.showPopupMenu(requireContext(), binding.imgDropdow, binding.imgDropdow, getString(R.string.wPA_WPA2),
+            R.drawable.ic_control,
+            getString(R.string.wap),
+            R.drawable.ic_control,
+            object : PopUpOnClickListener {
+                override fun onClickItemOne() {
+                  toast("1111111111111")
+
+                }
+
+                override fun onClickItemTwo() {
+                    toast("22222222222222")
+                }
+            })
 
 }

@@ -3,6 +3,7 @@ package com.example.socialmedia.base.utils
 import android.app.Activity
 import android.content.Context
 import android.content.pm.PackageManager
+import android.content.res.Resources
 import android.os.SystemClock
 import android.text.Editable
 import android.text.TextWatcher
@@ -82,5 +83,10 @@ fun Context.checkPermission(vararg permission: String): Boolean {
         }
     }
     return true
+}
+
+fun Int.dpToPx(resources: Resources): Int {
+    val scale = resources.displayMetrics.density
+    return (this * scale + 0.5f).toInt()
 }
 
