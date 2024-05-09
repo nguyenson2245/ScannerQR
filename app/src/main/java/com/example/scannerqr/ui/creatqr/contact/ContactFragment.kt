@@ -66,8 +66,7 @@ class ContactFragment : BaseFragmentWithBinding<FragmentContactBinding>() {
                     while (phones?.moveToNext() == true) {
                         var number =
                             phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER))
-                        var name =
-                            phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME))
+                        var name = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME))
                         binding.phoneNumber.setText(number.toString())
                         binding.fullName.setText(name.toString())
                     }

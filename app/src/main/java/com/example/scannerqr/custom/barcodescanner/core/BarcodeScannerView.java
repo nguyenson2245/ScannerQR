@@ -264,7 +264,6 @@ public abstract class BarcodeScannerView extends FrameLayout implements Camera.P
     public void setFlash(boolean flag) {
         mFlashState = flag;
         if (mCameraWrapper != null && CameraUtils.isFlashSupported(mCameraWrapper.mCamera)) {
-
             Camera.Parameters parameters = mCameraWrapper.mCamera.getParameters();
             if (flag) {
                 if (parameters.getFlashMode().equals(Camera.Parameters.FLASH_MODE_TORCH)) {

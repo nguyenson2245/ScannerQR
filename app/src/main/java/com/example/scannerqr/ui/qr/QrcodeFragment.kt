@@ -43,11 +43,6 @@ class QrcodeFragment : BaseFragmentWithBinding<FragmentQrcodeBinding>(), Scanner
 
     override fun init() {
 
-
-    }
-
-    override fun onResume() {
-        super.onResume()
         if (context?.checkPermission(Manifest.permission.CAMERA) == true) {
             binding.scannerView.setResultHandler(this)
             binding.scannerView.startCamera();
@@ -60,10 +55,15 @@ class QrcodeFragment : BaseFragmentWithBinding<FragmentQrcodeBinding>(), Scanner
                         binding.scannerView.setResultHandler(this)
                         binding.scannerView.startCamera();
                     } else {
-                        Toast.makeText(requireContext(),  "These permissions are denied: $deniedList", Toast.LENGTH_LONG).show()
+                        
                     }
                 }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
     }
 
     override fun initData() {
