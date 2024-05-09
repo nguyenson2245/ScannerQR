@@ -30,7 +30,6 @@ class DialogCreateQr(context: Context, val inputValue: String) : Dialog(context)
     private fun init() {
         val qrgEncoder = QRGEncoder(inputValue, null, QRGContents.Type.TEXT,TypedValue.applyDimension(
             TypedValue.COMPLEX_UNIT_DIP, 300f, context.getResources().getDisplayMetrics()).toInt() )
-
         try {
             val bitmap = qrgEncoder.getBitmap()
             binding.imageQr.setImageBitmap(bitmap)
