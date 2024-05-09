@@ -2,9 +2,11 @@ package com.example.scannerqr.ui.setting
 
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.ViewDataBinding
 import com.bumptech.glide.Glide
 import com.example.scannerqr.model.Settings
+import com.example.scannerqr.ui.utils.Constants
 import com.example.socialmedia.base.recyclerview.BaseRecyclerAdapter
 import com.example.socialmedia.base.recyclerview.BaseViewHolder
 import com.scan.scannerqr.R
@@ -12,7 +14,11 @@ import com.scan.scannerqr.databinding.ItemSettingContentBinding
 import com.scan.scannerqr.databinding.ItemSettingSwitchBinding
 import com.scan.scannerqr.databinding.ItemSettingsBinding
 
-class SettingsAdapter : BaseRecyclerAdapter<Settings, SettingsAdapter.SettingsViewHolder>() {
+class SettingsAdapter(val viewModel: SettingsViewModel,val callback: (String)-> Unit) :
+    BaseRecyclerAdapter<Settings, SettingsAdapter.SettingsViewHolder>() {
+
+    private var onSwitchChangeListener: OnSwitchChangeListener? = null
+
     inner class SettingsViewHolder(val binding: ViewDataBinding) :
         BaseViewHolder<Settings>(binding) {
         override fun bind(itemData: Settings?) {
@@ -26,7 +32,8 @@ class SettingsAdapter : BaseRecyclerAdapter<Settings, SettingsAdapter.SettingsVi
 
                 binding.title.text = itemData?.title
 
-                binding.imageView.visibility = if (itemData?.icon != 0 && itemData?.icon != null) View.VISIBLE else View.GONE
+                binding.imageView.visibility =
+                    if (itemData?.icon != 0 && itemData?.icon != null) View.VISIBLE else View.GONE
 
                 Glide.with(itemView).load(itemData?.icon).into(binding.imageView)
             }
@@ -34,11 +41,26 @@ class SettingsAdapter : BaseRecyclerAdapter<Settings, SettingsAdapter.SettingsVi
                 binding.title.text = itemData?.title
                 binding.content.text = itemData?.description
 
-                binding.content.visibility = if (itemData?.description?.isNotEmpty() == true) View.VISIBLE else View.GONE
+                binding.content.visibility =
+                    if (itemData?.description?.isNotEmpty() == true) View.VISIBLE else View.GONE
 
                 binding.btnSwitch.visibility =
                     if (itemData?.showButtonSwitch == true) View.VISIBLE else View.GONE
                 binding.btnSwitch.isChecked = itemData?.switchEnabled ?: false
+
+                binding.btnSwitch.setOnClickListener {
+                    if (itemData?.key == Constants.OPEN_WEB){
+
+                    }
+                    itemData?.let { it1 -> callback.invoke(it1.key) }
+                    viewModel.saveSettingKey(itemData?.key ?: "", itemData?.switchEnabled != true)
+                    viewModel.preferences.setBoolean(
+                        itemData?.key ?: "",
+                        itemData?.switchEnabled != true
+                    )
+                    viewModel.initDataSetting()
+                }
+
             }
         }
     }
@@ -71,5 +93,9 @@ class SettingsAdapter : BaseRecyclerAdapter<Settings, SettingsAdapter.SettingsVi
         const val TYPE_HEADER = 0
         const val TYPE_CONTENT = 1
         const val TYPE_CONTENT_SWITCH = 3
+    }
+
+    fun setOnSwitchChangeListener(listener: OnSwitchChangeListener) {
+        onSwitchChangeListener = listener
     }
 }

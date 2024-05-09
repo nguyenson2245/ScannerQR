@@ -5,5 +5,6 @@ data class Settings(
     val icon: Int = 0,
     val description: String = "",
     val showButtonSwitch: Boolean = false,
-    val switchEnabled: Boolean = false
+    val switchEnabled: Boolean = false,
+    val key : String =""
 )

@@ -1,10 +1,16 @@
-package com.example.quanlychitieu.local
+package com.example.scannerqr.local
 
 import android.content.Context
 import android.content.SharedPreferences
 
-
 class Preferences(var sharedPreferences: SharedPreferences? = null) {
+    private val BEARER_HEADER = "Bearer0 "
+    private val PREFS_ACCOUNT = "PREFS_ACCOUNT"
+    private val KEY_TYPE_ONE = "KEY_TYPE_ONE"
+    private val KEY_TOTAL_COIN = "KEY_TOTAL_COIN" // coin
+    private val KEY_FIRST_INSTALL = "KEY_FIRST_INSTALL" // coin
+    private val INT_ZERO = 0 // coin
+
     fun setString(key: String, string: String) {
         sharedPreferences?.edit()?.putString(key, string)?.apply()
     }
@@ -44,6 +50,24 @@ class Preferences(var sharedPreferences: SharedPreferences? = null) {
     fun getLong(key: String): Float? {
         return sharedPreferences?.getFloat(key, 0f)
     }
+    fun setValueTypeOne(value: String?) {
+        sharedPreferences?.edit()?.putString(KEY_TYPE_ONE, value)?.apply()
+    }
+
+    var firstInstall: Boolean
+        get() = sharedPreferences?.getBoolean(KEY_FIRST_INSTALL, false) ?: false
+        set(value) {
+            sharedPreferences?.edit()?.putBoolean(KEY_FIRST_INSTALL, value)?.apply()
+        }
+
+    fun setValueCoin(value: Int) {
+        sharedPreferences?.edit()?.putInt(KEY_TOTAL_COIN, value)?.apply()
+    }
+
+    fun getValueCoin(): Int {
+        return sharedPreferences?.getInt(KEY_TOTAL_COIN, INT_ZERO)?: 0
+    }
+
 
     companion object {
         private val PREFS_NAME = "share_prefs"
@@ -55,6 +79,4 @@ class Preferences(var sharedPreferences: SharedPreferences? = null) {
             ).also { INSTANCE = it }
         }
     }
-
-
 }
