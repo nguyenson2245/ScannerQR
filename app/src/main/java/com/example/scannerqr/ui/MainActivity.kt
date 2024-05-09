@@ -15,6 +15,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     }
 
     private val viewModel : MainViewModel by viewModels()
+
     override fun init() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S_V2)
             openFragment(SplashFragment::class.java, null, false)

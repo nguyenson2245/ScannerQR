@@ -16,6 +16,7 @@ import com.scan.scannerqr.databinding.FragmentMainBinding
 
 
 class MainFragment : BaseFragmentWithBinding<FragmentMainBinding>() {
+
     val listFragment: ArrayList<Fragment> = arrayListOf(
         QrcodeFragment.newInstance(),
         CreateQrFragment.newInstance(),
@@ -27,10 +28,10 @@ class MainFragment : BaseFragmentWithBinding<FragmentMainBinding>() {
         fun newInstance() = MainFragment()
     }
 
-
     private val viewModel: MainViewModel by viewModels()
 
     private lateinit var adapter: PagerAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -45,12 +46,9 @@ class MainFragment : BaseFragmentWithBinding<FragmentMainBinding>() {
         adapter.setData(listFragment)
         binding.viewPager.adapter = adapter
         binding.viewPager.offscreenPageLimit = 4
-        
     }
 
-
     override fun initData() {
-
     }
 
     override fun initAction() {

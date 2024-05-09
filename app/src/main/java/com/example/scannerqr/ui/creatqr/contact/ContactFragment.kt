@@ -36,9 +36,6 @@ class ContactFragment : BaseFragmentWithBinding<FragmentContactBinding>() {
 
     }
 
-    override fun onResume() {
-        super.onResume()
-    }
 
     override fun initData() {
 
@@ -86,10 +83,6 @@ class ContactFragment : BaseFragmentWithBinding<FragmentContactBinding>() {
             }
         }
     }
-
-
-
-
 
     override fun initAction() {
         binding.contact.click {

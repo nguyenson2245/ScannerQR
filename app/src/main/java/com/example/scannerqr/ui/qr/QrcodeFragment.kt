@@ -69,7 +69,7 @@ class QrcodeFragment : BaseFragmentWithBinding<FragmentQrcodeBinding>(), Scanner
     override fun initData() {
         viewModel.bitmap.observe(viewLifecycleOwner) {
             if (it != null){
-                Toast.makeText(requireContext(),readQRImage(it), Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(),readQRImage(it).toString(), Toast.LENGTH_SHORT).show()
                 viewModel.bitmap.postValue(null)
             }
 
@@ -78,6 +78,7 @@ class QrcodeFragment : BaseFragmentWithBinding<FragmentQrcodeBinding>(), Scanner
 
    private fun readQRImage(bMap: Bitmap): String? {
         var contents: String? = null
+       try {
         val intArray = IntArray(bMap.getWidth() * bMap.getHeight())
         //copy pixel data from the Bitmap into the 'intArray' array
         bMap.getPixels(intArray, 0, bMap.getWidth(), 0, 0, bMap.getWidth(), bMap.getHeight())
@@ -85,7 +86,7 @@ class QrcodeFragment : BaseFragmentWithBinding<FragmentQrcodeBinding>(), Scanner
             RGBLuminanceSource(bMap.getWidth(), bMap.getHeight(), intArray)
         val bitmap = BinaryBitmap(HybridBinarizer(source))
         val reader: Reader = MultiFormatReader() // use this otherwise ChecksumException
-        try {
+
             val result: Result = reader.decode(bitmap)
             contents = result.text
         } catch (e: NotFoundException) {
@@ -93,6 +94,8 @@ class QrcodeFragment : BaseFragmentWithBinding<FragmentQrcodeBinding>(), Scanner
         } catch (e: ChecksumException) {
             e.printStackTrace()
         } catch (e: FormatException) {
+            e.printStackTrace()
+        }catch (e: Throwable){
             e.printStackTrace()
         }
         return contents
