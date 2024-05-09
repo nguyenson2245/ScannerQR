@@ -7,6 +7,7 @@ import com.example.scannerqr.ui.creatqr.contact.ContactFragment
 import com.example.scannerqr.ui.creatqr.contentfromclipboard.ContentFromClipboardFragment
 import com.example.scannerqr.ui.creatqr.event.EventFragment
 import com.example.scannerqr.ui.creatqr.shareinotherapp.ShareInOtherAppsFragment
+import com.example.scannerqr.ui.creatqr.supportedCodes.SupportedCodesFragment
 import com.example.scannerqr.ui.creatqr.web.WebsiteFragment
 import com.example.scannerqr.ui.creatqr.wifi.WifiFragment
 import com.example.scannerqr.ui.history.HistoryFragment
@@ -27,7 +28,7 @@ class CreateQrViewModel : BaseViewModel() {
         listCreateQR.add(CreateQR("Wi-Fi", R.drawable.ic_wifi, WifiFragment::class.java))
         listCreateQR.add(CreateQR("Event", R.drawable.ic_event, EventFragment::class.java))
         listCreateQR.add(CreateQR("Add QR code", R.drawable.ic_add_qr, AddQRCodeFragment::class.java))
-        listCreateQR.add(CreateQR("Barcodes and other 2D codes", R.drawable.ic_barcode, QrcodeFragment::class.java))
+        listCreateQR.add(CreateQR("Barcodes and other 2D codes", R.drawable.ic_barcode, SupportedCodesFragment::class.java))
 
         listCreateQRLiveData.postValue(listCreateQR)
     }

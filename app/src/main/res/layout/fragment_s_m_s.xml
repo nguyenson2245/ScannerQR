@@ -1,11 +1,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
-    tools:context="com.example.scannerqr.ui.creatqr.addQrCode.text.DocumentFragment">
+    android:orientation="vertical"
+    tools:context="com.example.scannerqr.ui.creatqr.addQrCode.sms.SMSFragment">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -22,7 +22,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/document"
+                android:text="@string/sms"
                 android:textColor="#21404F"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -43,18 +43,38 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="18dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="@dimen/_30sdp"
+        android:layout_marginBottom="@dimen/_10sdp"
         android:backgroundTint="@color/white"
         app:cardCornerRadius="12dp">
 
         <EditText
-            android:id="@+id/edit_text"
+            android:id="@+id/editPhoneNumber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@null"
-            android:hint="Text ..."
+            android:hint="Phone number"
+            android:padding="16dp"
+            android:textColor="@color/black" />
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:backgroundTint="@color/white"
+        app:cardCornerRadius="12dp">
+
+        <EditText
+            android:id="@+id/editMessage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:hint="Message"
             android:padding="16dp"
             android:textColor="@color/black" />
     </androidx.cardview.widget.CardView>

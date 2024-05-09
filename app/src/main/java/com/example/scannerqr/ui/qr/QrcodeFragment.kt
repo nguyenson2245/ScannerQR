@@ -10,7 +10,7 @@ import androidx.fragment.app.activityViewModels
 import com.example.scannerqr.base.BaseFragmentWithBinding
 import com.example.scannerqr.custom.ScannerView
 import com.example.scannerqr.ui.MainViewModel
-import com.example.scannerqr.ui.qr.gallery.help.HelpAndFeedbackFragment
+import com.example.scannerqr.ui.qr.help.HelpAndFeedbackFragment
 import com.example.socialmedia.base.utils.checkPermission
 import com.example.socialmedia.base.utils.click
 import com.example.socialmedia.ui.home.post.gallery.GalleryImageFragment

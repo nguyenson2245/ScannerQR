@@ -1,12 +1,8 @@
-package com.example.scannerqr.ui.creatqr.addQrCode.document
+package com.example.scannerqr.ui.creatqr.addQrCode.text
 
-import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import com.example.scannerqr.base.BaseFragmentWithBinding
-import com.scan.scannerqr.R
+import com.example.socialmedia.base.utils.click
 import com.scan.scannerqr.databinding.FragmentDocumentBinding
 
 
@@ -24,6 +20,8 @@ class DocumentFragment : BaseFragmentWithBinding<FragmentDocumentBinding>() {
     }
 
     override fun initAction() {
+
+        binding.toolbar.click { onBackPressed() }
 
     }
 

@@ -30,6 +30,7 @@ class ContactFragment : BaseFragmentWithBinding<FragmentContactBinding>() {
     }
 
     override fun initAction() {
+
         binding.save.click {
             val vCardData = "Full Name:${binding.fullName.text}" + "\n" +
                     "Company:" + binding.company.text + "\n" +
@@ -43,6 +44,10 @@ class ContactFragment : BaseFragmentWithBinding<FragmentContactBinding>() {
                     "Nation" + binding.nation.text + "\n" +
                     "Website:" + binding.web.text
             context?.let { it1 -> DialogCreateQr(it1, vCardData).show() }
+        }
+
+        binding.toolbar.click {
+            onBackPressed()
         }
     }
 }
