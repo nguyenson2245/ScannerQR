@@ -10,6 +10,4 @@ data class History(
     val icon: Int = 0,
     val date: String = "",
     val time: String = "",
-    val type: String = "",
-    val fragmentOpen: Class<*>
 )

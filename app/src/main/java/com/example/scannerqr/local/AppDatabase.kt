@@ -1,10 +1,11 @@
-package com.example.quanlychitieu.local
+package com.example.scannerqr.local
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.quanlychitieu.local.dao.QRDao
+import com.example.scannerqr.application.MainApp
 import com.example.scannerqr.model.History
 
 @Database(
@@ -24,7 +25,7 @@ abstract class AppDatabase : RoomDatabase() {
                 instance = Room.databaseBuilder(
                     context, AppDatabase::class.java, "database-name"
                 ).allowMainThreadQueries()
-                    .fallbackToDestructiveMigration().build()
+                    .build()
             }
             return instance!!
         }

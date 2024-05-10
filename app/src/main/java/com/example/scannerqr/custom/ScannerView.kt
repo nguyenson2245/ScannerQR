@@ -115,7 +115,7 @@ class ScannerView : BarcodeScannerView {
                     mResultHandler = null
                     stopCameraPreview()
                     tmpResultHandler?.handleResult(finalRawResult)
-                }
+                    }
             } else {
                 camera.setOneShotPreviewCallback(this)
             }

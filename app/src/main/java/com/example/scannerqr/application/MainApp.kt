@@ -9,7 +9,6 @@ class MainApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        instance = this
         pref = Preferences.getInstance(this)
         if (pref?.firstInstall == false) {
             pref?.firstInstall = true
@@ -18,7 +17,7 @@ class MainApp : Application() {
     }
 
     companion object {
-        var instance: MainApp? = null
+        private var instance: MainApp? = null
         fun newInstance(): MainApp {
             if (instance == null) {
                 instance = MainApp()
@@ -26,6 +25,5 @@ class MainApp : Application() {
             return instance!!
         }
 
-        fun getContext() = instance?.applicationContext!!
     }
 }

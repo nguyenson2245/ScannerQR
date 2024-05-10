@@ -4,14 +4,12 @@ import android.content.Context
 import android.database.Cursor
 import android.net.Uri
 import android.provider.MediaStore
+import com.example.scannerqr.local.AppDatabase
+import com.example.scannerqr.model.History
 import com.example.scannerqr.model.ImageModel
 import com.example.socialmedia.common.State
 
 class Repository {
-    companion object {
-        private var instance: Repository? = null
-
-    }
     fun getAllImages(context: Context, callback: (state: State<ArrayList<ImageModel>>) -> Unit) {
         callback.invoke(State.Loading)
         val uri: Uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
@@ -34,5 +32,7 @@ class Repository {
         }
         callback.invoke(State.Success(listOfAllImages))
     }
+    suspend fun addHistory(context: Context,history: History) = AppDatabase.getInstance(context).getQRDao()?.insertAll(history)
 
+    fun getLiveDataHistory(context: Context) = AppDatabase.getInstance(context).getQRDao().getLiveDataHistory()
 }

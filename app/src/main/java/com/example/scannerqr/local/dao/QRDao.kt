@@ -9,7 +9,7 @@ import com.example.scannerqr.model.History
 
 @Dao
 interface QRDao {
-    @Query("SELECT * FROM history")
+    @Query("SELECT * FROM History")
     fun getAll(): List<History>
 
     @Insert
@@ -19,5 +19,5 @@ interface QRDao {
     suspend fun delete(collect: History)
 
     @Query("SELECT * FROM history")
-    fun getLiveDataHistory(): LiveData<ArrayList<History>>
+    fun getLiveDataHistory(): LiveData<List<History>>
 }

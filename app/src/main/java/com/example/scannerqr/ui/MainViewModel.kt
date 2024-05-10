@@ -6,4 +6,5 @@ import com.example.socialmedia.base.BaseViewModel
 
 class MainViewModel : BaseViewModel() {
     var bitmap : MutableLiveData<Bitmap?> = MutableLiveData()
+    val isPlayCamera : MutableLiveData<Boolean> = MutableLiveData(false)
 }

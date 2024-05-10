@@ -7,7 +7,10 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.scannerqr.base.BaseFragmentWithBinding
 import com.example.scannerqr.model.History
+import com.example.scannerqr.ui.qr.detail.DetailFragment
 import com.example.scanqr.ui.qr.QrcodeFragment
+import com.example.socialmedia.base.utils.gone
+import com.example.socialmedia.base.utils.visible
 import com.scan.scannerqr.R
 import com.scan.scannerqr.databinding.FragmentHistoryBinding
 
@@ -20,7 +23,6 @@ class HistoryFragment : BaseFragmentWithBinding<FragmentHistoryBinding>() {
 
     private val viewModel: HistoryViewModel by viewModels()
     private lateinit var adapter: HistoryAdapter
-    private val listHistory: ArrayList<History> = arrayListOf()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,8 +41,11 @@ class HistoryFragment : BaseFragmentWithBinding<FragmentHistoryBinding>() {
             LinearLayoutManager.VERTICAL
         )
         adapter = HistoryAdapter() {
-            openFragment(it, null, true)
-            toast(it.name)
+            val bundle = Bundle()
+            bundle.putString("value", it.title)
+            bundle.putString("date", it.date)
+            openFragment(DetailFragment::class.java, bundle, true)
+
         }
         binding.rvView.adapter = adapter
         binding.rvView.setHasFixedSize(true)
@@ -48,107 +53,21 @@ class HistoryFragment : BaseFragmentWithBinding<FragmentHistoryBinding>() {
     }
 
     override fun initData() {
-        initDataCreateQr()
-        adapter.submitList(listHistory)
+        context?.let { viewModel.getLiveDateHistory(it).observe(viewLifecycleOwner){
+            adapter.submitList(it)
+            if (it.isEmpty()){
+                binding.nodata.visible()
+            }else{
+                binding.nodata.gone()
+            }
+
+        } }
+
     }
 
     override fun initAction() {
 
     }
 
-    fun initDataCreateQr() {
-        listHistory.add(
-            History(
-                0,
-                "Hello",
-                R.drawable.ic_edit,
-                "13/5/4048",
-                "12:30",
-                "Qr",
-                QrcodeFragment::class.java
-            )
-        )
-        listHistory.add(
-            History(
-                0,
-                "Bart Simpson",
-                R.drawable.ic_edit,
-                "23/6/4048",
-                "10:30",
-                "Qr",
-                QrcodeFragment::class.java
-            )
-        )
-        listHistory.add(
-            History(0,
-                "Hello",
-                R.drawable.ic_edit,
-                "03/2/4048",
-                "12:30",
-                "Qr",
-                QrcodeFragment::class.java
-            )
-        )
-        listHistory.add(
-            History(0,
-                "Hello",
-                R.drawable.ic_edit,
-                "13/1/4048",
-                "12:30",
-                "Qr",
-                QrcodeFragment::class.java
-            )
-        )
-        listHistory.add(
-            History(0,
-                "Hello",
-                R.drawable.ic_edit,
-                "3/5/4048",
-                "12:30",
-                "Qr",
-                QrcodeFragment::class.java
-            )
-        )
-        listHistory.add(
-            History(0,
-                "Hello",
-                R.drawable.ic_edit,
-                "13/7/4048",
-                "12:30",
-                "Qr",
-                QrcodeFragment::class.java
-            )
-        )
-        listHistory.add(
-            History(0,
-                "Hello",
-                R.drawable.ic_edit,
-                "13/5/4048",
-                "12:30",
-                "Qr",
-                QrcodeFragment::class.java
-            )
-        )
-        listHistory.add(
-            History(0,
-                "Hello",
-                R.drawable.ic_edit,
-                "13/5/4048",
-                "12:30",
-                "Qr",
-                QrcodeFragment::class.java
-            )
-        )
-        listHistory.add(
-            History(0,
-                "Hello",
-                R.drawable.ic_edit,
-                "13/5/4048",
-                "12:30",
-                "Qr",
-                QrcodeFragment::class.java
-            )
-        )
 
-    }
 }

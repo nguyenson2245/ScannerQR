@@ -1,14 +1,12 @@
 package com.example.scannerqr.ui.creatqr.addQrCode.email
 
-import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import com.example.scannerqr.base.BaseFragmentWithBinding
+import com.example.scannerqr.ui.dialog.DialogCreateQr
 import com.example.socialmedia.base.utils.click
-import com.scan.scannerqr.R
 import com.scan.scannerqr.databinding.FragmentEmailBinding
+import java.io.UnsupportedEncodingException
+import java.net.URLEncoder
 
 
 class EmailFragment : BaseFragmentWithBinding<FragmentEmailBinding>() {
@@ -25,9 +23,24 @@ class EmailFragment : BaseFragmentWithBinding<FragmentEmailBinding>() {
     }
 
     override fun initAction() {
+        binding.save.click {
+            val uri =
+                ("mailto:${binding.editEmail.text}" + "?subject=" + urlEncode(binding.editSubject.text.toString())) + "&body=" + urlEncode(
+                    binding.editMessage.text.toString()
+                )
+            context?.let { DialogCreateQr(it, uri).show() }
+        }
       binding.toolbar.click {
           onBackPressed()
       }
     }
 
+    private fun urlEncode(value: String): String {
+        return try {
+            URLEncoder.encode(value, "UTF-8")
+        } catch (e: UnsupportedEncodingException) {
+            e.printStackTrace()
+            value
+        }
+    }
 }

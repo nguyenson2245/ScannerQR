@@ -9,7 +9,8 @@ import com.example.socialmedia.base.recyclerview.BaseViewHolder
 import com.scan.scannerqr.R
 import com.scan.scannerqr.databinding.ItemHistoryBinding
 
- class HistoryAdapter(val click: (Class<*>) -> Unit) : BaseRecyclerAdapter<History,HistoryAdapter.HistoryViewHolder>() {
+class HistoryAdapter(val click: (History) -> Unit) :
+    BaseRecyclerAdapter<History, HistoryAdapter.HistoryViewHolder>() {
 
     inner class HistoryViewHolder(val binding : ViewDataBinding) : BaseViewHolder<History>(binding){
         override fun bind(itemData: History?) {
@@ -21,7 +22,11 @@ import com.scan.scannerqr.databinding.ItemHistoryBinding
                 binding.txtTime.text = itemData?.time
 
                 Glide.with(itemView).load(itemData?.icon).into(binding.icon)
-                onItemClickListener { itemData?.fragmentOpen?.let { click.invoke(it) } }
+                onItemClickListener {
+                    if (itemData != null) {
+                        click.invoke(itemData)
+                    }
+                }
             }
         }
     }

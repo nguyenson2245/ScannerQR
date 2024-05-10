@@ -1,31 +1,39 @@
 package com.example.scannerqr.ui.qr.detail
 
-import androidx.fragment.app.viewModels
+import android.annotation.SuppressLint
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import com.example.scannerqr.base.BaseFragmentWithBinding
-import com.example.scannerqr.ui.creatqr.addQrCode.app.AppAdapter
-import com.example.socialmedia.base.BaseFragment
+import com.example.scannerqr.model.History
+import com.example.scannerqr.repository.Repository
+import com.example.scannerqr.ui.MainViewModel
 import com.example.socialmedia.base.utils.click
 import com.scan.scannerqr.R
 import com.scan.scannerqr.databinding.FragmentDetailBinding
+import java.text.SimpleDateFormat
+import java.util.Date
 
 class DetailFragment : BaseFragmentWithBinding<FragmentDetailBinding>() {
-
+    val repository = Repository()
     companion object {
         fun newInstance() = DetailFragment()
     }
 
     private val viewModel: DetailViewModel by viewModels()
+    private val mainViewModel: MainViewModel by activityViewModels()
     private lateinit var adapter: DetailAdapter
+    private var value: String = ""
+    var isBackScannerQR: Boolean = false
+    private var date: String = ""
 
-
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        value = arguments?.getString("value") ?: ""
+        isBackScannerQR = arguments?.getBoolean("isBack") ?: false
+        date = arguments?.getString("date") ?: ""
+    }
 
     override fun getViewBinding(inflater: LayoutInflater): FragmentDetailBinding {
         return FragmentDetailBinding.inflate(inflater)
@@ -41,17 +49,31 @@ class DetailFragment : BaseFragmentWithBinding<FragmentDetailBinding>() {
         binding.rvView.setHasFixedSize(true)
     }
 
+    @SuppressLint("SimpleDateFormat")
     override fun initData() {
-        viewModel.initDataApp(1)
+        viewModel.initDataApp(2, value)
+        binding.time.text = if (date.isNullOrEmpty())
+            SimpleDateFormat("dd/MM/yyyy HH:mm").format(Date(System.currentTimeMillis())) else date
+        binding.title.text = value
         viewModel.listDetailsLiveData.observe(viewLifecycleOwner){
             adapter.submitList(it)
+        }
+        if (isBackScannerQR) {
+            context?.let {
+                viewModel.addHistory(
+                    it,
+                    History(0, value, R.drawable.seecode, binding.time.text.toString())
+                )
+            }
         }
     }
 
     override fun initAction() {
 
         binding.toolbar.click {
+            mainViewModel.isPlayCamera.postValue(true)
             onBackPressed()
+
         }
 
         binding.toolbar.setOnMenuItemClickListener {
