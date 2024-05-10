@@ -43,22 +43,7 @@ class QrcodeFragment : BaseFragmentWithBinding<FragmentQrcodeBinding>(), Scanner
 
     override fun init() {
 
-        if (context?.checkPermission(Manifest.permission.CAMERA) == true) {
-            binding.scannerView.setResultHandler(this)
-            binding.scannerView.startCamera();
-            binding.scannerView.flash = false
-        } else{
-            PermissionX.init(this)
-                .permissions( Manifest.permission.CAMERA)
-                .request { allGranted, grantedList, deniedList ->
-                    if (allGranted) {
-                        binding.scannerView.setResultHandler(this)
-                        binding.scannerView.startCamera();
-                    } else {
-                        
-                    }
-                }
-        }
+
     }
 
     override fun onResume() {
@@ -73,6 +58,26 @@ class QrcodeFragment : BaseFragmentWithBinding<FragmentQrcodeBinding>(), Scanner
                 viewModel.bitmap.postValue(null)
             }
 
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        if (context?.checkPermission(Manifest.permission.CAMERA) == true) {
+            binding.scannerView.setResultHandler(this)
+            binding.scannerView.startCamera();
+            binding.scannerView.flash = false
+        } else{
+            PermissionX.init(this)
+                .permissions( Manifest.permission.CAMERA)
+                .request { allGranted, grantedList, deniedList ->
+                    if (allGranted) {
+                        binding.scannerView.setResultHandler(this)
+                        binding.scannerView.startCamera();
+                    } else {
+
+                    }
+                }
         }
     }
 
