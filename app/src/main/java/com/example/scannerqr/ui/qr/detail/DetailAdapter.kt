@@ -32,6 +32,4 @@ class DetailAdapter(val click: (Class<*>) -> Unit) :
         return DetailViewHolder(getViewHolderDataBinding(parent, viewType))
     }
 
-
-
 }

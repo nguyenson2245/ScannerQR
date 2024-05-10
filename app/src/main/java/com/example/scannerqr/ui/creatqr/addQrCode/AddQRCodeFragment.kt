@@ -26,7 +26,6 @@ class AddQRCodeFragment : BaseFragmentWithBinding<FragmentAddQRCodeBinding>() {
     override fun init() {
         adapter = AddQrCodeAdapter() {
             openFragment(it, null, true)
-            toast(it.name)
         }
 
         binding.rvView.adapter = adapter

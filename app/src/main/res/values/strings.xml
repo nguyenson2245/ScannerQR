@@ -49,6 +49,7 @@
     <string name="copyPassword">Copy password</string>
     <string name="copyTheNetworkName">Copy the network name</string>
     <string name="searchForProductsOnTheWeb">Search for products on the web</string>
+    <string name="textScanning">Scanning does not work</string>
 
 
 </resources>

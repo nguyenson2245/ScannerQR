@@ -25,9 +25,7 @@ class DetailFragment : BaseFragmentWithBinding<FragmentDetailBinding>() {
     private val viewModel: DetailViewModel by viewModels()
     private lateinit var adapter: DetailAdapter
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+
 
     override fun getViewBinding(inflater: LayoutInflater): FragmentDetailBinding {
         return FragmentDetailBinding.inflate(inflater)

@@ -35,30 +35,23 @@ class QrcodeFragment : BaseFragmentWithBinding<FragmentQrcodeBinding>(), Scanner
         fun newInstance() = QrcodeFragment()
     }
 
-
     private val viewModel: MainViewModel by activityViewModels()
-    private var flashLightStatus : Boolean = false
+    private var flashLightStatus: Boolean = false
     override fun getViewBinding(inflater: LayoutInflater): FragmentQrcodeBinding {
-       return FragmentQrcodeBinding.inflate(inflater)
+        return FragmentQrcodeBinding.inflate(inflater)
     }
 
     override fun init() {
-
-
     }
 
-    override fun onResume() {
-        super.onResume()
-
-    }
 
     override fun initData() {
         viewModel.bitmap.observe(viewLifecycleOwner) {
-            if (it != null){
-                Toast.makeText(requireContext(),readQRImage(it).toString(), Toast.LENGTH_SHORT).show()
+            if (it != null) {
+                Toast.makeText(requireContext(), readQRImage(it).toString(), Toast.LENGTH_SHORT)
+                    .show()
                 viewModel.bitmap.postValue(null)
             }
-
         }
     }
 
@@ -68,9 +61,9 @@ class QrcodeFragment : BaseFragmentWithBinding<FragmentQrcodeBinding>(), Scanner
             binding.scannerView.setResultHandler(this)
             binding.scannerView.startCamera();
             binding.scannerView.flash = false
-        } else{
+        } else {
             PermissionX.init(this)
-                .permissions( Manifest.permission.CAMERA)
+                .permissions(Manifest.permission.CAMERA)
                 .request { allGranted, grantedList, deniedList ->
                     if (allGranted) {
                         binding.scannerView.setResultHandler(this)
@@ -82,16 +75,15 @@ class QrcodeFragment : BaseFragmentWithBinding<FragmentQrcodeBinding>(), Scanner
         }
     }
 
-   private fun readQRImage(bMap: Bitmap): String? {
+    private fun readQRImage(bMap: Bitmap): String? {
         var contents: String? = null
-       try {
-        val intArray = IntArray(bMap.getWidth() * bMap.getHeight())
-        //copy pixel data from the Bitmap into the 'intArray' array
-        bMap.getPixels(intArray, 0, bMap.getWidth(), 0, 0, bMap.getWidth(), bMap.getHeight())
-        val source: LuminanceSource =
-            RGBLuminanceSource(bMap.getWidth(), bMap.getHeight(), intArray)
-        val bitmap = BinaryBitmap(HybridBinarizer(source))
-        val reader: Reader = MultiFormatReader() // use this otherwise ChecksumException
+        try {
+            val intArray = IntArray(bMap.getWidth() * bMap.getHeight())
+            bMap.getPixels(intArray, 0, bMap.getWidth(), 0, 0, bMap.getWidth(), bMap.getHeight())
+            val source: LuminanceSource =
+                RGBLuminanceSource(bMap.getWidth(), bMap.getHeight(), intArray)
+            val bitmap = BinaryBitmap(HybridBinarizer(source))
+            val reader: Reader = MultiFormatReader()
 
             val result: Result = reader.decode(bitmap)
             contents = result.text
@@ -101,11 +93,12 @@ class QrcodeFragment : BaseFragmentWithBinding<FragmentQrcodeBinding>(), Scanner
             e.printStackTrace()
         } catch (e: FormatException) {
             e.printStackTrace()
-        }catch (e: Throwable){
+        } catch (e: Throwable) {
             e.printStackTrace()
         }
         return contents
     }
+
     override fun initAction() {
         binding.openFlash.click {
             binding.scannerView.flash = !flashLightStatus
@@ -116,7 +109,7 @@ class QrcodeFragment : BaseFragmentWithBinding<FragmentQrcodeBinding>(), Scanner
         }
 
         binding.btnHelp.click {
-            openFragment(DetailFragment::class.java, null, true)
+            openFragment(HelpAndFeedbackFragment::class.java, null, true)
         }
         binding.btnZoomIn.setOnClickListener {
             binding.seekBar.progress = binding.seekBar.progress + 10
@@ -155,7 +148,7 @@ class QrcodeFragment : BaseFragmentWithBinding<FragmentQrcodeBinding>(), Scanner
 
     override fun onPause() {
         binding.scannerView.flash = false
-        flashLightStatus= false
+        flashLightStatus = false
         super.onPause()
     }
 

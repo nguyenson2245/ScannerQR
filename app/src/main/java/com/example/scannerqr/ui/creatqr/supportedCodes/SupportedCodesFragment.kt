@@ -1,8 +1,10 @@
 package com.example.scannerqr.ui.creatqr.supportedCodes
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.fragment.app.viewModels
 import com.example.scannerqr.base.BaseFragmentWithBinding
+import com.example.scannerqr.ui.creatqr.supportedCodes.open.OpenSupportedCodesFragment
 import com.example.socialmedia.base.utils.click
 import com.scan.scannerqr.databinding.FragmentSupportedSodesBinding
 
@@ -18,9 +20,12 @@ class SupportedCodesFragment : BaseFragmentWithBinding<FragmentSupportedSodesBin
     }
 
     override fun init() {
+
+
         adapter = SupportedCodeAdapter() {
-            openFragment(it, null, true)
-            toast(it.name)
+            val bundle = Bundle()
+            bundle.putSerializable("key", it)
+            openFragment(OpenSupportedCodesFragment::class.java, bundle, true)
         }
 
         binding.rvView.adapter = adapter

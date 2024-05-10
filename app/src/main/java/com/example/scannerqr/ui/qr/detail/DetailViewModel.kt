@@ -14,7 +14,6 @@ class DetailViewModel : BaseViewModel() {
         listDetails.add(Detail("See code", R.drawable.seecode))
         when (type) {
             0 -> {
-
                 listDetails.add(Detail("Wifi connection", R.drawable.wifi))
                 listDetails.add(Detail("Copy password", R.drawable.copypw))
                 listDetails.add(Detail("Copy the network name", R.drawable.copypw))

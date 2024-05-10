@@ -25,7 +25,6 @@ class AppFragment : BaseFragmentWithBinding<FragmentAppBinding>() {
     override fun init() {
         adapter = AppAdapter() {
             openFragment(it, null, true)
-
         }
 
         binding.rvView.adapter = adapter

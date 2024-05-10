@@ -21,7 +21,6 @@ class CreateQrFragment : BaseFragmentWithBinding<FragmentCreatQrBinding>() {
     override fun init() {
         adapter = CreateQrAdapter() {
             openFragment(it, null, true)
-            toast(it.name)
         }
 
         binding.rvView.adapter = adapter
