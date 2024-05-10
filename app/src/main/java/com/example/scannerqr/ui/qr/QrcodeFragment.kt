@@ -2,6 +2,7 @@ package com.example.scanqr.ui.qr
 
 import android.Manifest
 import android.graphics.Bitmap
+import android.os.Bundle
 import android.os.Handler
 import android.view.LayoutInflater
 import android.widget.SeekBar
@@ -11,7 +12,6 @@ import com.example.scannerqr.base.BaseFragmentWithBinding
 import com.example.scannerqr.custom.ScannerView
 import com.example.scannerqr.ui.MainViewModel
 import com.example.scannerqr.ui.qr.detail.DetailFragment
-import com.example.scannerqr.ui.qr.help.HelpAndFeedbackFragment
 import com.example.socialmedia.base.utils.checkPermission
 import com.example.socialmedia.base.utils.click
 import com.example.socialmedia.ui.home.post.gallery.GalleryImageFragment
@@ -57,6 +57,12 @@ class QrcodeFragment : BaseFragmentWithBinding<FragmentQrcodeBinding>(), Scanner
             if (it != null){
                 Toast.makeText(requireContext(),readQRImage(it).toString(), Toast.LENGTH_SHORT).show()
                 viewModel.bitmap.postValue(null)
+            }
+        }
+        viewModel.isPlayCamera.observe(viewLifecycleOwner) {
+            if (it){
+                binding.scannerView.resumeCameraPreview(this)
+
             }
 
         }
@@ -141,16 +147,13 @@ class QrcodeFragment : BaseFragmentWithBinding<FragmentQrcodeBinding>(), Scanner
     }
 
     override fun handleResult(rawResult: Result?) {
-        Toast.makeText(
-            activity, ("Contents = " + rawResult?.getText()).toString() +
-                    ", Form at = " + rawResult?.getBarcodeFormat().toString(), Toast.LENGTH_SHORT
-        ).show()
+        val bundle = Bundle()
+        bundle.putString("value", rawResult.toString())
+        bundle.putBoolean("isBack", true)
+        viewModel.isPlayCamera.postValue(false)
+        openFragment(DetailFragment::class.java, bundle, true)
 
-        val handler = Handler()
-        handler.postDelayed(
-            Runnable { binding.scannerView.resumeCameraPreview(this) },
-            1000
-        )
+
     }
 
     override fun onPause() {

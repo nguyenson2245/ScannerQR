@@ -5,6 +5,5 @@ import androidx.lifecycle.ViewModel
 import com.example.scannerqr.repository.Repository
 
 abstract class BaseViewModel() : ViewModel() {
-    val repository  = Repository()
     val isLoading: MutableLiveData<Boolean> = MutableLiveData(false)
 }

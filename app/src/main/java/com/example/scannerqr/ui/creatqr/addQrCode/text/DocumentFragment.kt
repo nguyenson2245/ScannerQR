@@ -2,6 +2,7 @@ package com.example.scannerqr.ui.creatqr.addQrCode.text
 
 import android.view.LayoutInflater
 import com.example.scannerqr.base.BaseFragmentWithBinding
+import com.example.scannerqr.ui.dialog.DialogCreateQr
 import com.example.socialmedia.base.utils.click
 import com.scan.scannerqr.databinding.FragmentDocumentBinding
 
@@ -20,7 +21,9 @@ class DocumentFragment : BaseFragmentWithBinding<FragmentDocumentBinding>() {
     }
 
     override fun initAction() {
-
+        binding.save.click {
+            context?.let { DialogCreateQr(it, binding.editText.text.toString()).show() }
+        }
         binding.toolbar.click { onBackPressed() }
 
     }

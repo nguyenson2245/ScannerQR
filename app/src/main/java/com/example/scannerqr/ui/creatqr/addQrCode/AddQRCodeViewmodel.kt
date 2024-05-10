@@ -18,7 +18,7 @@ class AddQRCodeViewmodel : BaseViewModel() {
         listAddQRCode.add(AddQRCode("Document", R.drawable.pen2, DocumentFragment::class.java))
         listAddQRCode.add(AddQRCode("Email", R.drawable.email2, EmailFragment::class.java))
         listAddQRCode.add(AddQRCode("SMS", R.drawable.sms, SMSFragment::class.java))
-        listAddQRCode.add(AddQRCode("App", R.drawable.ic_add_qr, AppFragment::class.java))
+//        listAddQRCode.add(AddQRCode("App", R.drawable.ic_add_qr, AppFragment::class.java))
 
         listAddQRCodeLiveData.postValue(listAddQRCode)
     }
