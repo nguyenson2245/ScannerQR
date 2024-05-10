@@ -1,5 +1,6 @@
 package com.example.scannerqr.ui.setting
 
+import android.media.MediaPlayer
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
@@ -14,7 +15,8 @@ import com.scan.scannerqr.databinding.ItemSettingContentBinding
 import com.scan.scannerqr.databinding.ItemSettingSwitchBinding
 import com.scan.scannerqr.databinding.ItemSettingsBinding
 
-class SettingsAdapter(val viewModel: SettingsViewModel,val callback: (String)-> Unit) :
+
+class SettingsAdapter(val viewModel: SettingsViewModel) :
     BaseRecyclerAdapter<Settings, SettingsAdapter.SettingsViewHolder>() {
 
     private var onSwitchChangeListener: OnSwitchChangeListener? = null
@@ -49,10 +51,44 @@ class SettingsAdapter(val viewModel: SettingsViewModel,val callback: (String)-> 
                 binding.btnSwitch.isChecked = itemData?.switchEnabled ?: false
 
                 binding.btnSwitch.setOnClickListener {
-                    if (itemData?.key == Constants.OPEN_WEB){
+                    if (itemData?.key == Constants.OPEN_WEB) {
+
+                        if (itemData?.switchEnabled != true) {
+                            Toast.makeText(itemView.context, "OPEN_WEB_On", Toast.LENGTH_SHORT)
+                                .show()
+                        } else {
+                            Toast.makeText(itemView.context, "OPEN_WEB_OFF", Toast.LENGTH_SHORT)
+                                .show()
+                        }
+                    } else if (itemData?.key == Constants.OPEN_WEB) {
+
+                    } else if (itemData?.key == Constants.SCAN) {
+
+                    } else if (itemData?.key == Constants.DUPLICATION) {
+
+
+                    } else if (itemData?.key == Constants.CONFIRM) {
+
+                    } else if (itemData?.key == Constants.SOUND) {
+                        val mediaPlayer: MediaPlayer =
+                            MediaPlayer.create(itemView.context, R.raw.musicmp3)
+                        if (itemData?.switchEnabled != true) {
+                            Toast.makeText(itemView.context, "On", Toast.LENGTH_SHORT)
+                                .show()
+                            mediaPlayer.start();
+                        } else {
+                            Toast.makeText(itemView.context, "OFF", Toast.LENGTH_SHORT)
+                                .show()
+                            mediaPlayer.pause();
+                            mediaPlayer.seekTo(0);
+                        }
+
+                    } else if (itemData?.key == Constants.PRODUCT) {
+
+                    } else {
 
                     }
-                    itemData?.let { it1 -> callback.invoke(it1.key) }
+
                     viewModel.saveSettingKey(itemData?.key ?: "", itemData?.switchEnabled != true)
                     viewModel.preferences.setBoolean(
                         itemData?.key ?: "",
@@ -60,7 +96,6 @@ class SettingsAdapter(val viewModel: SettingsViewModel,val callback: (String)-> 
                     )
                     viewModel.initDataSetting()
                 }
-
             }
         }
     }

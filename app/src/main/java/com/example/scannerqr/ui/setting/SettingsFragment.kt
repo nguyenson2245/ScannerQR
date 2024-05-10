@@ -24,9 +24,7 @@ class SettingsFragment : BaseFragmentWithBinding<FragmentSettingsBinding>() {
     }
 
     override fun init() {
-        adapter = SettingsAdapter(viewModel){
-            Toast.makeText(context, it, Toast.LENGTH_LONG).show()
-        }
+        adapter = SettingsAdapter(viewModel)
         binding.rvView.adapter = adapter
         binding.rvView.setHasFixedSize(true)
     }
