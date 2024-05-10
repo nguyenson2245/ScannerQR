@@ -42,6 +42,13 @@
     <string name="sms">SMS</string>
     <string name="app">App</string>
     <string name="supportedCodes">Supported Codes</string>
+    <string name="detail">Detail</string>
+    <string name="sdt">0987654321</string>
+    <string name="seeCode">See Code</string>
+    <string name="WifiConnection">Wifi connection</string>
+    <string name="copyPassword">Copy password</string>
+    <string name="copyTheNetworkName">Copy the network name</string>
+    <string name="searchForProductsOnTheWeb">Search for products on the web</string>
 
 
 </resources>

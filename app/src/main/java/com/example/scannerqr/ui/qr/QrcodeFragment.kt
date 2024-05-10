@@ -10,6 +10,7 @@ import androidx.fragment.app.activityViewModels
 import com.example.scannerqr.base.BaseFragmentWithBinding
 import com.example.scannerqr.custom.ScannerView
 import com.example.scannerqr.ui.MainViewModel
+import com.example.scannerqr.ui.qr.detail.DetailFragment
 import com.example.scannerqr.ui.qr.help.HelpAndFeedbackFragment
 import com.example.socialmedia.base.utils.checkPermission
 import com.example.socialmedia.base.utils.click
@@ -115,7 +116,7 @@ class QrcodeFragment : BaseFragmentWithBinding<FragmentQrcodeBinding>(), Scanner
         }
 
         binding.btnHelp.click {
-            openFragment(HelpAndFeedbackFragment::class.java, null, true)
+            openFragment(DetailFragment::class.java, null, true)
         }
         binding.btnZoomIn.setOnClickListener {
             binding.seekBar.progress = binding.seekBar.progress + 10

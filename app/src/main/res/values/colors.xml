@@ -8,5 +8,9 @@
     <color name="viewfinder_laser">#ffcc0000</color>
     <color name="viewfinder_border">#ffafed44</color>
     <color name="Primary500">#2E6DEE</color>
+    <color name="text_content">#21404F</color>
+    <color name="text_2">#697A98</color>
+
+
 
 </resources>

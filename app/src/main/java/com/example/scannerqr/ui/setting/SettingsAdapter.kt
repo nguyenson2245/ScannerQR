@@ -19,8 +19,6 @@ import com.scan.scannerqr.databinding.ItemSettingsBinding
 class SettingsAdapter(val viewModel: SettingsViewModel) :
     BaseRecyclerAdapter<Settings, SettingsAdapter.SettingsViewHolder>() {
 
-    private var onSwitchChangeListener: OnSwitchChangeListener? = null
-
     inner class SettingsViewHolder(val binding: ViewDataBinding) :
         BaseViewHolder<Settings>(binding) {
         override fun bind(itemData: Settings?) {
@@ -130,7 +128,4 @@ class SettingsAdapter(val viewModel: SettingsViewModel) :
         const val TYPE_CONTENT_SWITCH = 3
     }
 
-    fun setOnSwitchChangeListener(listener: OnSwitchChangeListener) {
-        onSwitchChangeListener = listener
-    }
 }
