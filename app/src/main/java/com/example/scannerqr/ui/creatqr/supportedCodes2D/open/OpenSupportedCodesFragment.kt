@@ -28,9 +28,9 @@ class OpenSupportedCodesFragment : BaseFragmentWithBinding<FragmentOpenSupported
             binding.txtToolBar.text = title.toString()
         }
 
-        binding.edtTitle.doOnTextChanged { text, start, before, count ->
-            val input = text.toString()
 
+        binding.edtTitle.doOnTextChanged { text, start, before, count ->
+            val input = text?.trim().toString()
             when (title) {
                 BarcodeFormat.QR_CODE -> {
                     binding.edtTitle.hint = "text"
@@ -83,7 +83,8 @@ class OpenSupportedCodesFragment : BaseFragmentWithBinding<FragmentOpenSupported
                     val input = binding.edtTitle.text.toString()
 
                     if (input.length != 13 || !input.matches(ean13Regex)) {
-                        binding.edtTitle.error = "The input must contain exactly 12 digits followed by 1 digit for checksum!"
+                        binding.edtTitle.error =
+                            "The input must contain exactly 12 digits followed by 1 digit for checksum!"
                     } else {
                         binding.edtTitle.error = null
                         toast("ok")
@@ -108,7 +109,8 @@ class OpenSupportedCodesFragment : BaseFragmentWithBinding<FragmentOpenSupported
                     val digitRegex = Regex("^[0-9]{7}[0-9]\$")
 
                     if (digitRegex.matches(input)) {
-                        binding.edtTitle.error = "Input must contain exactly 7 digits followed by 1 digit for total!"
+                        binding.edtTitle.error =
+                            "Input must contain exactly 7 digits followed by 1 digit for total!"
                     } else {
                         binding.edtTitle.error = null
                     }
@@ -192,13 +194,14 @@ class OpenSupportedCodesFragment : BaseFragmentWithBinding<FragmentOpenSupported
                     }
                 }
 
-                BarcodeFormat.MAXICODE -> Log.d("BarcodeFormat", "MAXICODE: ")
+                BarcodeFormat.MAXICODE -> Log.d("BarcodeFormat", "MAXI CODE: ")
                 BarcodeFormat.RSS_14 -> Log.d("BarcodeFormat", "RSS_14: ")
                 BarcodeFormat.RSS_EXPANDED -> Log.d("BarcodeFormat", "RSS_EXPANDED: ")
                 BarcodeFormat.UPC_EAN_EXTENSION -> Log.d("BarcodeFormat", "UPC_EAN_EXTENSION: ")
 
                 null -> Log.d("BarcodeFormat", "err: ")
             }
+
         }
     }
 
@@ -208,7 +211,17 @@ class OpenSupportedCodesFragment : BaseFragmentWithBinding<FragmentOpenSupported
         }
 
         binding.save.click {
-            context?.let { it1 -> DialogCreateQr(it1, binding.edtTitle.text.toString(),title).show() }
+            val input = binding.edtTitle.text.trim().toString()
+            if (input.isNotEmpty() && binding.edtTitle.error == null) {
+                context?.let { it1 ->
+                    DialogCreateQr(
+                        it1,
+                        binding.edtTitle.text.toString(), title
+                    ).show()
+                }
+            } else
+                if (input.isEmpty())
+                    binding.edtTitle.error = "not value"
         }
 
     }
