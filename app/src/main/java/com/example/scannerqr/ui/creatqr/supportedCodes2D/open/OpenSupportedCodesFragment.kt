@@ -28,10 +28,10 @@ class OpenSupportedCodesFragment : BaseFragmentWithBinding<FragmentOpenSupported
             binding.txtToolBar.text = title.toString()
         }
 
-
         binding.edtTitle.doOnTextChanged { text, start, before, count ->
             val input = text?.trim().toString()
             when (title) {
+
                 BarcodeFormat.QR_CODE -> {
                     binding.edtTitle.hint = "text"
                 }
@@ -201,11 +201,11 @@ class OpenSupportedCodesFragment : BaseFragmentWithBinding<FragmentOpenSupported
 
                 null -> Log.d("BarcodeFormat", "err: ")
             }
-
         }
     }
 
     override fun initAction() {
+
         binding.toolbar.click {
             onBackPressed()
         }
@@ -216,7 +216,8 @@ class OpenSupportedCodesFragment : BaseFragmentWithBinding<FragmentOpenSupported
                 context?.let { it1 ->
                     DialogCreateQr(
                         it1,
-                        binding.edtTitle.text.toString(), title
+                        binding.edtTitle.text.toString(),
+                        title
                     ).show()
                 }
             } else

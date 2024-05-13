@@ -8,6 +8,7 @@ import androidmads.library.qrgenearator.QRGContents
 import androidmads.library.qrgenearator.QRGEncoder
 import androidx.fragment.app.viewModels
 import com.example.scannerqr.base.BaseFragmentWithBinding
+import com.example.scannerqr.ui.creatqr.shareinotherapp.ShareInOtherAppsFragment
 import com.example.scannerqr.ui.dialog.DialogCreateQr
 import com.example.socialmedia.base.utils.click
 import com.google.zxing.BarcodeFormat
@@ -27,8 +28,6 @@ class WebsiteFragment : BaseFragmentWithBinding<FragmentWebsiteBinding>() {
      return FragmentWebsiteBinding.inflate(inflater)
     }
 
-
-
     override fun init() {
 
     }
@@ -43,6 +42,10 @@ class WebsiteFragment : BaseFragmentWithBinding<FragmentWebsiteBinding>() {
         }
         binding.toolbar.click {
             onBackPressed()
+        }
+
+        binding.openShareOther.click {
+            openFragment(ShareInOtherAppsFragment::class.java,null,true)
         }
 
     }
