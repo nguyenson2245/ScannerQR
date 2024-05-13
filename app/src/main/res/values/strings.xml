@@ -41,7 +41,7 @@
     <string name="document">Document</string>
     <string name="sms">SMS</string>
     <string name="app">App</string>
-    <string name="supportedCodes">Supported Codes</string>
+    <string name="scanningTips">Scanning tips</string>
     <string name="detail">Detail</string>
     <string name="sdt">0987654321</string>
     <string name="seeCode">See Code</string>
@@ -50,6 +50,16 @@
     <string name="copyTheNetworkName">Copy the network name</string>
     <string name="searchForProductsOnTheWeb">Search for products on the web</string>
     <string name="textScanning">Scanning does not work</string>
-
+    <string name="supportCode">Support code</string>
+    <string name="textScanningDoesNot1">First, make sure you have read all the information\nunder \'Support Codes and \'Scan Tips.</string>
+    <string name="textScanningDoesNot2">To be able to scan, the most important thing is that the code is not blurred, has clear contrast and is not tilted.</string>
+    <string name="textScanningDoesNot3">The code is not affected by light or reflection\nshade.</string>
+    <string name="textScanningDoesNot4">The code does not have to fill the entire scan area.</string>
+    <string name="textScanningDoesNot5">Do not place the camera too close because it may not be able to focus of the code.</string>
+    <string name="textScanningDoesNot6">Two-finger zoom may work for these the code is small in size.</string>
+    <string name="textScanningDoesNot7">Increasing the scanning area can be effective with codes very large, complex, or very long.</string>
+    <string name="scan_with_cheap_phones">Scan with cheap phones</string>
+    <string name="textScanningDoesNot8">Scanning with cheap phones can be very difficult either not even possible due to lower camera quality.</string>
+    <string name="textScanningDoesNot9">If you can\'t scan, try taking a photo with the app\nUse your normal camera, then scan the image using “Scan Images”.</string>
 
 </resources>

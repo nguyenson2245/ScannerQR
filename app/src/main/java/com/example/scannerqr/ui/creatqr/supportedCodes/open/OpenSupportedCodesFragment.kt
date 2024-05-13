@@ -1,19 +1,12 @@
 package com.example.scannerqr.ui.creatqr.supportedCodes.open
 
-import android.content.ContentValues.TAG
-import android.os.Bundle
 import android.text.InputType
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import com.example.scannerqr.base.BaseFragmentWithBinding
 import com.example.socialmedia.base.utils.click
 import com.google.zxing.BarcodeFormat
-import com.scan.scannerqr.R
 import com.scan.scannerqr.databinding.FragmentOpenSupportedCodesBinding
-import com.scan.scannerqr.databinding.FragmentSupportedSodesBinding
 
 class OpenSupportedCodesFragment : BaseFragmentWithBinding<FragmentOpenSupportedCodesBinding>() {
 

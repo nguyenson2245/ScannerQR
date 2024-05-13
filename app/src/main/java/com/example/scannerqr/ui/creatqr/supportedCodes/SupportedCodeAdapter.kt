@@ -1,12 +1,9 @@
 package com.example.scannerqr.ui.creatqr.supportedCodes
 
-import android.os.Bundle
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.databinding.ViewDataBinding
 import com.bumptech.glide.Glide
 import com.example.scannerqr.model.Supported
-import com.example.scannerqr.ui.creatqr.supportedCodes.open.OpenSupportedCodesFragment
 import com.example.socialmedia.base.recyclerview.BaseRecyclerAdapter
 import com.example.socialmedia.base.recyclerview.BaseViewHolder
 import com.google.zxing.BarcodeFormat
