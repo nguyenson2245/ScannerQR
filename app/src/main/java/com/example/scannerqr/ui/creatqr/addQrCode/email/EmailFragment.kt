@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import com.example.scannerqr.base.BaseFragmentWithBinding
 import com.example.scannerqr.ui.dialog.DialogCreateQr
 import com.example.socialmedia.base.utils.click
+import com.google.zxing.BarcodeFormat
 import com.scan.scannerqr.databinding.FragmentEmailBinding
 import java.io.UnsupportedEncodingException
 import java.net.URLEncoder
@@ -28,7 +29,7 @@ class EmailFragment : BaseFragmentWithBinding<FragmentEmailBinding>() {
                 ("mailto:${binding.editEmail.text}" + "?subject=" + urlEncode(binding.editSubject.text.toString())) + "&body=" + urlEncode(
                     binding.editMessage.text.toString()
                 )
-            context?.let { DialogCreateQr(it, uri).show() }
+            context?.let { DialogCreateQr(it,uri, BarcodeFormat.QR_CODE).show() }
         }
       binding.toolbar.click {
           onBackPressed()

@@ -3,10 +3,8 @@ package com.example.scanqr.ui.qr
 import android.Manifest
 import android.graphics.Bitmap
 import android.os.Bundle
-import android.os.Handler
 import android.view.LayoutInflater
 import android.widget.SeekBar
-import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import com.example.scannerqr.base.BaseFragmentWithBinding
 import com.example.scannerqr.custom.ScannerView
@@ -55,7 +53,16 @@ class QrcodeFragment : BaseFragmentWithBinding<FragmentQrcodeBinding>(), Scanner
     override fun initData() {
         viewModel.bitmap.observe(viewLifecycleOwner) {
             if (it != null){
-                Toast.makeText(requireContext(),readQRImage(it).toString(), Toast.LENGTH_SHORT).show()
+                val result = readQRImage(it)
+                if (result != null) {
+                    val bundle = Bundle()
+                    bundle.putString("value", result)
+                    bundle.putBoolean("isBack", true)
+                    viewModel.isPlayCamera.postValue(false)
+                    openFragment(DetailFragment::class.java, bundle, true)
+                } else {
+                    toast("Can't read qr")
+                }
                 viewModel.bitmap.postValue(null)
             }
         }
@@ -73,7 +80,6 @@ class QrcodeFragment : BaseFragmentWithBinding<FragmentQrcodeBinding>(), Scanner
         if (context?.checkPermission(Manifest.permission.CAMERA) == true) {
             binding.scannerView.setResultHandler(this)
             binding.scannerView.startCamera();
-            binding.scannerView.flash = false
         } else{
             PermissionX.init(this)
                 .permissions( Manifest.permission.CAMERA)

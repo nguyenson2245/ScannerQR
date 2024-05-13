@@ -36,10 +36,7 @@ class HistoryFragment : BaseFragmentWithBinding<FragmentHistoryBinding>() {
 
 
     override fun init() {
-        val dividerItemDecoration = DividerItemDecoration(
-            context,
-            LinearLayoutManager.VERTICAL
-        )
+        val dividerItemDecoration = DividerItemDecoration(context, LinearLayoutManager.VERTICAL)
         adapter = HistoryAdapter() {
             val bundle = Bundle()
             bundle.putString("value", it.title)
@@ -60,7 +57,6 @@ class HistoryFragment : BaseFragmentWithBinding<FragmentHistoryBinding>() {
             }else{
                 binding.nodata.gone()
             }
-
         } }
 
     }

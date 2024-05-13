@@ -3,10 +3,8 @@ package com.example.scannerqr.ui.creatqr.contact
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity.RESULT_OK
-import android.content.ContentValues.TAG
 import android.content.Intent
 import android.provider.ContactsContract
-import android.util.Log
 import android.view.LayoutInflater
 import android.widget.Toast
 import androidx.fragment.app.viewModels
@@ -14,6 +12,7 @@ import com.example.scannerqr.base.BaseFragmentWithBinding
 import com.example.scannerqr.ui.dialog.DialogCreateQr
 import com.example.socialmedia.base.utils.checkPermission
 import com.example.socialmedia.base.utils.click
+import com.google.zxing.BarcodeFormat
 import com.permissionx.guolindev.PermissionX
 import com.scan.scannerqr.databinding.FragmentContactBinding
 
@@ -117,7 +116,7 @@ class ContactFragment : BaseFragmentWithBinding<FragmentContactBinding>() {
                     "Region:" + binding.region.text + "\n" +
                     "Nation" + binding.nation.text + "\n" +
                     "Website:" + binding.web.text
-            context?.let { it1 -> DialogCreateQr(it1, vCardData).show() }
+            context?.let { it1 -> DialogCreateQr(it1, vCardData, BarcodeFormat.QR_CODE).show() }
         }
 
         binding.toolbar.click {
