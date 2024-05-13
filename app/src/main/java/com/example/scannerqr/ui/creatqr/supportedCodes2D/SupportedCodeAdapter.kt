@@ -1,4 +1,4 @@
-package com.example.scannerqr.ui.creatqr.supportedCodes
+package com.example.scannerqr.ui.creatqr.supportedCodes2D
 
 import android.view.ViewGroup
 import androidx.databinding.ViewDataBinding

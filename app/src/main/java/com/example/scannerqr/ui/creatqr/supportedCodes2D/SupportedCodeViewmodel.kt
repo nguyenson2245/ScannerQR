@@ -1,8 +1,8 @@
-package com.example.scannerqr.ui.creatqr.supportedCodes
+package com.example.scannerqr.ui.creatqr.supportedCodes2D
 
 import androidx.lifecycle.MutableLiveData
 import com.example.scannerqr.model.Supported
-import com.example.scannerqr.ui.creatqr.supportedCodes.open.OpenSupportedCodesFragment
+import com.example.scannerqr.ui.creatqr.supportedCodes2D.open.OpenSupportedCodesFragment
 import com.example.socialmedia.base.BaseViewModel
 import com.google.zxing.BarcodeFormat
 import com.scan.scannerqr.R

@@ -14,8 +14,7 @@ import com.scan.scannerqr.R
 import com.scan.scannerqr.databinding.DialogCreatQrBinding
 
 
-class DialogCreateQr(context: Context, val inputValue: String, val type: BarcodeFormat) :
-    Dialog(context) {
+class DialogCreateQr(context: Context, val inputValue: String, val type: BarcodeFormat) : Dialog(context) {
     private lateinit var binding: DialogCreatQrBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,12 +54,12 @@ class DialogCreateQr(context: Context, val inputValue: String, val type: Barcode
                 message,
                 BarcodeFormat.PDF_417,
                 300.dpToPx(context.resources),
-                120.dpToPx(context.resources)
+                300.dpToPx(context.resources)
             )
 
             BarcodeFormat.AZTEC -> MultiFormatWriter().encode(
                 message, BarcodeFormat.AZTEC,
-                300.dpToPx(context.resources), 300.dpToPx(context.resources)
+                300.dpToPx(context.resources), 120.dpToPx(context.resources)
             )
 
             BarcodeFormat.EAN_13 -> MultiFormatWriter().encode(

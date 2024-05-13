@@ -7,11 +7,9 @@ import com.example.scannerqr.ui.creatqr.contact.ContactFragment
 import com.example.scannerqr.ui.creatqr.contentfromclipboard.ContentFromClipboardFragment
 import com.example.scannerqr.ui.creatqr.event.EventFragment
 import com.example.scannerqr.ui.creatqr.shareinotherapp.ShareInOtherAppsFragment
-import com.example.scannerqr.ui.creatqr.supportedCodes.SupportedCodesFragment
+import com.example.scannerqr.ui.creatqr.supportedCodes2D.SupportedCodesFragment
 import com.example.scannerqr.ui.creatqr.web.WebsiteFragment
 import com.example.scannerqr.ui.creatqr.wifi.WifiFragment
-import com.example.scannerqr.ui.history.HistoryFragment
-import com.example.scanqr.ui.qr.QrcodeFragment
 import com.example.socialmedia.base.BaseViewModel
 import com.scan.scannerqr.R
 

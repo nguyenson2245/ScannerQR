@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="vertical"
-    tools:context="com.example.scannerqr.ui.creatqr.supportedCodes.SupportedCodesFragment">
+    tools:context="com.example.scannerqr.ui.creatqr.supportedCodes2D.SupportedCodesFragment">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"

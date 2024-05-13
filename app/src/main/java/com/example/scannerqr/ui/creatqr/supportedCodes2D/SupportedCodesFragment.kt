@@ -1,10 +1,10 @@
-package com.example.scannerqr.ui.creatqr.supportedCodes
+package com.example.scannerqr.ui.creatqr.supportedCodes2D
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.fragment.app.viewModels
 import com.example.scannerqr.base.BaseFragmentWithBinding
-import com.example.scannerqr.ui.creatqr.supportedCodes.open.OpenSupportedCodesFragment
+import com.example.scannerqr.ui.creatqr.supportedCodes2D.open.OpenSupportedCodesFragment
 import com.example.socialmedia.base.utils.click
 import com.scan.scannerqr.databinding.FragmentSupportedSodesBinding
 

@@ -52,7 +52,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
         android:elevation="10dp"
-        android:text="Huỷ"
+        android:text="Cancel"
         android:textColor="@color/black"
         android:textSize="16sp"
         app:backgroundTint="@color/white" />
