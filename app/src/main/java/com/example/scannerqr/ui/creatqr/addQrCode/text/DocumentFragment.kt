@@ -10,7 +10,7 @@ import com.scan.scannerqr.databinding.FragmentDocumentBinding
 
 class DocumentFragment : BaseFragmentWithBinding<FragmentDocumentBinding>() {
     override fun getViewBinding(inflater: LayoutInflater): FragmentDocumentBinding {
-      return FragmentDocumentBinding.inflate(inflater)
+        return FragmentDocumentBinding.inflate(inflater)
     }
 
     override fun init() {
@@ -22,10 +22,31 @@ class DocumentFragment : BaseFragmentWithBinding<FragmentDocumentBinding>() {
     }
 
     override fun initAction() {
-        binding.save.click {
-            context?.let { DialogCreateQr(it, binding.editText.text.toString(), BarcodeFormat.QR_CODE).show() }
+        binding.toolbar.click {
+            onBackPressed()
         }
-        binding.toolbar.click { onBackPressed() }
+
+        binding.save.click {
+
+            val input = binding.editText.text.trim().toString()
+
+            if (input.isNotEmpty() && binding.editText.error == null) {
+                context?.let { it1 ->
+                    context?.let {
+                        DialogCreateQr(
+                            it,
+                            binding.editText.text.toString(),
+                            BarcodeFormat.QR_CODE
+                        ).show()
+                    }
+                }
+            } else{
+                if (input.isEmpty())
+                    binding.editText.error = "not value"
+            }
+
+        }
+
 
     }
 

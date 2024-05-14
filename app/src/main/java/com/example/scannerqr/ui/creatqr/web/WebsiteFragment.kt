@@ -2,6 +2,8 @@ package com.example.scannerqr.ui.creatqr.web
 
 import android.R.attr.bitmap
 import android.graphics.Color
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import androidmads.library.qrgenearator.QRGContents
@@ -25,7 +27,7 @@ class WebsiteFragment : BaseFragmentWithBinding<FragmentWebsiteBinding>() {
     private val viewModel: WebsiteViewModel by viewModels()
 
     override fun getViewBinding(inflater: LayoutInflater): FragmentWebsiteBinding {
-     return FragmentWebsiteBinding.inflate(inflater)
+        return FragmentWebsiteBinding.inflate(inflater)
     }
 
     override fun init() {
@@ -37,15 +39,41 @@ class WebsiteFragment : BaseFragmentWithBinding<FragmentWebsiteBinding>() {
     }
 
     override fun initAction() {
+
         binding.save.click {
-            context?.let { it1 -> DialogCreateQr(it1, binding.editText.text.toString(),BarcodeFormat.QR_CODE).show() }
+
+            val input = binding.editText.text.trim().toString()
+
+            if (input.isNotEmpty() && binding.editText.error == null) {
+                context?.let { it1 ->
+
+                    if (!input.startsWith("http://")) {
+                        binding.editText.setText("")
+                        binding.editText.error = "Please enter the HTTP link"
+                    } else {
+                        binding.editText.error = null
+                        context?.let { it1 ->
+                            DialogCreateQr(
+                                it1,
+                                binding.editText.text.toString(),
+                                BarcodeFormat.QR_CODE
+                            ).show()
+                        }
+                    }
+
+                }
+            } else {
+                if (input.isEmpty())
+                    binding.editText.error = "not value"
+            }
         }
+
         binding.toolbar.click {
             onBackPressed()
         }
 
         binding.openShareOther.click {
-            openFragment(ShareInOtherAppsFragment::class.java,null,true)
+            openFragment(ShareInOtherAppsFragment::class.java, null, true)
         }
 
     }

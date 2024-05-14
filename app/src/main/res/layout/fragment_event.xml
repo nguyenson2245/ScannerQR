@@ -34,6 +34,7 @@
 
 
                 <ImageView
+                    android:id="@+id/save"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_marginStart="18dp"
@@ -54,6 +55,7 @@
         app:cardCornerRadius="12dp">
 
         <EditText
+            android:id="@+id/editTextEventTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@null"
@@ -203,8 +205,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="@dimen/_8sdp"
-        android:backgroundTint="@color/white"
         android:layout_marginBottom="@dimen/_30sdp"
+        android:backgroundTint="@color/white"
         app:cardCornerRadius="12dp">
 
         <EditText

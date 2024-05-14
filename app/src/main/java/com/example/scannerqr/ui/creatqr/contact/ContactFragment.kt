@@ -5,8 +5,10 @@ import android.annotation.SuppressLint
 import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.provider.ContactsContract
+import android.util.Log
 import android.view.LayoutInflater
 import android.widget.Toast
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
 import com.example.scannerqr.base.BaseFragmentWithBinding
 import com.example.scannerqr.ui.dialog.DialogCreateQr
@@ -65,7 +67,8 @@ class ContactFragment : BaseFragmentWithBinding<FragmentContactBinding>() {
                     while (phones?.moveToNext() == true) {
                         var number =
                             phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER))
-                        var name = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME))
+                        var name =
+                            phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME))
                         binding.phoneNumber.setText(number.toString())
                         binding.fullName.setText(name.toString())
                     }
@@ -83,44 +86,90 @@ class ContactFragment : BaseFragmentWithBinding<FragmentContactBinding>() {
     }
 
     override fun initAction() {
+
+        editText()
+
+        binding.toolbar.click {
+            onBackPressed()
+        }
+
         binding.contact.click {
             if (context?.checkPermission(Manifest.permission.READ_CONTACTS) == true) {
                 val intent = Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI)
                 startActivityForResult(intent, 1)
             } else {
-                PermissionX.init(this)
-                    .permissions(Manifest.permission.READ_CONTACTS)
-                    .request { allGranted, grantedList, deniedList ->
-                        if (allGranted) {
-                            Toast.makeText(context, "oke", Toast.LENGTH_SHORT).show()
-                        } else {
-                            Toast.makeText(
-                                requireContext(),
-                                "These permissions are denied: $deniedList",
-                                Toast.LENGTH_LONG
-                            ).show()
-                        }
+                when {
+                    context?.checkPermission(Manifest.permission.READ_CONTACTS) == false -> {
+                        requestPermissions(arrayOf(Manifest.permission.READ_CONTACTS), 200)
                     }
+
+                    shouldShowRequestPermissionRationale(Manifest.permission.READ_CONTACTS) -> {
+                        requestPermissions(arrayOf(Manifest.permission.READ_CONTACTS), 200)
+                    }
+
+                    else -> {
+                        toast("showDialog")
+                    }
+                }
+
+//                PermissionX.init(this)
+//                    .permissions(Manifest.permission.READ_CONTACTS)
+//                    .request { allGranted, grantedList, deniedList ->
+//                        if (allGranted) {
+//                            Toast.makeText(context, "oke", Toast.LENGTH_SHORT).show()
+//                        } else {
+//                            Toast.makeText(
+//                                requireContext(),
+//                                "These permissions are denied: $deniedList",
+//                                Toast.LENGTH_LONG
+//                            ).show()
+//                        }
+//                    }
             }
 
         }
         binding.save.click {
-            val vCardData = "Full Name:${binding.fullName.text}" + "\n" +
-                    "Company:" + binding.company.text + "\n" +
-                    "Title:" + binding.title.text + "\n" +
-                    "Phone number:" + binding.phoneNumber.text + "\n" +
-                    "email:" + binding.email.text + "\n" +
-                    "Address:" + binding.address.text + "\n" +
-                    "Zip:" + binding.zipCode.text + "\n" +
-                    "Country:" + binding.city.text + "\n" +
-                    "Region:" + binding.region.text + "\n" +
-                    "Nation" + binding.nation.text + "\n" +
-                    "Website:" + binding.web.text
-            context?.let { it1 -> DialogCreateQr(it1, vCardData, BarcodeFormat.QR_CODE).show() }
+            val fullName = binding.fullName.text.trim().toString()
+
+
+            if (fullName.isNotEmpty()&&
+                binding.fullName.error == null
+
+            ) {
+                context?.let { it1 ->
+                    val vCardData = "Full Name:${binding.fullName.text}" + "\n" +
+                            "Company:" + binding.company.text + "\n" +
+                            "Title:" + binding.title.text + "\n" +
+                            "Phone number:" + binding.phoneNumber.text + "\n" +
+                            "email:" + binding.email.text + "\n" +
+                            "Address:" + binding.address.text + "\n" +
+                            "Zip:" + binding.zipCode.text + "\n" +
+                            "Country:" + binding.city.text + "\n" +
+                            "Region:" + binding.region.text + "\n" +
+                            "Nation" + binding.nation.text + "\n" +
+                            "Website:" + binding.web.text
+                    context?.let { it1 ->
+                        DialogCreateQr(
+                            it1,
+                            vCardData,
+                            BarcodeFormat.QR_CODE
+                        ).show()
+                    }
+
+                }
+            } else
+                if (fullName.isEmpty()
+
+                ) {
+
+                    toast("PLEASE enter complete information")
+                }
         }
 
-        binding.toolbar.click {
-            onBackPressed()
-        }
+
+    }
+
+    private fun editText() {
+
     }
 }

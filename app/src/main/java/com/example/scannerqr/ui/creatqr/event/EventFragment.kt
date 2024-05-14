@@ -9,7 +9,9 @@ import android.view.LayoutInflater
 import android.widget.DatePicker
 import android.widget.Toast
 import com.example.scannerqr.base.BaseFragmentWithBinding
+import com.example.scannerqr.ui.dialog.DialogCreateQr
 import com.example.socialmedia.base.utils.click
+import com.google.zxing.BarcodeFormat
 import com.scan.scannerqr.databinding.FragmentEventBinding
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -39,6 +41,26 @@ class EventFragment : BaseFragmentWithBinding<FragmentEventBinding>() {
             onBackPressed()
         }
 
+        binding.save.click {
+            val input = binding.editTextEventTitle.text.trim().toString()
+
+            if (input.isNotEmpty() && binding.editTextEventTitle.error == null) {
+                context?.let { it1 ->
+                    context?.let {
+                        DialogCreateQr(
+                            it,
+                            binding.editTextEventTitle.text.toString(),
+                            BarcodeFormat.QR_CODE
+                        ).show()
+                    }
+                }
+            } else{
+                if (input.isEmpty())
+                    binding.editTextEventTitle.error = "not value"
+            }
+
+        }
+
         showDayAndTime()
     }
 
@@ -61,6 +83,7 @@ class EventFragment : BaseFragmentWithBinding<FragmentEventBinding>() {
         }
 
     }
+
 
     private fun showDatePicker() {
         val dateSetListener =

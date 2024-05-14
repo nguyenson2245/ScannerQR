@@ -63,5 +63,7 @@
     <string name="textScanningDoesNot9">If you can\'t scan, try taking a photo with the app\nUse your normal camera, then scan the image using “Scan Images”.</string>
     <string name="corepermissions">You have not granted permission to the application!\\nGo to settings and grant permissions to the app!\\nThank you</string>
     <string name="pms">You have not granted permission! Please grant permission to the application !!\n</string>
+    <string name="text2Setting">The feature to select data from contacts only works when you have permission to read your contacts</string>
+    <string name="text1Setting">Allow access to contacts?</string>
 
 </resources>

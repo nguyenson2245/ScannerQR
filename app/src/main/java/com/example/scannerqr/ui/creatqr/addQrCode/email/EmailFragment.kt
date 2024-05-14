@@ -12,7 +12,7 @@ import java.net.URLEncoder
 
 class EmailFragment : BaseFragmentWithBinding<FragmentEmailBinding>() {
     override fun getViewBinding(inflater: LayoutInflater): FragmentEmailBinding {
-     return FragmentEmailBinding.inflate(inflater)
+        return FragmentEmailBinding.inflate(inflater)
     }
 
     override fun init() {
@@ -25,15 +25,33 @@ class EmailFragment : BaseFragmentWithBinding<FragmentEmailBinding>() {
 
     override fun initAction() {
         binding.save.click {
-            val uri =
-                ("mailto:${binding.editEmail.text}" + "?subject=" + urlEncode(binding.editSubject.text.toString())) + "&body=" + urlEncode(
-                    binding.editMessage.text.toString()
-                )
-            context?.let { DialogCreateQr(it,uri, BarcodeFormat.QR_CODE).show() }
+
+            val editEmail = binding.editEmail.text.trim().toString()
+
+
+            if (editEmail.isNotEmpty() && binding.editEmail.error == null) {
+                context?.let { it1 ->
+                    context?.let {
+                        val uri =
+                            ("mailto:${binding.editEmail.text}" + "?subject=" + urlEncode(binding.editSubject.text.toString())) + "&body=" + urlEncode(
+                                binding.editMessage.text.toString()
+                            )
+                        context?.let { DialogCreateQr(it, uri, BarcodeFormat.QR_CODE).show() }
+
+                    }
+                }
+            } else {
+                if (editEmail.isEmpty())
+                    binding.editEmail.error = "not value"
+            }
+
+
         }
-      binding.toolbar.click {
-          onBackPressed()
-      }
+
+
+        binding.toolbar.click {
+            onBackPressed()
+        }
     }
 
     private fun urlEncode(value: String): String {
