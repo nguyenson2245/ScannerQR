@@ -1,11 +1,19 @@
 package com.example.scanqr.ui.qr
 
 import android.Manifest
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
+import android.provider.Settings
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.SeekBar
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
+import com.example.scannerqr.application.MainApp
 import com.example.scannerqr.base.BaseFragmentWithBinding
 import com.example.scannerqr.custom.ScannerView
 import com.example.scannerqr.ui.MainViewModel
@@ -13,6 +21,8 @@ import com.example.scannerqr.ui.qr.detail.DetailFragment
 import com.example.scannerqr.ui.qr.help.HelpAndFeedbackFragment
 import com.example.socialmedia.base.utils.checkPermission
 import com.example.socialmedia.base.utils.click
+import com.example.socialmedia.base.utils.gone
+import com.example.socialmedia.base.utils.visible
 import com.example.socialmedia.ui.home.post.gallery.GalleryImageFragment
 import com.google.zxing.BinaryBitmap
 import com.google.zxing.ChecksumException
@@ -34,26 +44,19 @@ class QrcodeFragment : BaseFragmentWithBinding<FragmentQrcodeBinding>(), Scanner
         fun newInstance() = QrcodeFragment()
     }
 
-
     private val viewModel: MainViewModel by activityViewModels()
-    private var flashLightStatus : Boolean = false
+    private var flashLightStatus: Boolean = false
     override fun getViewBinding(inflater: LayoutInflater): FragmentQrcodeBinding {
-       return FragmentQrcodeBinding.inflate(inflater)
+        return FragmentQrcodeBinding.inflate(inflater)
     }
 
     override fun init() {
-
-
-    }
-
-    override fun onResume() {
-        super.onResume()
-
+        checkPermissionX()
     }
 
     override fun initData() {
         viewModel.bitmap.observe(viewLifecycleOwner) {
-            if (it != null){
+            if (it != null) {
                 val result = readQRImage(it)
                 if (result != null) {
                     val bundle = Bundle()
@@ -68,7 +71,7 @@ class QrcodeFragment : BaseFragmentWithBinding<FragmentQrcodeBinding>(), Scanner
             }
         }
         viewModel.isPlayCamera.observe(viewLifecycleOwner) {
-            if (it){
+            if (it) {
                 binding.scannerView.resumeCameraPreview(this)
 
             }
@@ -78,33 +81,59 @@ class QrcodeFragment : BaseFragmentWithBinding<FragmentQrcodeBinding>(), Scanner
 
     override fun onStart() {
         super.onStart()
+        checkPermissionX()
+    }
+
+    private fun checkPermissionX() {
         if (context?.checkPermission(Manifest.permission.CAMERA) == true) {
             binding.scannerView.setResultHandler(this)
             binding.scannerView.startCamera();
-        } else{
-            PermissionX.init(this)
-                .permissions( Manifest.permission.CAMERA)
-                .request { allGranted, grantedList, deniedList ->
-                    if (allGranted) {
-                        binding.scannerView.setResultHandler(this)
-                        binding.scannerView.startCamera();
-                    } else {
-
-                    }
+            binding.viewScanner.visible()
+            binding.noScanCheckPer.gone()
+        } else
+            when {
+                context?.checkPermission(Manifest.permission.CAMERA) == false -> {
+                    requestPermissions(arrayOf(Manifest.permission.CAMERA), 200)
                 }
+
+                shouldShowRequestPermissionRationale(Manifest.permission.CAMERA) -> {
+                    requestPermissions(arrayOf(Manifest.permission.CAMERA), 200)
+                }
+
+                else -> {
+                    toast("showDialog")
+                }
+            }
+
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        if (requestCode == 200) {
+            if (context?.checkPermission(Manifest.permission.CAMERA) == true) {
+                binding.scannerView.setResultHandler(this)
+                binding.scannerView.startCamera();
+                binding.viewScanner.visible()
+                binding.noScanCheckPer.gone()
+            } else {
+                binding.viewScanner.gone()
+                binding.noScanCheckPer.visible()
+            }
         }
     }
 
-   private fun readQRImage(bMap: Bitmap): String? {
+    private fun readQRImage(bMap: Bitmap): String? {
         var contents: String? = null
-       try {
-        val intArray = IntArray(bMap.getWidth() * bMap.getHeight())
-        //copy pixel data from the Bitmap into the 'intArray' array
-        bMap.getPixels(intArray, 0, bMap.getWidth(), 0, 0, bMap.getWidth(), bMap.getHeight())
-        val source: LuminanceSource =
-            RGBLuminanceSource(bMap.getWidth(), bMap.getHeight(), intArray)
-        val bitmap = BinaryBitmap(HybridBinarizer(source))
-        val reader: Reader = MultiFormatReader() // use this otherwise ChecksumException
+        try {
+            val intArray = IntArray(bMap.getWidth() * bMap.getHeight())
+            bMap.getPixels(intArray, 0, bMap.getWidth(), 0, 0, bMap.getWidth(), bMap.getHeight())
+            val source: LuminanceSource =
+                RGBLuminanceSource(bMap.getWidth(), bMap.getHeight(), intArray)
+            val bitmap = BinaryBitmap(HybridBinarizer(source))
+            val reader: Reader = MultiFormatReader()
 
             val result: Result = reader.decode(bitmap)
             contents = result.text
@@ -114,11 +143,12 @@ class QrcodeFragment : BaseFragmentWithBinding<FragmentQrcodeBinding>(), Scanner
             e.printStackTrace()
         } catch (e: FormatException) {
             e.printStackTrace()
-        }catch (e: Throwable){
+        } catch (e: Throwable) {
             e.printStackTrace()
         }
         return contents
     }
+
     override fun initAction() {
         binding.openFlash.click {
             binding.scannerView.flash = !flashLightStatus
@@ -132,7 +162,7 @@ class QrcodeFragment : BaseFragmentWithBinding<FragmentQrcodeBinding>(), Scanner
             openFragment(HelpAndFeedbackFragment::class.java, null, true)
         }
         binding.btnZoomIn.setOnClickListener {
-            binding.seekBar.progress = binding.seekBar.progress + 10
+            binding.seekBar.progress += 10
         }
 
         binding.seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
@@ -147,10 +177,18 @@ class QrcodeFragment : BaseFragmentWithBinding<FragmentQrcodeBinding>(), Scanner
             }
 
         })
+
         binding.btnZoomOut.setOnClickListener {
-            binding.seekBar.progress = binding.seekBar.progress - 10
+            binding.seekBar.progress -= 10
         }
 
+        binding.scanWithCamera.click {
+            checkPermissionX()
+
+        }
+        binding.scanImages.click {
+            toast("scan Images")
+        }
     }
 
     override fun handleResult(rawResult: Result?) {
@@ -165,7 +203,7 @@ class QrcodeFragment : BaseFragmentWithBinding<FragmentQrcodeBinding>(), Scanner
 
     override fun onPause() {
         binding.scannerView.flash = false
-        flashLightStatus= false
+        flashLightStatus = false
         super.onPause()
     }
 

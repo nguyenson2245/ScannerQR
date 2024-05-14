@@ -26,14 +26,7 @@ class MainFragment : BaseFragmentWithBinding<FragmentMainBinding>() {
         fun newInstance() = MainFragment()
     }
 
-
-
     private lateinit var adapter: PagerAdapter
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
 
     override fun getViewBinding(inflater: LayoutInflater): FragmentMainBinding {
         return FragmentMainBinding.inflate(inflater)

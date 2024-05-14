@@ -1,155 +1,189 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black">
 
-
-    <com.example.scannerqr.custom.ScannerView
-        android:id="@+id/scannerView"
+    <LinearLayout
+        android:id="@+id/noScanCheckPer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:borderColor="#FFF"
-        app:borderLength="24dp"
-        app:borderWidth="4dp"
-        app:laserColor="#00ff77"
-        app:layout_constraintTop_toTopOf="parent"
-        app:maskColor="@android:color/transparent"
-        app:roundedCorner="false"
-        app:squaredFinder="true" />
+        android:background="@color/white"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
 
-    <LinearLayout
+        <ImageView
+            android:id="@+id/scanWithCamera"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:src="@drawable/check1" />
+
+        <ImageView
+            android:id="@+id/scanImages"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginTop="@dimen/_14sdp"
+            android:src="@drawable/check2" />
+    </LinearLayout>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/viewScanner"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/appCompatSeekBar"
+        android:layout_height="match_parent"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.19999999">
+        app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.legacy.widget.Space
+        <com.example.scannerqr.custom.ScannerView
+            android:id="@+id/scannerView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_height="match_parent"
+            app:borderColor="#FFF"
+            app:borderLength="24dp"
+            app:borderWidth="4dp"
+            app:laserColor="#00ff77"
+            app:layout_constraintTop_toTopOf="parent"
+            app:maskColor="@android:color/transparent"
+            app:roundedCorner="false"
+            app:squaredFinder="true" />
 
         <LinearLayout
-            android:id="@+id/open_flash"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="?attr/selectableItemBackground"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="20dp"
-                android:src="@drawable/ic_light" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="Light"
-                android:textColor="@color/white"
-                android:textSize="12sp" />
-        </LinearLayout>
-
-        <androidx.legacy.widget.Space
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            app:layout_constraintBottom_toTopOf="@+id/appCompatSeekBar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.19999999">
+
+            <androidx.legacy.widget.Space
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <LinearLayout
+                android:id="@+id/open_flash"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_light" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Light"
+                    android:textColor="@color/white"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <androidx.legacy.widget.Space
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <LinearLayout
+                android:id="@+id/btn_open_library"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_open_lib" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Scan images"
+                    android:textColor="@color/white"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <androidx.legacy.widget.Space
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <LinearLayout
+                android:id="@+id/btn_help"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_help" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Help"
+                    android:textColor="@color/white"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <androidx.legacy.widget.Space
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
+
 
         <LinearLayout
-            android:id="@+id/btn_open_library"
-            android:layout_width="wrap_content"
+            android:id="@+id/appCompatSeekBar"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?attr/selectableItemBackground"
-            android:gravity="center"
-            android:orientation="vertical">
+            android:layout_marginLeft="@dimen/_15sdp"
+            android:layout_marginRight="@dimen/_15sdp"
+            android:layout_marginBottom="@dimen/_70sdp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="20dp"
-                android:src="@drawable/ic_open_lib" />
-
-            <TextView
+                android:id="@+id/btn_zoom_out"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="Scan images"
-                android:textColor="@color/white"
-                android:textSize="12sp" />
-        </LinearLayout>
+                android:layout_gravity="bottom"
+                android:src="@drawable/ic_zoom_out" />
 
-        <androidx.legacy.widget.Space
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
-
-        <LinearLayout
-            android:id="@+id/btn_help"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="?attr/selectableItemBackground"
-            android:gravity="center"
-            android:orientation="vertical">
+            <androidx.appcompat.widget.AppCompatSeekBar
+                android:id="@+id/seekBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:max="100"
+                android:progress="0"
+                android:thumb="@drawable/ic_thumb" />
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="20dp"
-                android:src="@drawable/ic_help" />
-
-            <TextView
+                android:id="@+id/btn_zoom_in"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="Help"
-                android:textColor="@color/white"
-                android:textSize="12sp" />
+                android:src="@drawable/ic_zoom_in" />
         </LinearLayout>
-
-        <androidx.legacy.widget.Space
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-    <LinearLayout
-        android:id="@+id/appCompatSeekBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/_15sdp"
-        android:layout_marginRight="@dimen/_15sdp"
-        android:layout_marginBottom="@dimen/_70sdp"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <ImageView
-            android:id="@+id/btn_zoom_out"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-           android:src="@drawable/ic_zoom_out" />
-
-        <androidx.appcompat.widget.AppCompatSeekBar
-            android:id="@+id/seekBar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:progress="0"
-            android:max="100"
-            android:layout_gravity="center"
-            android:thumb="@drawable/ic_thumb" />
-
-        <ImageView
-            android:id="@+id/btn_zoom_in"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_zoom_in"
-          />
-    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

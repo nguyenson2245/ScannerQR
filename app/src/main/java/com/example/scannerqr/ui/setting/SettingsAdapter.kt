@@ -68,8 +68,7 @@ class SettingsAdapter(val viewModel: SettingsViewModel) :
                     } else if (itemData?.key == Constants.CONFIRM) {
 
                     } else if (itemData?.key == Constants.SOUND) {
-                        val mediaPlayer: MediaPlayer =
-                            MediaPlayer.create(itemView.context, R.raw.musicmp3)
+                        val mediaPlayer: MediaPlayer = MediaPlayer.create(itemView.context, R.raw.musicmp3)
                         if (itemData?.switchEnabled != true) {
                             Toast.makeText(itemView.context, "On", Toast.LENGTH_SHORT)
                                 .show()

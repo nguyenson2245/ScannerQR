@@ -1,5 +1,6 @@
 package com.example.socialmedia.base.utils
 
+import android.Manifest
 import android.app.Activity
 import android.content.Context
 import android.content.pm.PackageManager
@@ -84,6 +85,10 @@ fun Context.checkPermission(vararg permission: String): Boolean {
         }
     }
     return true
+}
+
+fun Context.checkPermissionCamera(context: Context): Boolean {
+    return context.checkPermission(Manifest.permission.CAMERA)
 }
 
 fun Int.dpToPx(resources: Resources): Int {

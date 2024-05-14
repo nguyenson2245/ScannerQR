@@ -61,5 +61,7 @@
     <string name="scan_with_cheap_phones">Scan with cheap phones</string>
     <string name="textScanningDoesNot8">Scanning with cheap phones can be very difficult either not even possible due to lower camera quality.</string>
     <string name="textScanningDoesNot9">If you can\'t scan, try taking a photo with the app\nUse your normal camera, then scan the image using “Scan Images”.</string>
+    <string name="corepermissions">You have not granted permission to the application!\\nGo to settings and grant permissions to the app!\\nThank you</string>
+    <string name="pms">You have not granted permission! Please grant permission to the application !!\n</string>
 
 </resources>
