@@ -3,8 +3,10 @@ package com.example.scannerqr.ui.creatqr.event
 import android.R
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.content.ContentValues.TAG
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.util.Log
 import android.view.LayoutInflater
 import android.widget.DatePicker
 import com.example.scannerqr.base.BaseFragmentWithBinding
@@ -14,6 +16,7 @@ import com.google.zxing.BarcodeFormat
 import com.scan.scannerqr.databinding.FragmentEventBinding
 import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Date
 import java.util.Locale
 
 
@@ -21,6 +24,7 @@ class EventFragment : BaseFragmentWithBinding<FragmentEventBinding>() {
 
     private val calendar = Calendar.getInstance()
 
+    private val pattern = "dd/MM/yyyy HH:mm"
     private var _timePickerDialog: TimePickerDialog? = null
 
     override fun getViewBinding(inflater: LayoutInflater): FragmentEventBinding {
@@ -44,6 +48,10 @@ class EventFragment : BaseFragmentWithBinding<FragmentEventBinding>() {
             val input = binding.editTextEventTitle.text.trim().toString()
 
             if (input.isNotEmpty() && binding.editTextEventTitle.error == null) {
+                Log.d(
+                    TAG,
+                    "initAction: " + binding.txtStartDay.text.toString() + " " + binding.txtStartTime.text.toString(),
+                )
                 context?.let { it1 ->
                     context?.let {
                         DialogCreateQr(
@@ -51,8 +59,14 @@ class EventFragment : BaseFragmentWithBinding<FragmentEventBinding>() {
                             createEventData(
                                 binding.title.text.toString(),
                                 binding.edtEventLocation.text.toString(),
-                                binding.txtStartDay.text.toString() + " " + binding.txtStartTime.text.toString(),
-                                binding.txtEndDay.text.toString() + " " + binding.txtEndTime.text.toString(),
+                                dateStringToLong(
+                                    binding.txtStartDay.text.toString() + " " + binding.txtStartTime.text.toString(),
+                                    pattern
+                                ),
+                                dateStringToLong(
+                                    binding.txtEndDay.text.toString() + " " + binding.txtEndTime.text.toString(),
+                                    pattern
+                                ),
                                 binding.edtDescribe.text.toString()
                             ),
                             BarcodeFormat.QR_CODE
@@ -175,19 +189,27 @@ class EventFragment : BaseFragmentWithBinding<FragmentEventBinding>() {
     fun createEventData(
         title: String,
         location: String,
-        startTime: String,
-        endTime: String,
+        startTime: Long,
+        endTime: Long,
         description: String
     ): String {
+        val dateFormat = SimpleDateFormat("yyyyMMdd'T'HHmmss", Locale.getDefault())
 
         return """
         BEGIN:VEVENT
         SUMMARY:$title
         LOCATION:$location
-        DTSTART:${startTime}
-        DTEND:${endTime}
+        DTSTART:${dateFormat.format(Date(startTime))}
+        DTEND:${dateFormat.format(Date(endTime))}
         DESCRIPTION:$description
         END:VEVENT
     """.trimIndent()
     }
+
+    fun dateStringToLong(dateString: String, pattern: String): Long {
+        val dateFormat = SimpleDateFormat(pattern, Locale.getDefault())
+        val date = dateFormat.parse(dateString)
+        return date?.time ?: -1
+    }
+
 }
