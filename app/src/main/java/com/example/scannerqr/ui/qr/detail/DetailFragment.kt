@@ -9,6 +9,7 @@ import com.example.scannerqr.base.BaseFragmentWithBinding
 import com.example.scannerqr.model.History
 import com.example.scannerqr.repository.Repository
 import com.example.scannerqr.ui.MainViewModel
+import com.example.scanqr.ui.qr.TypeValue
 import com.example.socialmedia.base.utils.click
 import com.scan.scannerqr.R
 import com.scan.scannerqr.databinding.FragmentDetailBinding
@@ -16,7 +17,6 @@ import java.text.SimpleDateFormat
 import java.util.Date
 
 class DetailFragment : BaseFragmentWithBinding<FragmentDetailBinding>() {
-    val repository = Repository()
     companion object {
         fun newInstance() = DetailFragment()
     }
@@ -27,12 +27,15 @@ class DetailFragment : BaseFragmentWithBinding<FragmentDetailBinding>() {
     private var value: String = ""
     var isBackScannerQR: Boolean = false
     private var date: String = ""
+    private var type: TypeValue? = TypeValue.TYPE_CONTENT
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         value = arguments?.getString("value") ?: ""
         isBackScannerQR = arguments?.getBoolean("isBack") ?: false
         date = arguments?.getString("date") ?: ""
+        type = (arguments?.getSerializable("type_va lue") ?: TypeValue.TYPE_CONTENT) as TypeValue?
+
     }
 
     override fun getViewBinding(inflater: LayoutInflater): FragmentDetailBinding {
@@ -51,7 +54,7 @@ class DetailFragment : BaseFragmentWithBinding<FragmentDetailBinding>() {
 
     @SuppressLint("SimpleDateFormat")
     override fun initData() {
-        viewModel.initDataApp(2, value)
+        type?.let { viewModel.initDataApp(it, value) }
         binding.time.text = if (date.isNullOrEmpty())
             SimpleDateFormat("dd/MM/yyyy HH:mm").format(Date(System.currentTimeMillis())) else date
         binding.title.text = value

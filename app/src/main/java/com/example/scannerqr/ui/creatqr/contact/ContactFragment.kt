@@ -5,17 +5,14 @@ import android.annotation.SuppressLint
 import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.provider.ContactsContract
-import android.util.Log
 import android.view.LayoutInflater
 import android.widget.Toast
-import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
 import com.example.scannerqr.base.BaseFragmentWithBinding
 import com.example.scannerqr.ui.dialog.DialogCreateQr
 import com.example.socialmedia.base.utils.checkPermission
 import com.example.socialmedia.base.utils.click
 import com.google.zxing.BarcodeFormat
-import com.permissionx.guolindev.PermissionX
 import com.scan.scannerqr.databinding.FragmentContactBinding
 
 
@@ -112,19 +109,6 @@ class ContactFragment : BaseFragmentWithBinding<FragmentContactBinding>() {
                     }
                 }
 
-//                PermissionX.init(this)
-//                    .permissions(Manifest.permission.READ_CONTACTS)
-//                    .request { allGranted, grantedList, deniedList ->
-//                        if (allGranted) {
-//                            Toast.makeText(context, "oke", Toast.LENGTH_SHORT).show()
-//                        } else {
-//                            Toast.makeText(
-//                                requireContext(),
-//                                "These permissions are denied: $deniedList",
-//                                Toast.LENGTH_LONG
-//                            ).show()
-//                        }
-//                    }
             }
 
         }
@@ -137,17 +121,18 @@ class ContactFragment : BaseFragmentWithBinding<FragmentContactBinding>() {
 
             ) {
                 context?.let { it1 ->
-                    val vCardData = "Full Name:${binding.fullName.text}" + "\n" +
-                            "Company:" + binding.company.text + "\n" +
-                            "Title:" + binding.title.text + "\n" +
-                            "Phone number:" + binding.phoneNumber.text + "\n" +
-                            "email:" + binding.email.text + "\n" +
-                            "Address:" + binding.address.text + "\n" +
-                            "Zip:" + binding.zipCode.text + "\n" +
-                            "Country:" + binding.city.text + "\n" +
-                            "Region:" + binding.region.text + "\n" +
-                            "Nation" + binding.nation.text + "\n" +
-                            "Website:" + binding.web.text
+                    val vCardData = """
+    BEGIN:VCARD
+    VERSION:3.0
+    N:${binding.fullName.text};${binding.title.text};;;
+    ORG:${binding.company.text}
+    TEL:${binding.phoneNumber.text}
+    EMAIL:${binding.email.text}
+    ADR:${binding.address.text};;;;${binding.city.text};${binding.region.text};${binding.nation.text};${binding.zipCode.text}
+    URL:${binding.web.text}
+    END:VCARD
+""".trimIndent()
+
                     context?.let { it1 ->
                         DialogCreateQr(
                             it1,

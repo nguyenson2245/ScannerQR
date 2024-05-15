@@ -7,7 +7,6 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
 import android.widget.DatePicker
-import android.widget.Toast
 import com.example.scannerqr.base.BaseFragmentWithBinding
 import com.example.scannerqr.ui.dialog.DialogCreateQr
 import com.example.socialmedia.base.utils.click
@@ -49,7 +48,13 @@ class EventFragment : BaseFragmentWithBinding<FragmentEventBinding>() {
                     context?.let {
                         DialogCreateQr(
                             it,
-                            binding.editTextEventTitle.text.toString(),
+                            createEventData(
+                                binding.title.text.toString(),
+                                binding.edtEventLocation.text.toString(),
+                                binding.txtStartDay.text.toString() + " " + binding.txtStartTime.text.toString(),
+                                binding.txtEndDay.text.toString() + " " + binding.txtEndTime.text.toString(),
+                                binding.edtDescribe.text.toString()
+                            ),
                             BarcodeFormat.QR_CODE
                         ).show()
                     }
@@ -127,24 +132,22 @@ class EventFragment : BaseFragmentWithBinding<FragmentEventBinding>() {
         _timePickerDialog?.show()
     }
 
-//    private fun showTimePicker() {
-//        val timeSetListener =
-//            OnTimeSetListener { view, hourOfDay, minute ->
-//                calendar[Calendar.HOUR_OF_DAY] = hourOfDay
-//                calendar[Calendar.MINUTE] = minute
-//                updateTime()
-//            }
-//        TimePickerDialog(
-//            requireContext(), timeSetListener,
-//            calendar[Calendar.HOUR_OF_DAY],
-//            calendar[Calendar.MINUTE],
-//            true
-//        ).show()
-//    }
-//
-//    private fun updateTime() {
-//        val myFormat = "HH:mm"
-//        val sdf = SimpleDateFormat(myFormat, Locale.getDefault())
-//        binding.txtStartTime.text = sdf.format(calendar.time)
-//    }
+    fun createEventData(
+        title: String,
+        location: String,
+        startTime: String,
+        endTime: String,
+        description: String
+    ): String {
+
+        return """
+        BEGIN:VEVENT
+        SUMMARY:$title
+        LOCATION:$location
+        DTSTART:${startTime}
+        DTEND:${endTime}
+        DESCRIPTION:$description
+        END:VEVENT
+    """.trimIndent()
+    }
 }

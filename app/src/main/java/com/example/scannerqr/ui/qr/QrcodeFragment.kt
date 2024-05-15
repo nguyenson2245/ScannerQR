@@ -1,19 +1,11 @@
 package com.example.scanqr.ui.qr
 
 import android.Manifest
-import android.content.Intent
-import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import android.net.Uri
 import android.os.Bundle
-import android.provider.Settings
 import android.view.LayoutInflater
-import android.view.View
 import android.widget.SeekBar
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
-import com.example.scannerqr.application.MainApp
 import com.example.scannerqr.base.BaseFragmentWithBinding
 import com.example.scannerqr.custom.ScannerView
 import com.example.scannerqr.ui.MainViewModel
@@ -34,10 +26,10 @@ import com.google.zxing.RGBLuminanceSource
 import com.google.zxing.Reader
 import com.google.zxing.Result
 import com.google.zxing.common.HybridBinarizer
-import com.permissionx.guolindev.PermissionX
 import com.scan.scannerqr.databinding.FragmentQrcodeBinding
 
 
+@Suppress("IMPLICIT_CAST_TO_ANY")
 class QrcodeFragment : BaseFragmentWithBinding<FragmentQrcodeBinding>(), ScannerView.ResultHandler {
 
     companion object {
@@ -192,13 +184,48 @@ class QrcodeFragment : BaseFragmentWithBinding<FragmentQrcodeBinding>(), Scanner
     }
 
     override fun handleResult(rawResult: Result?) {
+        val contents = rawResult.toString()
+
         val bundle = Bundle()
-        bundle.putString("value", rawResult.toString())
+        bundle.putString("value", contents)
         bundle.putBoolean("isBack", true)
+        bundle.putSerializable("type_value", checkTypeValue(contents))
         viewModel.isPlayCamera.postValue(false)
         openFragment(DetailFragment::class.java, bundle, true)
+    }
+
+    private fun checkTypeValue(contents: String): TypeValue {
+        return when {
+            contents.startsWith("WIFI:") -> TypeValue.TYPE_WIFI
+            contents.startsWith("BEGIN:VCARD") -> TypeValue.TYPE_VCARD
+            contents.startsWith("http://") || contents.startsWith("https://") -> TypeValue.TYPE_WEB
+            contents.startsWith("BEGIN:VEVENT") -> TypeValue.TYPE_EVENT
+            contents.startsWith("mailto:") -> TypeValue.TYPE_MAIL
+            contents.startsWith("SMSTO:") -> TypeValue.TYPE_SMS
+            else -> TypeValue.TYPE_CONTENT
+        }
+    }
 
 
+    // Phân tích mã QR Wi-Fi
+    private fun parseWifiQR(contents: String): Map<String, String>? {
+        if (!contents.startsWith("WIFI:")) return null
+
+        val data = mutableMapOf<String, String>()
+        val fields = contents.substring(5).split(";")
+
+        for (field in fields) {
+            val parts = field.split(":")
+            if (parts.size == 2) {
+                when (parts[0]) {
+                    "T" -> data["type"] = parts[1]
+                    "S" -> data["SSID"] = parts[1]
+                    "P" -> data["password"] = parts[1]
+                    "H" -> data["hidden"] = parts[1]
+                }
+            }
+        }
+        return data
     }
 
     override fun onPause() {
@@ -207,4 +234,8 @@ class QrcodeFragment : BaseFragmentWithBinding<FragmentQrcodeBinding>(), Scanner
         super.onPause()
     }
 
+}
+
+enum class TypeValue() {
+    TYPE_WIFI, TYPE_CONTENT, TYPE_VCARD, TYPE_EVENT, TYPE_WEB, TYPE_MAIL, TYPE_SMS
 }

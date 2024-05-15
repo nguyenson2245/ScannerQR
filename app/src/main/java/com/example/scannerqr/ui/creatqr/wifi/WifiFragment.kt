@@ -28,13 +28,16 @@ class WifiFragment : BaseFragmentWithBinding<FragmentWifiBinding>() {
         binding.save.click {
 
             val input = binding.edtNetworkName.text.trim().toString()
-
             if (input.isNotEmpty() && binding.edtNetworkName.error == null) {
                 context?.let { it1 ->
                     context?.let {
                         DialogCreateQr(
                             it,
-                            binding.edtNetworkName.text.toString(),
+                            buildWifiString(
+                                binding.edtNetworkName.text.toString(),
+                                binding.txtWPA2.text.toString(),
+                                binding.edtPassword.text.toString()
+                            ),
                             BarcodeFormat.QR_CODE
                         ).show()
                     }
@@ -43,7 +46,6 @@ class WifiFragment : BaseFragmentWithBinding<FragmentWifiBinding>() {
                 if (input.isEmpty())
                     binding.edtNetworkName.error = "not value"
             }
-
 
         }
 
@@ -55,6 +57,10 @@ class WifiFragment : BaseFragmentWithBinding<FragmentWifiBinding>() {
           showPopUp()
       }
 
+    }
+
+    fun buildWifiString(ssid: String, encryptionType: String, password: String): String {
+        return "WIFI:S:$ssid;T:$encryptionType;P:$password;;"
     }
 
 
