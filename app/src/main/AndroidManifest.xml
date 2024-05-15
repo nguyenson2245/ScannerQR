@@ -18,6 +18,8 @@
         tools:ignore="SelectedPhotoAccess" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
 
     <application
         android:name="com.example.scannerqr.application.MainApp"

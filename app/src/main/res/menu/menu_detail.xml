@@ -12,10 +12,10 @@
         app:showAsAction="always"
         android:title="Output to txt" />
 
-    <item
-        android:id="@+id/more"
-        android:icon="@drawable/more"
-        app:showAsAction="always"
-        android:title="More" />
+<!--    <item-->
+<!--        android:id="@+id/more"-->
+<!--        android:icon="@drawable/more"-->
+<!--        app:showAsAction="always"-->
+<!--        android:title="More" />-->
 
 </menu>

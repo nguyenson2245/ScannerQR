@@ -6,12 +6,9 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.scannerqr.base.BaseFragmentWithBinding
-import com.example.scannerqr.model.History
 import com.example.scannerqr.ui.qr.detail.DetailFragment
-import com.example.scanqr.ui.qr.QrcodeFragment
 import com.example.socialmedia.base.utils.gone
 import com.example.socialmedia.base.utils.visible
-import com.scan.scannerqr.R
 import com.scan.scannerqr.databinding.FragmentHistoryBinding
 
 
@@ -25,15 +22,9 @@ class HistoryFragment : BaseFragmentWithBinding<FragmentHistoryBinding>() {
     private lateinit var adapter: HistoryAdapter
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
-
     override fun getViewBinding(inflater: LayoutInflater): FragmentHistoryBinding {
         return FragmentHistoryBinding.inflate(inflater)
     }
-
 
     override fun init() {
         val dividerItemDecoration = DividerItemDecoration(context, LinearLayoutManager.VERTICAL)
@@ -41,6 +32,7 @@ class HistoryFragment : BaseFragmentWithBinding<FragmentHistoryBinding>() {
             val bundle = Bundle()
             bundle.putString("value", it.title)
             bundle.putString("date", it.date)
+            bundle.putSerializable("dataHistory", it)
             openFragment(DetailFragment::class.java, bundle, true)
 
         }

@@ -28,8 +28,6 @@ import com.google.zxing.Result
 import com.google.zxing.common.HybridBinarizer
 import com.scan.scannerqr.databinding.FragmentQrcodeBinding
 
-
-@Suppress("IMPLICIT_CAST_TO_ANY")
 class QrcodeFragment : BaseFragmentWithBinding<FragmentQrcodeBinding>(), ScannerView.ResultHandler {
 
     companion object {
@@ -67,7 +65,6 @@ class QrcodeFragment : BaseFragmentWithBinding<FragmentQrcodeBinding>(), Scanner
                 binding.scannerView.resumeCameraPreview(this)
 
             }
-
         }
     }
 
@@ -96,7 +93,6 @@ class QrcodeFragment : BaseFragmentWithBinding<FragmentQrcodeBinding>(), Scanner
                     toast("showDialog")
                 }
             }
-
     }
 
     override fun onRequestPermissionsResult(
@@ -179,7 +175,11 @@ class QrcodeFragment : BaseFragmentWithBinding<FragmentQrcodeBinding>(), Scanner
 
         }
         binding.scanImages.click {
-            toast("scan Images")
+            openFragment(GalleryImageFragment::class.java, null, true)
+        }
+
+        binding.btnStore.click {
+            toast("Store")
         }
     }
 

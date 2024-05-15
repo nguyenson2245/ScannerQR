@@ -156,4 +156,10 @@ class DetailViewModel : BaseViewModel() {
         return data
     }
 
+
+    fun deleteHistory(context: Context,history: History){
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.deleteHistory(context,history)
+        }
+    }
 }

@@ -10,4 +10,5 @@ class HistoryViewModel : BaseViewModel() {
 
     private val repository = Repository()
     fun getLiveDateHistory(context: Context) = repository.getLiveDataHistory(context)
+
 }
