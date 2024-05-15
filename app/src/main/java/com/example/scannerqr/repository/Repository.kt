@@ -35,4 +35,7 @@ class Repository {
     suspend fun addHistory(context: Context,history: History) = AppDatabase.getInstance(context).getQRDao()?.insertAll(history)
 
     fun getLiveDataHistory(context: Context) = AppDatabase.getInstance(context).getQRDao().getLiveDataHistory()
+
+    suspend fun deleteHistory(context: Context,history: History) = AppDatabase.getInstance(context).getQRDao()?.delete(history)
+
 }

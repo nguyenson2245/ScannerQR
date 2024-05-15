@@ -1,7 +1,10 @@
 package com.example.scannerqr.ui.qr.detail
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -15,30 +18,39 @@ import com.scan.scannerqr.databinding.FragmentDetailBinding
 import java.text.SimpleDateFormat
 import java.util.Date
 
+
 class DetailFragment : BaseFragmentWithBinding<FragmentDetailBinding>() {
     val repository = Repository()
+
     companion object {
         fun newInstance() = DetailFragment()
     }
 
     private val viewModel: DetailViewModel by viewModels()
     private val mainViewModel: MainViewModel by activityViewModels()
+
     private lateinit var adapter: DetailAdapter
+
     private var value: String = ""
-    var isBackScannerQR: Boolean = false
     private var date: String = ""
+    private var dataHistory: History? = null
+
+    var isBackScannerQR: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        value = arguments?.getString("value") ?: ""
+
         isBackScannerQR = arguments?.getBoolean("isBack") ?: false
+
+        value = arguments?.getString("value") ?: ""
         date = arguments?.getString("date") ?: ""
+
+        dataHistory = arguments?.getSerializable("dataHistory") as History?
     }
 
     override fun getViewBinding(inflater: LayoutInflater): FragmentDetailBinding {
         return FragmentDetailBinding.inflate(inflater)
     }
-
 
     override fun init() {
         adapter = DetailAdapter() {
@@ -52,17 +64,21 @@ class DetailFragment : BaseFragmentWithBinding<FragmentDetailBinding>() {
     @SuppressLint("SimpleDateFormat")
     override fun initData() {
         viewModel.initDataApp(2, value)
-        binding.time.text = if (date.isNullOrEmpty())
-            SimpleDateFormat("dd/MM/yyyy HH:mm").format(Date(System.currentTimeMillis())) else date
+
+        binding.time.text =
+            if (date.isNullOrEmpty()) SimpleDateFormat("dd/MM/yyyy HH:mm").format(Date(System.currentTimeMillis())) else date
         binding.title.text = value
-        viewModel.listDetailsLiveData.observe(viewLifecycleOwner){
+        viewModel.listDetailsLiveData.observe(viewLifecycleOwner) {
             adapter.submitList(it)
         }
         if (isBackScannerQR) {
+            if (dataHistory == null) {
+                dataHistory = History(0, value, R.drawable.seecode, binding.time.text.toString())
+            }
             context?.let {
                 viewModel.addHistory(
-                    it,
-                    History(0, value, R.drawable.seecode, binding.time.text.toString())
+                    it, dataHistory!!
+
                 )
             }
         }
@@ -77,17 +93,38 @@ class DetailFragment : BaseFragmentWithBinding<FragmentDetailBinding>() {
         }
 
         binding.toolbar.setOnMenuItemClickListener {
-            when(it.itemId){
+            when (it.itemId) {
                 R.id.delete -> {
-                   toast("delete")
+
+                    AlertDialog.Builder(requireActivity())
+                        .setTitle("Delete entire history ? ")
+                        .setMessage("Do you want to delete . -> $value")
+                        .setPositiveButton("Yes") { dialog, which ->
+                            dataHistory?.let { it1 ->
+                                viewModel.deleteHistory(
+                                    requireActivity(),
+                                    it1
+                                )
+                            }
+                            onBackPressed()
+                        }
+                        .setNegativeButton("No", null)
+                        .show()
+
+
                     true
                 }
+
                 R.id.outToTxt -> {
-                    toast("outToTxt")
-                    true
-                }
-                R.id.more -> {
-                    toast("more")
+
+                    val dataToShare = value
+                    val shareIntent = Intent(Intent.ACTION_SEND)
+
+                    shareIntent.setType("text/plain")
+                    shareIntent.putExtra(Intent.EXTRA_TEXT, dataToShare)
+
+                    startActivity(Intent.createChooser(shareIntent, "Share data with"))
+
                     true
                 }
             }

@@ -1,6 +1,7 @@
 package com.example.scannerqr.ui.setting
 
 import android.media.MediaPlayer
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
@@ -52,23 +53,50 @@ class SettingsAdapter(val viewModel: SettingsViewModel) :
                     if (itemData?.key == Constants.OPEN_WEB) {
 
                         if (itemData?.switchEnabled != true) {
-                            Toast.makeText(itemView.context, "OPEN_WEB_On", Toast.LENGTH_SHORT)
-                                .show()
+                            Toast.makeText(itemView.context, "OPEN_WEB", Toast.LENGTH_SHORT).show()
+
                         } else {
-                            Toast.makeText(itemView.context, "OPEN_WEB_OFF", Toast.LENGTH_SHORT)
-                                .show()
+                            Toast.makeText(itemView.context, "OFF", Toast.LENGTH_SHORT).show()
+
                         }
                     } else if (itemData?.key == Constants.OPEN_WEB) {
+                        if (itemData?.switchEnabled != true) {
+                            Toast.makeText(itemView.context, "On", Toast.LENGTH_SHORT).show()
 
+                        } else {
+                            Toast.makeText(itemView.context, "OFF", Toast.LENGTH_SHORT).show()
+
+                        }
                     } else if (itemData?.key == Constants.SCAN) {
+                        if (itemData?.switchEnabled != true) {
+                            Toast.makeText(itemView.context, "On", Toast.LENGTH_SHORT).show()
 
+                        } else {
+                            Toast.makeText(itemView.context, "OFF", Toast.LENGTH_SHORT).show()
+
+                        }
                     } else if (itemData?.key == Constants.DUPLICATION) {
+                        if (itemData?.switchEnabled != true) {
+                            Toast.makeText(itemView.context, "On", Toast.LENGTH_SHORT).show()
 
+                        } else {
+                            Toast.makeText(itemView.context, "OFF", Toast.LENGTH_SHORT).show()
+
+                        }
 
                     } else if (itemData?.key == Constants.CONFIRM) {
 
+                        if (itemData?.switchEnabled != true) {
+                            Toast.makeText(itemView.context, "On", Toast.LENGTH_SHORT).show()
+
+                        } else {
+                            Toast.makeText(itemView.context, "OFF", Toast.LENGTH_SHORT).show()
+
+                        }
+
                     } else if (itemData?.key == Constants.SOUND) {
-                        val mediaPlayer: MediaPlayer = MediaPlayer.create(itemView.context, R.raw.musicmp3)
+                        val mediaPlayer: MediaPlayer =
+                            MediaPlayer.create(itemView.context, R.raw.musicmp3)
                         if (itemData?.switchEnabled != true) {
                             Toast.makeText(itemView.context, "On", Toast.LENGTH_SHORT)
                                 .show()
@@ -81,9 +109,15 @@ class SettingsAdapter(val viewModel: SettingsViewModel) :
                         }
 
                     } else if (itemData?.key == Constants.PRODUCT) {
+                        if (itemData?.switchEnabled != true) {
+                            Toast.makeText(itemView.context, "On", Toast.LENGTH_SHORT).show()
 
+                        } else {
+                            Toast.makeText(itemView.context, "OFF", Toast.LENGTH_SHORT).show()
+
+                        }
                     } else {
-
+                        Log.d("switchEnabled", "err")
                     }
 
                     viewModel.saveSettingKey(itemData?.key ?: "", itemData?.switchEnabled != true)

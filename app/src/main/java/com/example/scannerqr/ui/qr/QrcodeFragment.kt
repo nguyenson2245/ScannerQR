@@ -1,19 +1,11 @@
 package com.example.scanqr.ui.qr
 
 import android.Manifest
-import android.content.Intent
-import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import android.net.Uri
 import android.os.Bundle
-import android.provider.Settings
 import android.view.LayoutInflater
-import android.view.View
 import android.widget.SeekBar
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
-import com.example.scannerqr.application.MainApp
 import com.example.scannerqr.base.BaseFragmentWithBinding
 import com.example.scannerqr.custom.ScannerView
 import com.example.scannerqr.ui.MainViewModel
@@ -34,9 +26,7 @@ import com.google.zxing.RGBLuminanceSource
 import com.google.zxing.Reader
 import com.google.zxing.Result
 import com.google.zxing.common.HybridBinarizer
-import com.permissionx.guolindev.PermissionX
 import com.scan.scannerqr.databinding.FragmentQrcodeBinding
-
 
 class QrcodeFragment : BaseFragmentWithBinding<FragmentQrcodeBinding>(), ScannerView.ResultHandler {
 
@@ -75,7 +65,6 @@ class QrcodeFragment : BaseFragmentWithBinding<FragmentQrcodeBinding>(), Scanner
                 binding.scannerView.resumeCameraPreview(this)
 
             }
-
         }
     }
 
@@ -104,7 +93,6 @@ class QrcodeFragment : BaseFragmentWithBinding<FragmentQrcodeBinding>(), Scanner
                     toast("showDialog")
                 }
             }
-
     }
 
     override fun onRequestPermissionsResult(
@@ -197,8 +185,6 @@ class QrcodeFragment : BaseFragmentWithBinding<FragmentQrcodeBinding>(), Scanner
         bundle.putBoolean("isBack", true)
         viewModel.isPlayCamera.postValue(false)
         openFragment(DetailFragment::class.java, bundle, true)
-
-
     }
 
     override fun onPause() {

@@ -30,6 +30,7 @@ class HistoryAdapter(val click: (History) -> Unit) :
             }
         }
     }
+
     override fun getItemLayoutResource(viewType: Int): Int {
         return R.layout.item_history
     }

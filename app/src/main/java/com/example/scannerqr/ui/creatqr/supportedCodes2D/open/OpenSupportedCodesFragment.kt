@@ -45,7 +45,6 @@ class OpenSupportedCodesFragment : BaseFragmentWithBinding<FragmentOpenSupported
 
                     } else {
                         binding.edtTitle.error = null
-                        toast("ok")
                     }
                 }
 
@@ -58,7 +57,6 @@ class OpenSupportedCodesFragment : BaseFragmentWithBinding<FragmentOpenSupported
                         binding.edtTitle.error = "Text input only!"
                     } else {
                         binding.edtTitle.error = null
-                        toast("ok")
                     }
                 }
 
@@ -71,7 +69,6 @@ class OpenSupportedCodesFragment : BaseFragmentWithBinding<FragmentOpenSupported
                         binding.edtTitle.error = "Text without special characters!"
                     } else {
                         binding.edtTitle.error = null
-                        toast("ok")
                     }
                 }
 
@@ -87,7 +84,6 @@ class OpenSupportedCodesFragment : BaseFragmentWithBinding<FragmentOpenSupported
                             "The input must contain exactly 12 digits followed by 1 digit for checksum!"
                     } else {
                         binding.edtTitle.error = null
-                        toast("ok")
                     }
                 }
 
@@ -138,7 +134,6 @@ class OpenSupportedCodesFragment : BaseFragmentWithBinding<FragmentOpenSupported
                         binding.edtTitle.error = "Text without special characters!"
                     } else {
                         binding.edtTitle.error = null
-                        toast("ok")
                     }
                 }
 
@@ -150,7 +145,6 @@ class OpenSupportedCodesFragment : BaseFragmentWithBinding<FragmentOpenSupported
                         binding.edtTitle.error = "Text without special characters!"
                     } else {
                         binding.edtTitle.error = null
-                        toast("ok")
                     }
                 }
 
@@ -162,7 +156,6 @@ class OpenSupportedCodesFragment : BaseFragmentWithBinding<FragmentOpenSupported
                         binding.edtTitle.error = "Text without special characters!"
                     } else {
                         binding.edtTitle.error = null
-                        toast("ok")
                     }
                 }
 
@@ -177,7 +170,6 @@ class OpenSupportedCodesFragment : BaseFragmentWithBinding<FragmentOpenSupported
                         binding.edtTitle.error = "The input must contain exactly 8 digits!"
                     } else {
                         binding.edtTitle.error = null
-
                     }
                 }
 

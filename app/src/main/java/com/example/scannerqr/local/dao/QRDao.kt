@@ -16,7 +16,7 @@ interface QRDao {
     suspend fun insertAll(vararg collect: History)
 
     @Delete
-    suspend fun delete(collect: History)
+    suspend fun delete(vararg collect: History)
 
     @Query("SELECT * FROM history")
     fun getLiveDataHistory(): LiveData<List<History>>
