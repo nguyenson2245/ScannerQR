@@ -7,7 +7,6 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
 import android.widget.DatePicker
-import android.widget.Toast
 import com.example.scannerqr.base.BaseFragmentWithBinding
 import com.example.scannerqr.ui.dialog.DialogCreateQr
 import com.example.socialmedia.base.utils.click
@@ -67,31 +66,30 @@ class EventFragment : BaseFragmentWithBinding<FragmentEventBinding>() {
     private fun showDayAndTime() {
 
         binding.txtStartDay.setOnClickListener {
-            showDatePicker()
+            showDatePickerStart()
         }
 
         binding.txtEndDay.setOnClickListener {
-            showDatePicker()
+            showDatePickerEnd()
         }
 
         binding.txtStartTime.setOnClickListener {
-            showTimePicker()
+            showTimePickerStart()
         }
 
         binding.txtEndTime.setOnClickListener {
-            showTimePicker()
+            showTimePickerEnd()
         }
 
     }
 
 
-    private fun showDatePicker() {
-        val dateSetListener =
-            DatePickerDialog.OnDateSetListener { _: DatePicker, year: Int, monthOfYear: Int, dayOfMonth: Int ->
+    private fun showDatePickerStart() {
+        val dateSetListener = DatePickerDialog.OnDateSetListener { _: DatePicker, year: Int, monthOfYear: Int, dayOfMonth: Int ->
                 calendar.set(Calendar.YEAR, year)
                 calendar.set(Calendar.MONTH, monthOfYear)
                 calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-                updateDate()
+                startDay()
             }
 
         DatePickerDialog(
@@ -103,14 +101,37 @@ class EventFragment : BaseFragmentWithBinding<FragmentEventBinding>() {
         ).show()
     }
 
-    private fun updateDate() {
+    private fun showDatePickerEnd() {
+        val dateSetListener = DatePickerDialog.OnDateSetListener { _: DatePicker, year: Int, monthOfYear: Int, dayOfMonth: Int ->
+            calendar.set(Calendar.YEAR, year)
+            calendar.set(Calendar.MONTH, monthOfYear)
+            calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+            endDay()
+        }
+
+        DatePickerDialog(
+            requireContext(),
+            dateSetListener,
+            calendar.get(Calendar.YEAR),
+            calendar.get(Calendar.MONTH),
+            calendar.get(Calendar.DAY_OF_MONTH)
+        ).show()
+    }
+
+    private fun startDay() {
         val myFormat = "dd/MM/yyyy"
         val sdf = SimpleDateFormat(myFormat, Locale.getDefault())
         binding.txtStartDay.text = sdf.format(calendar.time)
     }
 
+    private fun endDay() {
+        val myFormat = "dd/MM/yyyy"
+        val sdf = SimpleDateFormat(myFormat, Locale.getDefault())
+        binding.txtEndDay.text = sdf.format(calendar.time)
+    }
 
-    private fun showTimePicker() {
+
+    private fun showTimePickerStart() {
         val hourOfDay = 23
         val minute = 55
         val is24HourView = true
@@ -127,24 +148,22 @@ class EventFragment : BaseFragmentWithBinding<FragmentEventBinding>() {
         _timePickerDialog?.show()
     }
 
-//    private fun showTimePicker() {
-//        val timeSetListener =
-//            OnTimeSetListener { view, hourOfDay, minute ->
-//                calendar[Calendar.HOUR_OF_DAY] = hourOfDay
-//                calendar[Calendar.MINUTE] = minute
-//                updateTime()
-//            }
-//        TimePickerDialog(
-//            requireContext(), timeSetListener,
-//            calendar[Calendar.HOUR_OF_DAY],
-//            calendar[Calendar.MINUTE],
-//            true
-//        ).show()
-//    }
-//
-//    private fun updateTime() {
-//        val myFormat = "HH:mm"
-//        val sdf = SimpleDateFormat(myFormat, Locale.getDefault())
-//        binding.txtStartTime.text = sdf.format(calendar.time)
-//    }
+
+    private fun showTimePickerEnd() {
+        val hourOfDay = 23
+        val minute = 55
+        val is24HourView = true
+
+        _timePickerDialog = TimePickerDialog(requireContext(), R.style.Theme_Holo_Light_Dialog, { view, hourOfDay, minute ->
+            binding.txtEndTime.text = "$hourOfDay:$minute"
+        },
+            hourOfDay,
+            minute,
+            is24HourView
+        )
+        _timePickerDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        _timePickerDialog?.setTitle("Hour : Minute")
+        _timePickerDialog?.show()
+    }
+
 }

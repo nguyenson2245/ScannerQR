@@ -175,7 +175,11 @@ class QrcodeFragment : BaseFragmentWithBinding<FragmentQrcodeBinding>(), Scanner
 
         }
         binding.scanImages.click {
-            toast("scan Images")
+            openFragment(GalleryImageFragment::class.java, null, true)
+        }
+
+        binding.btnStore.click {
+            toast("Store")
         }
     }
 
