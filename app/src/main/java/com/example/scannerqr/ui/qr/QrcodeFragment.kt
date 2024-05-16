@@ -201,32 +201,13 @@ class QrcodeFragment : BaseFragmentWithBinding<FragmentQrcodeBinding>(), Scanner
             contents.startsWith("http://") || contents.startsWith("https://") -> TypeValue.TYPE_WEB
             contents.startsWith("BEGIN:VEVENT") -> TypeValue.TYPE_EVENT
             contents.startsWith("mailto:") -> TypeValue.TYPE_MAIL
-            contents.startsWith("SMSTO:") -> TypeValue.TYPE_SMS
+            contents.startsWith("smsto:") -> TypeValue.TYPE_SMS
             else -> TypeValue.TYPE_CONTENT
         }
     }
 
 
-    // Phân tích mã QR Wi-Fi
-    private fun parseWifiQR(contents: String): Map<String, String>? {
-        if (!contents.startsWith("WIFI:")) return null
 
-        val data = mutableMapOf<String, String>()
-        val fields = contents.substring(5).split(";")
-
-        for (field in fields) {
-            val parts = field.split(":")
-            if (parts.size == 2) {
-                when (parts[0]) {
-                    "T" -> data["type"] = parts[1]
-                    "S" -> data["SSID"] = parts[1]
-                    "P" -> data["password"] = parts[1]
-                    "H" -> data["hidden"] = parts[1]
-                }
-            }
-        }
-        return data
-    }
 
     override fun onPause() {
         binding.scannerView.flash = false

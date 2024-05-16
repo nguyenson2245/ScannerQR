@@ -1,6 +1,8 @@
 package com.example.scannerqr.ui.qr.detail
 
+import android.content.ContentValues.TAG
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.scannerqr.model.Detail
@@ -14,11 +16,11 @@ import kotlinx.coroutines.launch
 
 class DetailViewModel : BaseViewModel() {
     private val listDetails: ArrayList<Detail> = arrayListOf()
-    private val repository= Repository()
+    private val repository = Repository()
     val listDetailsLiveData: MutableLiveData<ArrayList<Detail>> = MutableLiveData()
 
 
-    fun initDataApp(type: TypeValue,value: String) {
+    fun initDataApp(type: TypeValue, value: String) {
         listDetails.add(Detail("See code", R.drawable.seecode))
         when (type) {
             TypeValue.TYPE_WIFI -> {
@@ -27,13 +29,13 @@ class DetailViewModel : BaseViewModel() {
                 listDetails.add(Detail("Copy the network name", R.drawable.copypw))
             }
 
-            TypeValue.TYPE_VCARD-> {
+            TypeValue.TYPE_VCARD -> {
                 listDetails.add(Detail("Open the website", R.drawable.openweb))
-                listDetails.add(Detail("Dial $value", R.drawable.phone))
+                listDetails.add(Detail("Dial ${getTelephoneFromVCard(value)}", R.drawable.phone))
                 listDetails.add(Detail("Add contact", R.drawable.ic_contact))
             }
 
-           TypeValue.TYPE_WEB -> {
+            TypeValue.TYPE_WEB -> {
                 listDetails.add(Detail("Search for products on the web", R.drawable.web))
                 listDetails.add(Detail("Search on Amazon.com", R.drawable.amazon))
                 listDetails.add(Detail(" Search on eBay.com", R.drawable.ic_share))
@@ -47,29 +49,39 @@ class DetailViewModel : BaseViewModel() {
                 listDetails.add(Detail("Add to calendar", R.drawable.add2))
             }
 
-            TypeValue.TYPE_MAIL -> TODO()
-            TypeValue.TYPE_SMS -> TODO()
+            TypeValue.TYPE_MAIL -> {
+
+            }
+            TypeValue.TYPE_SMS -> {
+
+            }
         }
         listDetailsLiveData.postValue(listDetails)
     }
-    fun addHistory(context: Context,history: History){
+
+    fun addHistory(context: Context, history: History) {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.addHistory(context,history)
-        }
-    }
-    fun getValueType(type: TypeValue , content : String) : String {
-    return  when ( type){
-            TypeValue.TYPE_WIFI ->TODO()
-            TypeValue.TYPE_CONTENT -> TODO()
-            TypeValue.TYPE_VCARD -> TODO()
-            TypeValue.TYPE_EVENT -> TODO()
-            TypeValue.TYPE_WEB -> TODO()
-            TypeValue.TYPE_MAIL -> content
-            TypeValue.TYPE_SMS ->  content
+            repository.addHistory(context, history)
         }
     }
 
-    // Phân tích mã QR Wi-Fi
+    private fun getTelephoneFromVCard(vCardData: String): String? {
+        val parsedData = parseVCard(vCardData)
+        return parsedData["Telephone"]
+    }
+
+    fun getValueType(type: TypeValue, content: String): String {
+        return when (type) {
+            TypeValue.TYPE_WIFI -> mapToString(parseWifiQR(content))
+            TypeValue.TYPE_CONTENT -> content
+            TypeValue.TYPE_VCARD -> mapToString(parseVCard(content))
+            TypeValue.TYPE_EVENT -> mapToString(parseEvent(content))
+            TypeValue.TYPE_WEB -> mapToString(parseURL(content))
+            TypeValue.TYPE_MAIL -> mapToString(parseEmail(content))
+            TypeValue.TYPE_SMS -> mapToString(parseSMS(content))
+        }
+    }
+
     private fun parseWifiQR(contents: String): Map<String, String> {
         val data = mutableMapOf<String, String>()
         val fields = contents.substring(5).split(";")
@@ -87,7 +99,6 @@ class DetailViewModel : BaseViewModel() {
         }
         return data
     }
-
 
 
     private fun parseURL(contents: String): Map<String, String> {
@@ -113,6 +124,7 @@ class DetailViewModel : BaseViewModel() {
         }
         return data
     }
+
     fun parseVCard(vCardData: String): Map<String, String> {
         val vCardFields = mutableMapOf<String, String>()
 
@@ -137,7 +149,6 @@ class DetailViewModel : BaseViewModel() {
     }
 
 
-
     private fun parseEmail(contents: String): Map<String, String> {
         return mapOf("Email" to contents.substring(7))
     }
@@ -157,9 +168,17 @@ class DetailViewModel : BaseViewModel() {
     }
 
 
-    fun deleteHistory(context: Context,history: History){
+    fun deleteHistory(context: Context, history: History) {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.deleteHistory(context,history)
+            repository.deleteHistory(context, history)
         }
+    }
+
+    fun mapToString(map: Map<String, String>): String {
+        val stringBuilder = StringBuilder()
+        for ((key, value) in map) {
+            stringBuilder.append("$key: $value\n")
+        }
+        return stringBuilder.toString()
     }
 }

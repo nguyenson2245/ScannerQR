@@ -34,19 +34,13 @@ class SMSFragment : BaseFragmentWithBinding<FragmentSMSBinding>() {
 
         binding.save.click {
             val editPhoneNumber = binding.editPhoneNumber.text.trim().toString()
-
             if (editPhoneNumber.isNotEmpty() && binding.editPhoneNumber.error == null) {
-                context?.let { it1 ->
-                    context?.let {
-                        val uri =
-                            ("mailto:${binding.editPhoneNumber.text}" + "?subject=" + urlEncode(
-                                binding.editPhoneNumber.text.toString()
-                            )) + "&body=" + urlEncode(
-                                binding.editMessage.text.toString()
-                            )
-                        context?.let { DialogCreateQr(it, uri, BarcodeFormat.QR_CODE).show() }
-
-                    }
+                context?.let {
+                    DialogCreateQr(
+                        it,
+                        createSMSData(editPhoneNumber, binding.editMessage.text.toString()),
+                        BarcodeFormat.QR_CODE
+                    ).show()
                 }
             } else {
                 if (editPhoneNumber.isEmpty())
@@ -55,13 +49,11 @@ class SMSFragment : BaseFragmentWithBinding<FragmentSMSBinding>() {
         }
     }
 
-    private fun urlEncode(value: String): String {
-        return try {
-            URLEncoder.encode(value, "UTF-8")
-        } catch (e: UnsupportedEncodingException) {
-            e.printStackTrace()
-            value
-        }
+    private fun createSMSData(phoneNumber: String, message: String): String {
+        val smsUri = "smsto:$phoneNumber"
+        val encodedMessage = URLEncoder.encode(message, "UTF-8")
+        return "$smsUri:$encodedMessage"
     }
+
 
 }

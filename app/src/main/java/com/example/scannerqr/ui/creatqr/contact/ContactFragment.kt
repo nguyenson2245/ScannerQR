@@ -116,19 +116,22 @@ class ContactFragment : BaseFragmentWithBinding<FragmentContactBinding>() {
             val fullName = binding.fullName.text.trim().toString()
 
 
-            if (fullName.isNotEmpty()&&
+            if (fullName.isNotEmpty() &&
                 binding.fullName.error == null
 
             ) {
                 context?.let { it1 ->
                     val vCardData = """
     BEGIN:VCARD
-    VERSION:3.0
-    N:${binding.fullName.text};${binding.title.text};;;
-    ORG:${binding.company.text}
-    TEL:${binding.phoneNumber.text}
-    EMAIL:${binding.email.text}
-    ADR:${binding.address.text};;;;${binding.city.text};${binding.region.text};${binding.nation.text};${binding.zipCode.text}
+    Full name:${binding.fullName.text};${binding.title.text}
+    Company:${binding.company.text}
+    Telephone:${binding.phoneNumber.text}
+    Email:${binding.email.text}
+    Address:${binding.address.text}
+    City:${binding.city.text}
+    Region:${binding.region.text}
+    Nation${binding.nation.text}
+    ZipL${binding.zipCode.text}
     URL:${binding.web.text}
     END:VCARD
 """.trimIndent()
