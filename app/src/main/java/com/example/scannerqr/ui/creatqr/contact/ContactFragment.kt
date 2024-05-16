@@ -138,7 +138,7 @@ class ContactFragment : BaseFragmentWithBinding<FragmentContactBinding>() {
 
                     context?.let { it1 ->
                         DialogCreateQr(
-                            it1,
+                            this@ContactFragment,
                             vCardData,
                             BarcodeFormat.QR_CODE
                         ) {

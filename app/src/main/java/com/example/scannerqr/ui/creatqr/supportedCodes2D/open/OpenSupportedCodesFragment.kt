@@ -1,6 +1,5 @@
 package com.example.scannerqr.ui.creatqr.supportedCodes2D.open
 
-import android.Manifest
 import android.text.InputFilter
 import android.text.InputType
 import android.util.Log
@@ -206,17 +205,11 @@ class OpenSupportedCodesFragment : BaseFragmentWithBinding<FragmentOpenSupported
         binding.save.click {
             val input = binding.edtTitle.text.trim().toString()
             if (input.isNotEmpty() && binding.edtTitle.error == null) {
-                context?.let { it1 ->
                     DialogCreateQr(
-                        it1,
+                        this,
                         binding.edtTitle.text.toString(),
                         title
-                    ) {
-                        requestPermissions(
-                            arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 1
-                        )
-                    }.show()
-                }
+                    ).show()
             } else
                 if (input.isEmpty())
                     binding.edtTitle.error = "not value"

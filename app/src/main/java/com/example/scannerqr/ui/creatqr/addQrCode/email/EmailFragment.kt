@@ -1,6 +1,5 @@
 package com.example.scannerqr.ui.creatqr.addQrCode.email
 
-import android.Manifest
 import android.view.LayoutInflater
 import com.example.scannerqr.base.BaseFragmentWithBinding
 import com.example.scannerqr.ui.dialog.DialogCreateQr
@@ -37,9 +36,7 @@ class EmailFragment : BaseFragmentWithBinding<FragmentEmailBinding>() {
                             ("mailto:${binding.editEmail.text}" + "?subject=" + urlEncode(binding.editSubject.text.toString())) + "&body=" + urlEncode(
                                 binding.editMessage.text.toString()
                             )
-                        context?.let { DialogCreateQr(it, uri, BarcodeFormat.QR_CODE, {
-                            requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),1)
-                        }).show() }
+                        context?.let { DialogCreateQr(this@EmailFragment, uri, BarcodeFormat.QR_CODE).show() }
 
                     }
                 }

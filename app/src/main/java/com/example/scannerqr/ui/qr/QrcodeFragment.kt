@@ -2,12 +2,16 @@ package com.example.scanqr.ui.qr
 
 import android.Manifest
 import android.graphics.Bitmap
+import android.media.MediaPlayer
 import android.os.Bundle
+import android.provider.SyncStateContract.Constants
 import android.view.LayoutInflater
 import android.widget.SeekBar
+import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import com.example.scannerqr.base.BaseFragmentWithBinding
 import com.example.scannerqr.custom.ScannerView
+import com.example.scannerqr.local.Preferences
 import com.example.scannerqr.ui.MainViewModel
 import com.example.scannerqr.ui.qr.detail.DetailFragment
 import com.example.scannerqr.ui.qr.help.HelpAndFeedbackFragment
@@ -26,6 +30,7 @@ import com.google.zxing.RGBLuminanceSource
 import com.google.zxing.Reader
 import com.google.zxing.Result
 import com.google.zxing.common.HybridBinarizer
+import com.scan.scannerqr.R
 import com.scan.scannerqr.databinding.FragmentQrcodeBinding
 
 class QrcodeFragment : BaseFragmentWithBinding<FragmentQrcodeBinding>(), ScannerView.ResultHandler {
@@ -36,11 +41,13 @@ class QrcodeFragment : BaseFragmentWithBinding<FragmentQrcodeBinding>(), Scanner
 
     private val viewModel: MainViewModel by activityViewModels()
     private var flashLightStatus: Boolean = false
+    private  var preferences : Preferences ? = null
     override fun getViewBinding(inflater: LayoutInflater): FragmentQrcodeBinding {
         return FragmentQrcodeBinding.inflate(inflater)
     }
 
     override fun init() {
+        preferences = context?.let { Preferences.getInstance(it) }
         checkPermissionX()
     }
 
@@ -184,8 +191,13 @@ class QrcodeFragment : BaseFragmentWithBinding<FragmentQrcodeBinding>(), Scanner
     }
 
     override fun handleResult(rawResult: Result?) {
+        if (preferences?.getBoolean(com.example.scannerqr.ui.utils.Constants.SOUND) == true){
+            val mediaPlayer: MediaPlayer =
+                MediaPlayer.create(context, R.raw.musicmp3)
+            mediaPlayer.start();
+        }
+        if (preferences?.getBoolean(com.example.scannerqr.ui.utils.Constants.))
         val contents = rawResult.toString()
-
         val bundle = Bundle()
         bundle.putString("value", contents)
         bundle.putBoolean("isBack", true)

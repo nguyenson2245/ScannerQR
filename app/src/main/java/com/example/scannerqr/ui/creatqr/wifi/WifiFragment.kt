@@ -1,6 +1,5 @@
 package com.example.scannerqr.ui.creatqr.wifi
 
-import android.Manifest
 import android.view.LayoutInflater
 import com.example.scannerqr.base.BaseFragmentWithBinding
 import com.example.scannerqr.popup.CustomPopup
@@ -33,18 +32,14 @@ class WifiFragment : BaseFragmentWithBinding<FragmentWifiBinding>() {
                 context?.let { it1 ->
 
                         DialogCreateQr(
-                            it1,
+                            this@WifiFragment,
                             buildWifiString(
                                 binding.edtNetworkName.text.toString(),
                                 binding.txtWPA2.text.toString(),
                                 binding.edtPassword.text.toString()
                             ),
                             BarcodeFormat.QR_CODE
-                        ) {
-                            requestPermissions(
-                                arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 1
-                            )
-                        }.show()
+                        ).show()
                 }
             } else{
                 if (input.isEmpty())
