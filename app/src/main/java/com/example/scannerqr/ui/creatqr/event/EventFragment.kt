@@ -1,5 +1,6 @@
 package com.example.scannerqr.ui.creatqr.event
 
+import android.Manifest
 import android.R
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
@@ -70,7 +71,11 @@ class EventFragment : BaseFragmentWithBinding<FragmentEventBinding>() {
                                 binding.edtDescribe.text.toString()
                             ),
                             BarcodeFormat.QR_CODE
-                        ).show()
+                        ) {
+                            requestPermissions(
+                                arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 1
+                            )
+                        }.show()
                     }
                 }
             } else{

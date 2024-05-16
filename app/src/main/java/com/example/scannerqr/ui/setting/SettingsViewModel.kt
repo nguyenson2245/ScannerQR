@@ -64,6 +64,14 @@ class SettingsViewModel : BaseViewModel() {
 
         listSettings.add(
             Settings(
+                title = "Vibrate",
+                showButtonSwitch = true,
+                switchEnabled = preferences.getBoolean(Constants.VIBRATE) ?: false,   key = Constants.VIBRATE
+            )
+        )
+
+        listSettings.add(
+            Settings(
                 title = "Copy to clipboard",
                 showButtonSwitch = true,
                 switchEnabled = preferences.getBoolean(Constants.COPY) ?: false,   key = Constants.COPY

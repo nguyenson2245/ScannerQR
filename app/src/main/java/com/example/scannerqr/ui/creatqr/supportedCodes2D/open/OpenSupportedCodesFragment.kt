@@ -1,5 +1,6 @@
 package com.example.scannerqr.ui.creatqr.supportedCodes2D.open
 
+import android.Manifest
 import android.text.InputFilter
 import android.text.InputType
 import android.util.Log
@@ -210,7 +211,11 @@ class OpenSupportedCodesFragment : BaseFragmentWithBinding<FragmentOpenSupported
                         it1,
                         binding.edtTitle.text.toString(),
                         title
-                    ).show()
+                    ) {
+                        requestPermissions(
+                            arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 1
+                        )
+                    }.show()
                 }
             } else
                 if (input.isEmpty())

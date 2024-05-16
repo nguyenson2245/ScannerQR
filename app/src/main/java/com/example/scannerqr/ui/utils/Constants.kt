@@ -8,5 +8,6 @@ object Constants {
     const val CONFIRM = "confirm"
     const val SOUND = "sound"
     const val COPY = "Copy"
+    const val VIBRATE = "vibrate"
     const val PRODUCT = "product"
 }

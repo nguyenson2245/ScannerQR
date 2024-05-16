@@ -2,7 +2,6 @@ package com.example.scannerqr.ui.dialog
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.content.pm.PackageManager
@@ -10,16 +9,11 @@ import android.graphics.Bitmap
 import android.os.Bundle
 import android.os.Environment
 import android.view.LayoutInflater
-import android.widget.Toast
 import androidx.core.app.ActivityCompat
-import androidx.core.app.ActivityCompat.requestPermissions
+import androidx.core.app.ActivityCompat.OnRequestPermissionsResultCallback
 import androidx.core.content.ContextCompat
-import com.example.scannerqr.base.BaseFragmentWithBinding
-import com.example.socialmedia.base.utils.checkPermission
 import com.example.socialmedia.base.utils.click
 import com.example.socialmedia.base.utils.dpToPx
-import com.example.socialmedia.base.utils.gone
-import com.example.socialmedia.base.utils.visible
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.MultiFormatWriter
 import com.google.zxing.common.BitMatrix
@@ -31,31 +25,51 @@ import java.io.IOException
 import java.io.OutputStream
 
 
-class DialogCreateQr(val fragment: BaseFragmentWithBinding<*>, val inputValue: String, val type: BarcodeFormat) : Dialog(fragment.requireContext()) {
+class DialogCreateQr(
+    context: Context,
+    val inputValue: String,
+    val type: BarcodeFormat,
+    val onRequestPermissionsResultCallback: () -> Unit
+) : Dialog(context) {
     private lateinit var binding: DialogCreatQrBinding
+
     @SuppressLint("UseCompatLoadingForDrawables")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         window?.setBackgroundDrawable(context.getDrawable(R.drawable.bg_dialog))
         binding = DialogCreatQrBinding.inflate(LayoutInflater.from(context))
         setContentView(binding.root)
+        setCancelable(true)
         init()
     }
 
     private fun init() {
-
+        checkPermission()
         binding.imageQr.setImageBitmap(createImage(inputValue, type))
 
+        showSaveImageDialog()
+    }
+
+    fun showSaveImageDialog() {
         binding.btnSave.click {
-            checkPermission(context)
-            val bitmap = createImage(inputValue, type)
-            saveBitmapToStorage(context, bitmap, "${System.currentTimeMillis()}qrcode.png")
-            dismiss()
+            if (checkPermission()) {
+                val bitmap = createImage(inputValue, type)
+                saveBitmapToStorage(context, bitmap, "${System.currentTimeMillis()}qrcode.png")
+            } else {
+                onRequestPermissionsResultCallback.invoke()
+            }
         }
 
         binding.btnCancle.click {
             dismiss()
         }
+    }
+
+    private fun checkPermission(): Boolean {
+        return ContextCompat.checkSelfPermission(
+            context,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+        ) == PackageManager.PERMISSION_GRANTED
     }
 
     fun createImage(message: String?, type: BarcodeFormat): Bitmap {
@@ -170,8 +184,9 @@ class DialogCreateQr(val fragment: BaseFragmentWithBinding<*>, val inputValue: S
     }
 
 
-    fun saveBitmapToStorage(context: Context, bitmap: Bitmap, fileName: String) {
-        val directory = File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES), "MyImages")
+    private fun saveBitmapToStorage(context: Context, bitmap: Bitmap, fileName: String) {
+        val directory =
+            File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES), "MyImages")
         if (!directory.exists()) {
             directory.mkdirs()
         }
@@ -189,13 +204,6 @@ class DialogCreateQr(val fragment: BaseFragmentWithBinding<*>, val inputValue: S
         }
     }
 
-    fun checkPermission(){
-        if (ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(fragment.requireActivity(), arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 100)
-        } else {
-            Toast.makeText(, "", Toast.LENGTH_SHORT).show()
-        }
-    }
-
 
 }
+

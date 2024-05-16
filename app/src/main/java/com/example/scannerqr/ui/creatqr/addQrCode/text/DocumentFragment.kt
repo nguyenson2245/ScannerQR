@@ -1,5 +1,6 @@
 package com.example.scannerqr.ui.creatqr.addQrCode.text
 
+import android.Manifest
 import android.view.LayoutInflater
 import com.example.scannerqr.base.BaseFragmentWithBinding
 import com.example.scannerqr.ui.dialog.DialogCreateQr
@@ -37,7 +38,12 @@ class DocumentFragment : BaseFragmentWithBinding<FragmentDocumentBinding>() {
                             it,
                             binding.editText.text.toString(),
                             BarcodeFormat.QR_CODE
-                        ).show()
+                        ) {
+                            requestPermissions(
+                                arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                                1
+                            )
+                        }.show()
                     }
                 }
             } else{
@@ -49,5 +55,22 @@ class DocumentFragment : BaseFragmentWithBinding<FragmentDocumentBinding>() {
 
 
     }
+
+//    override fun onRequestPermissionsResult(
+//        requestCode: Int,
+//        permissions: Array<out String>,
+//        grantResults: IntArray
+//    ) {
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+//        if (requestCode == DialogCreateQr.REQUEST_CODE_STORAGE_PERMISSION) {
+//            if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                initAction()
+//            } else {
+//
+//            }
+//        }
+//
+//    }
+
 
 }

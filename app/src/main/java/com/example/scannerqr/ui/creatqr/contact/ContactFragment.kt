@@ -141,7 +141,10 @@ class ContactFragment : BaseFragmentWithBinding<FragmentContactBinding>() {
                             it1,
                             vCardData,
                             BarcodeFormat.QR_CODE
-                        ).show()
+                        ) {
+                            requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 1
+                            )
+                        }.show()
                     }
 
                 }
