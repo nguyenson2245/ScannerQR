@@ -30,9 +30,9 @@ class WifiFragment : BaseFragmentWithBinding<FragmentWifiBinding>() {
             val input = binding.edtNetworkName.text.trim().toString()
             if (input.isNotEmpty() && binding.edtNetworkName.error == null) {
                 context?.let { it1 ->
-                    context?.let {
+
                         DialogCreateQr(
-                            it,
+                            this@WifiFragment,
                             buildWifiString(
                                 binding.edtNetworkName.text.toString(),
                                 binding.txtWPA2.text.toString(),

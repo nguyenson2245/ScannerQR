@@ -35,7 +35,6 @@ class SMSFragment : BaseFragmentWithBinding<FragmentSMSBinding>() {
         binding.save.click {
             val editPhoneNumber = binding.editPhoneNumber.text.trim().toString()
 
-
             if (editPhoneNumber.isNotEmpty() && binding.editPhoneNumber.error == null) {
                 context?.let { it1 ->
                     context?.let {

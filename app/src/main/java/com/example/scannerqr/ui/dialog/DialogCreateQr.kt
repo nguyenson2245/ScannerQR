@@ -1,21 +1,39 @@
 package com.example.scannerqr.ui.dialog
 
+import android.Manifest
+import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.Dialog
 import android.content.Context
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.os.Bundle
+import android.os.Environment
 import android.view.LayoutInflater
+import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.app.ActivityCompat.requestPermissions
+import androidx.core.content.ContextCompat
+import com.example.scannerqr.base.BaseFragmentWithBinding
+import com.example.socialmedia.base.utils.checkPermission
 import com.example.socialmedia.base.utils.click
 import com.example.socialmedia.base.utils.dpToPx
+import com.example.socialmedia.base.utils.gone
+import com.example.socialmedia.base.utils.visible
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.MultiFormatWriter
 import com.google.zxing.common.BitMatrix
 import com.scan.scannerqr.R
 import com.scan.scannerqr.databinding.DialogCreatQrBinding
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
+import java.io.OutputStream
 
 
-class DialogCreateQr(context: Context, val inputValue: String, val type: BarcodeFormat) : Dialog(context) {
+class DialogCreateQr(val fragment: BaseFragmentWithBinding<*>, val inputValue: String, val type: BarcodeFormat) : Dialog(fragment.requireContext()) {
     private lateinit var binding: DialogCreatQrBinding
+    @SuppressLint("UseCompatLoadingForDrawables")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         window?.setBackgroundDrawable(context.getDrawable(R.drawable.bg_dialog))
@@ -29,12 +47,15 @@ class DialogCreateQr(context: Context, val inputValue: String, val type: Barcode
         binding.imageQr.setImageBitmap(createImage(inputValue, type))
 
         binding.btnSave.click {
-            dismiss()
-        }
-        binding.btnCancle.click {
+            checkPermission(context)
+            val bitmap = createImage(inputValue, type)
+            saveBitmapToStorage(context, bitmap, "${System.currentTimeMillis()}qrcode.png")
             dismiss()
         }
 
+        binding.btnCancle.click {
+            dismiss()
+        }
     }
 
     fun createImage(message: String?, type: BarcodeFormat): Bitmap {
@@ -147,5 +168,34 @@ class DialogCreateQr(context: Context, val inputValue: String, val type: Barcode
         bitmap.setPixels(pixels, 0, width, 0, 0, width, height)
         return bitmap
     }
+
+
+    fun saveBitmapToStorage(context: Context, bitmap: Bitmap, fileName: String) {
+        val directory = File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES), "MyImages")
+        if (!directory.exists()) {
+            directory.mkdirs()
+        }
+
+        val file = File(directory, fileName)
+
+        var outputStream: OutputStream? = null
+        try {
+            outputStream = FileOutputStream(file)
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
+        } catch (e: IOException) {
+            e.printStackTrace()
+        } finally {
+            outputStream?.close()
+        }
+    }
+
+    fun checkPermission(){
+        if (ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(fragment.requireActivity(), arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 100)
+        } else {
+            Toast.makeText(, "", Toast.LENGTH_SHORT).show()
+        }
+    }
+
 
 }
