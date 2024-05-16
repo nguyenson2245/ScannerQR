@@ -66,7 +66,7 @@ class DetailFragment : BaseFragmentWithBinding<FragmentDetailBinding>() {
     override fun initData() {
 
         type?.let {
-            viewModel.initDataApp(it, value)
+            viewModel.initDataApp(requireContext(),it, value)
             binding.title.text = viewModel.getValueType(it, value)
         }
 

@@ -1,18 +1,27 @@
 package com.example.scanqr.ui.qr
 
 import android.Manifest
+import android.content.Context.VIBRATOR_SERVICE
 import android.graphics.Bitmap
 import android.media.MediaPlayer
+import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.os.VibrationEffect
+import android.os.Vibrator
 import android.view.LayoutInflater
 import android.widget.SeekBar
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import com.example.scannerqr.base.BaseFragmentWithBinding
 import com.example.scannerqr.custom.ScannerView
 import com.example.scannerqr.local.Preferences
+import com.example.scannerqr.model.History
 import com.example.scannerqr.ui.MainViewModel
 import com.example.scannerqr.ui.qr.detail.DetailFragment
 import com.example.scannerqr.ui.qr.help.HelpAndFeedbackFragment
+import com.example.scannerqr.ui.utils.Constants
 import com.example.socialmedia.base.utils.checkPermission
 import com.example.socialmedia.base.utils.click
 import com.example.socialmedia.base.utils.gone
@@ -30,6 +39,8 @@ import com.google.zxing.Result
 import com.google.zxing.common.HybridBinarizer
 import com.scan.scannerqr.R
 import com.scan.scannerqr.databinding.FragmentQrcodeBinding
+import java.text.SimpleDateFormat
+import java.util.Date
 
 class QrcodeFragment : BaseFragmentWithBinding<FragmentQrcodeBinding>(), ScannerView.ResultHandler {
 
@@ -38,6 +49,7 @@ class QrcodeFragment : BaseFragmentWithBinding<FragmentQrcodeBinding>(), Scanner
     }
 
     private val viewModel: MainViewModel by activityViewModels()
+    private val qrcodeViewModel: QrcodeViewModel by viewModels()
     private var flashLightStatus: Boolean = false
     private  var preferences : Preferences ? = null
     override fun getViewBinding(inflater: LayoutInflater): FragmentQrcodeBinding {
@@ -189,21 +201,47 @@ class QrcodeFragment : BaseFragmentWithBinding<FragmentQrcodeBinding>(), Scanner
     }
 
     override fun handleResult(rawResult: Result?) {
-        if (preferences?.getBoolean(com.example.scannerqr.ui.utils.Constants.SOUND) == true){
+        val contents = rawResult.toString()
+        if (preferences?.getBoolean(Constants.SOUND) == true) {
             val mediaPlayer: MediaPlayer =
                 MediaPlayer.create(context, R.raw.musicmp3)
             mediaPlayer.start();
         }
-        if (preferences?.getBoolean(com.example.scannerqr.ui.utils.Constants.VIBRATE) == true){
-
+        if (preferences?.getBoolean(Constants.VIBRATE) == true) {
+            shakeItBaby()
         }
-        val contents = rawResult.toString()
-        val bundle = Bundle()
-        bundle.putString("value", contents)
-        bundle.putBoolean("isBack", true)
-        bundle.putSerializable("type_value", checkTypeValue(contents))
-        viewModel.isPlayCamera.postValue(false)
-        openFragment(DetailFragment::class.java, bundle, true)
+        if (preferences?.getBoolean(Constants.SCAN) == true) {
+            qrcodeViewModel.addHistory(
+                requireContext(), History(
+                    0, contents, R.drawable.seecode, SimpleDateFormat("dd/MM/yyyy HH:mm").format(
+                        Date(System.currentTimeMillis())
+                    )
+                )
+            )
+            Handler(Looper.getMainLooper()).postDelayed({
+                binding.scannerView.resumeCameraPreview(this)
+            }, 50)
+        } else {
+            val bundle = Bundle()
+            bundle.putString("value", contents)
+            bundle.putBoolean("isBack", true)
+            bundle.putSerializable("type_value", checkTypeValue(contents))
+            viewModel.isPlayCamera.postValue(false)
+            openFragment(DetailFragment::class.java, bundle, true)
+        }
+    }
+
+    private fun shakeItBaby() {
+        if (Build.VERSION.SDK_INT >= 26) {
+            (context?.getSystemService(VIBRATOR_SERVICE) as Vibrator?)?.vibrate(
+                VibrationEffect.createOneShot(
+                    150,
+                    VibrationEffect.DEFAULT_AMPLITUDE
+                )
+            )
+        } else {
+            (context?.getSystemService(VIBRATOR_SERVICE) as Vibrator?)?.vibrate(150)
+        }
     }
 
     private fun checkTypeValue(contents: String): TypeValue {

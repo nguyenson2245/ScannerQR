@@ -1,8 +1,13 @@
 package com.example.scannerqr.ui.qr.detail
 
-import android.content.ContentValues.TAG
+import android.app.SearchManager
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Context
-import android.util.Log
+import android.content.Intent
+import android.net.Uri
+import android.provider.ContactsContract
+import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.scannerqr.model.Detail
@@ -14,39 +19,82 @@ import com.scan.scannerqr.R
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
+
 class DetailViewModel : BaseViewModel() {
     private val listDetails: ArrayList<Detail> = arrayListOf()
     private val repository = Repository()
     val listDetailsLiveData: MutableLiveData<ArrayList<Detail>> = MutableLiveData()
 
 
-    fun initDataApp(type: TypeValue, value: String) {
-        listDetails.add(Detail("See code", R.drawable.seecode))
+    fun initDataApp(context: Context, type: TypeValue, value: String) {
+//        listDetails.add(Detail("See code", R.drawable.seecode))
         when (type) {
             TypeValue.TYPE_WIFI -> {
-                listDetails.add(Detail("Wifi connection", R.drawable.wifi))
-                listDetails.add(Detail("Copy password", R.drawable.copypw))
-                listDetails.add(Detail("Copy the network name", R.drawable.copypw))
+                listDetails.add(Detail("Copy password", R.drawable.copypw, action = {
+                    val clipboardManager =
+                        context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager?
+                    val clipData = ClipData.newPlainText("label", getPasswordFromWifi(value))
+                    clipboardManager?.setPrimaryClip(clipData)
+                }))
+                listDetails.add(Detail("Copy the network name", R.drawable.copypw, action = {
+                    val clipboardManager =
+                        context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager?
+                    val clipData = ClipData.newPlainText("label", getNameFromWifi(value))
+                    clipboardManager?.setPrimaryClip(clipData)
+                }))
             }
 
             TypeValue.TYPE_VCARD -> {
-                listDetails.add(Detail("Open the website", R.drawable.openweb))
-                listDetails.add(Detail("Dial ${getTelephoneFromVCard(value)}", R.drawable.phone))
-                listDetails.add(Detail("Add contact", R.drawable.ic_contact))
+                listDetails.add(Detail("Open the website", R.drawable.openweb, action = {
+                    val intent = Intent(Intent.ACTION_WEB_SEARCH)
+                    intent.putExtra(
+                        SearchManager.QUERY,
+                        getValueType(type, value)
+                    ) // query contains search string
+
+                    context.startActivity(intent)
+                }))
+
+                listDetails.add(Detail("Dial ${getTelephoneFromVCard(value)}", R.drawable.phone, action = {
+                    val intent = Intent(Intent.ACTION_DIAL)
+                    intent.data = Uri.parse("tel:${getTelephoneFromVCard(value)}")
+                  context. startActivity(intent)
+                }))
+                listDetails.add(Detail("Add contact", R.drawable.ic_contact, action = {
+                    val intent = Intent(ContactsContract.Intents.Insert.ACTION)
+                        intent.type = ContactsContract.RawContacts.CONTENT_TYPE
+                        intent.putExtra(ContactsContract.Intents.Insert.NAME, getFullNameFormVCard(value))
+                        intent.putExtra(ContactsContract.Intents.Insert.PHONE, getTelephoneFromVCard(value))
+                        context.startActivity(intent)
+                }))
             }
 
             TypeValue.TYPE_WEB -> {
-                listDetails.add(Detail("Search for products on the web", R.drawable.web))
-                listDetails.add(Detail("Search on Amazon.com", R.drawable.amazon))
-                listDetails.add(Detail(" Search on eBay.com", R.drawable.ic_share))
+                listDetails.add(Detail("Search for products on the web", R.drawable.web, action = {
+                    val intent = Intent(Intent.ACTION_WEB_SEARCH)
+                    intent.putExtra(
+                        SearchManager.QUERY,
+                        getValueType(type, value)
+                    ) // query contains search string
+                    context.startActivity(intent)
+                }))
             }
 
             TypeValue.TYPE_CONTENT -> {
-                listDetails.add(Detail("Search the web", R.drawable.search))
+                listDetails.add(Detail("Search the web", R.drawable.search, action = {
+                    val intent = Intent(Intent.ACTION_WEB_SEARCH)
+                    intent.putExtra(
+                        SearchManager.QUERY,
+                        getValueType(type, value)
+                    ) // query contains search string
+                    context.startActivity(intent)
+                }))
             }
 
             TypeValue.TYPE_EVENT -> {
-                listDetails.add(Detail("Add to calendar", R.drawable.add2))
+                listDetails.add(Detail("Add to calendar", R.drawable.add2, action = {
+                    Toast.makeText(context, "The skill are improving",Toast.LENGTH_LONG).show()
+                }))
             }
 
             TypeValue.TYPE_MAIL -> {
@@ -68,6 +116,20 @@ class DetailViewModel : BaseViewModel() {
     private fun getTelephoneFromVCard(vCardData: String): String? {
         val parsedData = parseVCard(vCardData)
         return parsedData["Telephone"]
+    }
+
+    private fun getPasswordFromWifi(value: String): String? {
+        val parsedData = parseWifiQR(value)
+        return parsedData["Password"]
+    }
+    private fun getFullNameFormVCard(value : String): String? {
+        val parsedData = parseVCard(value)
+        return  parsedData["FullName"]
+    }
+
+    private fun getNameFromWifi(value: String): String? {
+        val parsedData = parseWifiQR(value)
+        return parsedData["SSID"]
     }
 
     fun getValueType(type: TypeValue, content: String): String {

@@ -125,7 +125,7 @@ class ContactFragment : BaseFragmentWithBinding<FragmentContactBinding>() {
                 context?.let { it1 ->
                     val vCardData = """
     BEGIN:VCARD
-    Full name:${binding.fullName.text};${binding.title.text}
+    FullName:${binding.fullName.text};${binding.title.text}
     Company:${binding.company.text}
     Telephone:${binding.phoneNumber.text}
     Email:${binding.email.text}

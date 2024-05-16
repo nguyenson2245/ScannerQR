@@ -34,7 +34,6 @@ class HistoryFragment : BaseFragmentWithBinding<FragmentHistoryBinding>() {
             bundle.putString("date", it.date)
             bundle.putSerializable("dataHistory", it)
             openFragment(DetailFragment::class.java, bundle, true)
-
         }
         binding.rvView.adapter = adapter
         binding.rvView.setHasFixedSize(true)
@@ -43,7 +42,7 @@ class HistoryFragment : BaseFragmentWithBinding<FragmentHistoryBinding>() {
 
     override fun initData() {
         context?.let { viewModel.getLiveDateHistory(it).observe(viewLifecycleOwner){
-            adapter.submitList(it)
+            adapter.submitList(it.reversed())
             if (it.isEmpty()){
                 binding.nodata.visible()
             }else{
@@ -56,6 +55,5 @@ class HistoryFragment : BaseFragmentWithBinding<FragmentHistoryBinding>() {
     override fun initAction() {
 
     }
-
 
 }

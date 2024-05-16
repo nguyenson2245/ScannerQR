@@ -21,6 +21,9 @@ class DetailAdapter(val click: (Class<*>) -> Unit) :
                 Glide.with(itemView).load(itemData?.icon).into(binding.imageView)
                 onItemClickListener { itemData?.fragmentOpen?.let { click.invoke(it) } }
             }
+            onItemClickListener {
+                itemData?.action?.invoke()
+            }
         }
     }
 
