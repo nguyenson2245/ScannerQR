@@ -12,7 +12,6 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import com.example.scannerqr.base.BaseFragmentWithBinding
 import com.example.scannerqr.ui.dialog.DialogCreateQr
-import com.example.scannerqr.ui.dialog.DialogSettingPer
 import com.example.socialmedia.base.utils.checkPermission
 import com.example.socialmedia.base.utils.click
 import com.google.zxing.BarcodeFormat
@@ -102,18 +101,7 @@ class ContactFragment : BaseFragmentWithBinding<FragmentContactBinding>() {
 
 
     private fun openActSettingDialog() {
-        val dialog = DialogSettingPer(
-            requireActivity(),
-            getString(R.string.anser_grant_permission) + "\n" + getString(R.string.goto_setting_and_grant_permission)
-        )
-        dialog.setPositiveButtonClickListener {
-            openSettingApp()
-        }
 
-        dialog.setNegativeButtonClickListener {
-        }
-
-        dialog.show()
     }
 
     private fun openSettingApp() {
