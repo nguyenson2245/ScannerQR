@@ -1,5 +1,8 @@
 package com.example.scannerqr.ui.setting
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.media.MediaPlayer
 import android.util.Log
 import android.view.View
@@ -59,6 +62,7 @@ class SettingsAdapter(val viewModel: SettingsViewModel) :
                             Toast.makeText(itemView.context, "OFF", Toast.LENGTH_SHORT).show()
 
                         }
+
                     } else if (itemData?.key == Constants.OPEN_WEB) {
                         if (itemData?.switchEnabled != true) {
                             Toast.makeText(itemView.context, "On", Toast.LENGTH_SHORT).show()
@@ -75,6 +79,7 @@ class SettingsAdapter(val viewModel: SettingsViewModel) :
                             Toast.makeText(itemView.context, "OFF", Toast.LENGTH_SHORT).show()
 
                         }
+
                     } else if (itemData?.key == Constants.DUPLICATION) {
                         if (itemData?.switchEnabled != true) {
                             Toast.makeText(itemView.context, "On", Toast.LENGTH_SHORT).show()

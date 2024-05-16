@@ -94,7 +94,6 @@ class SettingsViewModel : BaseViewModel() {
         listAddSettings.postValue(listSettings)
     }
 
-
     fun saveSettingKey(key: String, switchEnabled: Boolean) {
       preferences.setBoolean(key,switchEnabled)
     }

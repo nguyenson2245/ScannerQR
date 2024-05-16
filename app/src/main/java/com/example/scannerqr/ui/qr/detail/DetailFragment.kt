@@ -35,7 +35,6 @@ class DetailFragment : BaseFragmentWithBinding<FragmentDetailBinding>() {
     private var type: TypeValue? = TypeValue.TYPE_CONTENT
     private var dataHistory: History? = null
 
-  
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,7 +45,7 @@ class DetailFragment : BaseFragmentWithBinding<FragmentDetailBinding>() {
         date = arguments?.getString("date") ?: ""
 
         dataHistory = arguments?.getSerializable("dataHistory") as History?
-        type = (arguments?.getSerializable("type_va lue") ?: TypeValue.TYPE_CONTENT) as TypeValue?
+        type = (arguments?.getSerializable("type_value") ?: TypeValue.TYPE_CONTENT) as TypeValue?
 
     }
 
@@ -66,13 +65,17 @@ class DetailFragment : BaseFragmentWithBinding<FragmentDetailBinding>() {
     @SuppressLint("SimpleDateFormat")
     override fun initData() {
 
-        type?.let { viewModel.initDataApp(it, value) }
+        type?.let {
+            viewModel.initDataApp(it, value)
+            binding.title.text = viewModel.getValueType(it, value)
+        }
+
         binding.time.text = if (date.isNullOrEmpty())
             SimpleDateFormat("dd/MM/yyyy HH:mm").format(Date(System.currentTimeMillis())) else date
-        binding.title.text = value
         viewModel.listDetailsLiveData.observe(viewLifecycleOwner) {
             adapter.submitList(it)
         }
+
         if (isBackScannerQR) {
             if (dataHistory == null) {
                 dataHistory = History(0, value, R.drawable.seecode, binding.time.text.toString())
@@ -112,7 +115,6 @@ class DetailFragment : BaseFragmentWithBinding<FragmentDetailBinding>() {
                         }
                         .setNegativeButton("No", null)
                         .show()
-
 
                     true
                 }
