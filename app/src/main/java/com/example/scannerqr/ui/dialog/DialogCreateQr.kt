@@ -47,7 +47,7 @@ class DialogCreateQr(val fragment: BaseFragmentWithBinding<*>, val inputValue: S
         binding.imageQr.setImageBitmap(createImage(inputValue, type))
 
         binding.btnSave.click {
-            checkPermission(context)
+            checkPermission()
             val bitmap = createImage(inputValue, type)
             saveBitmapToStorage(context, bitmap, "${System.currentTimeMillis()}qrcode.png")
             dismiss()
@@ -193,7 +193,7 @@ class DialogCreateQr(val fragment: BaseFragmentWithBinding<*>, val inputValue: S
         if (ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(fragment.requireActivity(), arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 100)
         } else {
-            Toast.makeText(, "", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "", Toast.LENGTH_SHORT).show()
         }
     }
 

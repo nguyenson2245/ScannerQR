@@ -55,7 +55,7 @@ class EventFragment : BaseFragmentWithBinding<FragmentEventBinding>() {
                 context?.let { it1 ->
                     context?.let {
                         DialogCreateQr(
-                            it,
+                            this,
                             createEventData(
                                 binding.title.text.toString(),
                                 binding.edtEventLocation.text.toString(),

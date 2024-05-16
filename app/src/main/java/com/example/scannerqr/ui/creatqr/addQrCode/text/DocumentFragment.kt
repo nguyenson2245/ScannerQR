@@ -34,7 +34,7 @@ class DocumentFragment : BaseFragmentWithBinding<FragmentDocumentBinding>() {
                 context?.let { it1 ->
                     context?.let {
                         DialogCreateQr(
-                            it,
+                            this,
                             binding.editText.text.toString(),
                             BarcodeFormat.QR_CODE
                         ).show()

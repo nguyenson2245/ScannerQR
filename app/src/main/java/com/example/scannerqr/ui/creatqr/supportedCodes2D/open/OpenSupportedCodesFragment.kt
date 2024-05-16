@@ -205,13 +205,11 @@ class OpenSupportedCodesFragment : BaseFragmentWithBinding<FragmentOpenSupported
         binding.save.click {
             val input = binding.edtTitle.text.trim().toString()
             if (input.isNotEmpty() && binding.edtTitle.error == null) {
-                context?.let { it1 ->
                     DialogCreateQr(
-                        it1,
+                        this,
                         binding.edtTitle.text.toString(),
                         title
                     ).show()
-                }
             } else
                 if (input.isEmpty())
                     binding.edtTitle.error = "not value"

@@ -37,7 +37,7 @@ class SMSFragment : BaseFragmentWithBinding<FragmentSMSBinding>() {
             if (editPhoneNumber.isNotEmpty() && binding.editPhoneNumber.error == null) {
                 context?.let {
                     DialogCreateQr(
-                        it,
+                        this@SMSFragment,
                         createSMSData(editPhoneNumber, binding.editMessage.text.toString()),
                         BarcodeFormat.QR_CODE
                     ).show()

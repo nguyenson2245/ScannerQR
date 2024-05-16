@@ -40,7 +40,6 @@ class WifiFragment : BaseFragmentWithBinding<FragmentWifiBinding>() {
                             ),
                             BarcodeFormat.QR_CODE
                         ).show()
-                    }
                 }
             } else{
                 if (input.isEmpty())

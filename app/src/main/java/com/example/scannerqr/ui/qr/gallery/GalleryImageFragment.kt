@@ -5,11 +5,14 @@ import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import androidx.core.view.get
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.scannerqr.base.PermissionFragment
 import com.example.scannerqr.ui.qr.cropimage.CropImageFragment
 import com.example.socialmedia.base.utils.click
+import com.example.socialmedia.base.utils.gone
+import com.example.socialmedia.base.utils.visible
 import com.scan.scannerqr.databinding.FragmentGalleryImageBinding
 
 class GalleryImageFragment : PermissionFragment<FragmentGalleryImageBinding>() {
@@ -43,6 +46,13 @@ class GalleryImageFragment : PermissionFragment<FragmentGalleryImageBinding>() {
             val listImage = it?.toMutableList()?.reversed()
             Log.d(TAG, "initData: "+ it?.size)
             galleryAdapter.submitList(listImage)
+            if (listImage?.isNotEmpty() == true) {
+                binding.rcvView.visible()
+                binding.layoutNoData.gone()
+            }else {
+                binding.layoutNoData.visible()
+                binding.rcvView.gone()
+            }
         }
 
     }

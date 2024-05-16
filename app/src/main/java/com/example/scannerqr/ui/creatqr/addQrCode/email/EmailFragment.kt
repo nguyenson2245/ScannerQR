@@ -36,7 +36,7 @@ class EmailFragment : BaseFragmentWithBinding<FragmentEmailBinding>() {
                             ("mailto:${binding.editEmail.text}" + "?subject=" + urlEncode(binding.editSubject.text.toString())) + "&body=" + urlEncode(
                                 binding.editMessage.text.toString()
                             )
-                        context?.let { DialogCreateQr(it, uri, BarcodeFormat.QR_CODE).show() }
+                        context?.let { DialogCreateQr(this@EmailFragment, uri, BarcodeFormat.QR_CODE).show() }
 
                     }
                 }
