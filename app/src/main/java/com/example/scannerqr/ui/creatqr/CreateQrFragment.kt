@@ -2,13 +2,19 @@ package com.example.scannerqr.ui.creatqr
 
 import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.provider.Settings
 import android.view.LayoutInflater
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import com.example.scannerqr.base.BaseFragmentWithBinding
 import com.example.scannerqr.ui.utils.PermissionUtils
+import com.example.socialmedia.base.utils.checkPermission
+import com.example.socialmedia.base.utils.gone
+import com.example.socialmedia.base.utils.visible
 import com.permissionx.guolindev.PermissionX
 import com.scan.scannerqr.R
 import com.scan.scannerqr.databinding.FragmentCreatQrBinding
@@ -27,8 +33,6 @@ class CreateQrFragment : BaseFragmentWithBinding<FragmentCreatQrBinding>() {
     }
 
     override fun init() {
-
-//        checkPermissionUT()
 
         adapter = CreateQrAdapter() {
             openFragment(it, null, true)

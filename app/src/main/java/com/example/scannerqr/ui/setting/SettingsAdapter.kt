@@ -1,24 +1,16 @@
 package com.example.scannerqr.ui.setting
 
-import android.content.ClipData
-import android.content.ClipboardManager
-import android.content.Context
-import android.media.MediaPlayer
-import android.util.Log
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.databinding.ViewDataBinding
 import com.bumptech.glide.Glide
 import com.example.scannerqr.model.Settings
-import com.example.scannerqr.ui.utils.Constants
 import com.example.socialmedia.base.recyclerview.BaseRecyclerAdapter
 import com.example.socialmedia.base.recyclerview.BaseViewHolder
 import com.scan.scannerqr.R
 import com.scan.scannerqr.databinding.ItemSettingContentBinding
 import com.scan.scannerqr.databinding.ItemSettingSwitchBinding
 import com.scan.scannerqr.databinding.ItemSettingsBinding
-
 
 class SettingsAdapter(val viewModel: SettingsViewModel) :
     BaseRecyclerAdapter<Settings, SettingsAdapter.SettingsViewHolder>() {
@@ -32,7 +24,6 @@ class SettingsAdapter(val viewModel: SettingsViewModel) :
                 binding.content.text = itemData?.description
             }
             if (binding is ItemSettingsBinding) {
-
 
                 binding.title.text = itemData?.title
 
@@ -50,6 +41,7 @@ class SettingsAdapter(val viewModel: SettingsViewModel) :
 
                 binding.btnSwitch.visibility =
                     if (itemData?.showButtonSwitch == true) View.VISIBLE else View.GONE
+
                 binding.btnSwitch.isChecked = itemData?.switchEnabled ?: false
 
                 binding.btnSwitch.setOnClickListener {

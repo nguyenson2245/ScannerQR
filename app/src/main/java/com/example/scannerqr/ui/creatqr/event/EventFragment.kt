@@ -71,11 +71,7 @@ class EventFragment : BaseFragmentWithBinding<FragmentEventBinding>() {
                                 binding.edtDescribe.text.toString()
                             ),
                             BarcodeFormat.QR_CODE
-                        ) {
-                            requestPermissions(
-                                arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 1
-                            )
-                        }.show()
+                        ).show()
                     }
                 }
             } else{

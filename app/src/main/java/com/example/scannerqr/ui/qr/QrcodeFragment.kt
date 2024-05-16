@@ -4,10 +4,8 @@ import android.Manifest
 import android.graphics.Bitmap
 import android.media.MediaPlayer
 import android.os.Bundle
-import android.provider.SyncStateContract.Constants
 import android.view.LayoutInflater
 import android.widget.SeekBar
-import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import com.example.scannerqr.base.BaseFragmentWithBinding
 import com.example.scannerqr.custom.ScannerView
@@ -196,7 +194,9 @@ class QrcodeFragment : BaseFragmentWithBinding<FragmentQrcodeBinding>(), Scanner
                 MediaPlayer.create(context, R.raw.musicmp3)
             mediaPlayer.start();
         }
-        if (preferences?.getBoolean(com.example.scannerqr.ui.utils.Constants.))
+        if (preferences?.getBoolean(com.example.scannerqr.ui.utils.Constants.VIBRATE) == true){
+
+        }
         val contents = rawResult.toString()
         val bundle = Bundle()
         bundle.putString("value", contents)

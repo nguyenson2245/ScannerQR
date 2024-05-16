@@ -38,12 +38,8 @@ class DocumentFragment : BaseFragmentWithBinding<FragmentDocumentBinding>() {
                             this,
                             binding.editText.text.toString(),
                             BarcodeFormat.QR_CODE
-                        ) {
-                            requestPermissions(
-                                arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
-                                1
-                            )
-                        }.show()
+                        ) 
+                          .show()
                     }
                 }
             } else{

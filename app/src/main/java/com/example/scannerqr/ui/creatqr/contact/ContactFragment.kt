@@ -44,7 +44,6 @@ class ContactFragment : BaseFragmentWithBinding<FragmentContactBinding>() {
         if (requestCode == 1) {
             if (resultCode == RESULT_OK) {
                 val contactData = data?.data;
-
                 val cursor = contactData?.let {
                     context?.getContentResolver()?.query(it, null, null, null, null)
                 };
@@ -82,36 +81,39 @@ class ContactFragment : BaseFragmentWithBinding<FragmentContactBinding>() {
         }
     }
 
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        if (requestCode == 200)
+            if (context?.checkPermission(Manifest.permission.READ_CONTACTS) == true) {
+                val intent = Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI)
+                startActivityForResult(intent, 1)
+            } else {
+                if (!shouldShowRequestPermissionRationale(Manifest.permission.READ_CONTACTS) )
+                    toast("showDialog ")
+            }
+    }
+
     override fun initAction() {
-
-        editText()
-
-        binding.toolbar.click {
-            onBackPressed()
-        }
 
         binding.contact.click {
             if (context?.checkPermission(Manifest.permission.READ_CONTACTS) == true) {
                 val intent = Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI)
                 startActivityForResult(intent, 1)
             } else {
-                when {
-                    context?.checkPermission(Manifest.permission.READ_CONTACTS) == false -> {
-                        requestPermissions(arrayOf(Manifest.permission.READ_CONTACTS), 200)
-                    }
-
-                    shouldShowRequestPermissionRationale(Manifest.permission.READ_CONTACTS) -> {
-                        requestPermissions(arrayOf(Manifest.permission.READ_CONTACTS), 200)
-                    }
-
-                    else -> {
-                        toast("showDialog")
-                    }
-                }
+                requestPermissions(arrayOf(Manifest.permission.READ_CONTACTS), 200)
 
             }
-
         }
+        editText()
+
+        binding.toolbar.click {
+            onBackPressed()
+        }
+
+
         binding.save.click {
             val fullName = binding.fullName.text.trim().toString()
 
@@ -141,10 +143,7 @@ class ContactFragment : BaseFragmentWithBinding<FragmentContactBinding>() {
                             this@ContactFragment,
                             vCardData,
                             BarcodeFormat.QR_CODE
-                        ) {
-                            requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 1
-                            )
-                        }.show()
+                        ).show()
                     }
 
                 }

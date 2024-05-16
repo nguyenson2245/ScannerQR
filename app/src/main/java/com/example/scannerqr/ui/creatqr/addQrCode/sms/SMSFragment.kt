@@ -35,9 +35,8 @@ class SMSFragment : BaseFragmentWithBinding<FragmentSMSBinding>() {
                         this@SMSFragment,
                         createSMSData(editPhoneNumber, binding.editMessage.text.toString()),
                         BarcodeFormat.QR_CODE
-                    ) {
-                        requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 1)
-                    }.show()
+                    )
+                .show()
 
 
                 }
