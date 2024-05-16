@@ -5,7 +5,9 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
+import android.provider.ContactsContract
 import android.provider.Settings
+import android.util.Log
 import android.view.LayoutInflater
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -34,6 +36,14 @@ class CreateQrFragment : BaseFragmentWithBinding<FragmentCreatQrBinding>() {
 
     override fun init() {
 
+        if (context?.checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == true) {
+            val intent = Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI)
+            startActivityForResult(intent, 1)
+        } else {
+            requestPermissions(arrayOf(Manifest.permission.READ_CONTACTS), 200)
+
+        }
+
         adapter = CreateQrAdapter() {
             openFragment(it, null, true)
         }
@@ -53,34 +63,20 @@ class CreateQrFragment : BaseFragmentWithBinding<FragmentCreatQrBinding>() {
 
     }
 
-//    private fun checkPermissionUT() {
-//
-//        if (!PermissionUtils.checkStoragePermission(requireActivity())) {
-//            PermissionX.init(this)
-//                .permissions(if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) Manifest.permission.WRITE_EXTERNAL_STORAGE else Manifest.permission.WRITE_EXTERNAL_STORAGE)
-//                .onExplainRequestReason { scope, deniedList ->
-//                    scope.showRequestReasonDialog(
-//                        deniedList,
-//                        "Core fundamental are based on these permissions",
-//                        "OK",
-//                        "Cancel"
-//                    )
-//                }
-//                .request { allGranted, grantedList, deniedList ->
-//
-//                }
-//        } else {
-//            openSettingApp()
-//        }
-//    }
-    private var showSetting = false
-
-    private fun openSettingApp() {
-        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-        toast(getString(R.string.please_grant_read_external_storage))
-        val uri = Uri.fromParts("package", requireActivity().packageName, null)
-        intent.data = uri
-        startActivity(intent)
-        showSetting = true
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        if (requestCode == 200)
+            if (context?.checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == true) {
+                val intent = Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI)
+                startActivityForResult(intent, 1)
+            } else {
+                if (!shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE) || !shouldShowRequestPermissionRationale(Manifest.permission.CAMERA) )
+                    Log.d("TAG", "onRequestPermissionsResult: +Grant permissions ")
+            }
     }
+
+
 }

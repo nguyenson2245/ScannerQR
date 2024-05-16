@@ -1,5 +1,6 @@
 package com.example.scannerqr.ui.setting
 
+import android.service.autofill.OnClickAction
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.ViewDataBinding
@@ -12,7 +13,10 @@ import com.scan.scannerqr.databinding.ItemSettingContentBinding
 import com.scan.scannerqr.databinding.ItemSettingSwitchBinding
 import com.scan.scannerqr.databinding.ItemSettingsBinding
 
-class SettingsAdapter(val viewModel: SettingsViewModel) :
+class SettingsAdapter(
+    val viewModel: SettingsViewModel,
+    val onClickOpenFragment: (Class<*>) -> Unit
+) :
     BaseRecyclerAdapter<Settings, SettingsAdapter.SettingsViewHolder>() {
 
     inner class SettingsViewHolder(val binding: ViewDataBinding) :
@@ -50,8 +54,13 @@ class SettingsAdapter(val viewModel: SettingsViewModel) :
                         itemData?.key ?: "",
                         itemData?.switchEnabled != true
                     )
-                    viewModel.initDataSetting()
+                    viewModel.initDataSetting(itemView.context)
                 }
+            }
+            onItemClickListener {
+                if (itemData?.fragmentOpen != null)
+                    onClickOpenFragment.invoke(itemData.fragmentOpen)
+                itemData?.action?.invoke()
             }
         }
     }

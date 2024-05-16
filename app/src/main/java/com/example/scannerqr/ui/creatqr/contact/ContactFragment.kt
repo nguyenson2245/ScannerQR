@@ -4,15 +4,19 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity.RESULT_OK
 import android.content.Intent
+import android.net.Uri
 import android.provider.ContactsContract
+import android.provider.Settings
 import android.view.LayoutInflater
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import com.example.scannerqr.base.BaseFragmentWithBinding
 import com.example.scannerqr.ui.dialog.DialogCreateQr
+import com.example.scannerqr.ui.dialog.DialogSettingPer
 import com.example.socialmedia.base.utils.checkPermission
 import com.example.socialmedia.base.utils.click
 import com.google.zxing.BarcodeFormat
+import com.scan.scannerqr.R
 import com.scan.scannerqr.databinding.FragmentContactBinding
 
 
@@ -23,12 +27,12 @@ class ContactFragment : BaseFragmentWithBinding<FragmentContactBinding>() {
     }
 
     private val viewModel: ContactViewModel by viewModels()
+    private var showSetting = false
 
 
     override fun getViewBinding(inflater: LayoutInflater): FragmentContactBinding {
         return FragmentContactBinding.inflate(inflater)
     }
-
 
     override fun init() {
 
@@ -91,9 +95,34 @@ class ContactFragment : BaseFragmentWithBinding<FragmentContactBinding>() {
                 val intent = Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI)
                 startActivityForResult(intent, 1)
             } else {
-                if (!shouldShowRequestPermissionRationale(Manifest.permission.READ_CONTACTS) )
-                    toast("showDialog ")
+                if (!shouldShowRequestPermissionRationale(Manifest.permission.READ_CONTACTS))
+                openActSettingDialog()
             }
+    }
+
+
+    private fun openActSettingDialog() {
+        val dialog = DialogSettingPer(
+            requireActivity(),
+            getString(R.string.anser_grant_permission) + "\n" + getString(R.string.goto_setting_and_grant_permission)
+        )
+        dialog.setPositiveButtonClickListener {
+            openSettingApp()
+        }
+
+        dialog.setNegativeButtonClickListener {
+        }
+
+        dialog.show()
+    }
+
+    private fun openSettingApp() {
+        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+        toast(getString(R.string.please_grant_read_external_storage))
+        val uri = Uri.fromParts("package", context?.packageName, null)
+        intent.data = uri
+        startActivity(intent)
+        showSetting = true
     }
 
     override fun initAction() {
@@ -104,7 +133,6 @@ class ContactFragment : BaseFragmentWithBinding<FragmentContactBinding>() {
                 startActivityForResult(intent, 1)
             } else {
                 requestPermissions(arrayOf(Manifest.permission.READ_CONTACTS), 200)
-
             }
         }
         editText()
@@ -151,7 +179,6 @@ class ContactFragment : BaseFragmentWithBinding<FragmentContactBinding>() {
                 if (fullName.isEmpty()
 
                 ) {
-
                     toast("PLEASE enter complete information")
                 }
         }

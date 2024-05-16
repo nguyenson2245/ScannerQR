@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.widget.Toast
 import com.example.scannerqr.base.BaseFragmentWithBinding
 import com.example.scannerqr.model.Settings
+import com.example.scannerqr.ui.qr.help.HelpAndFeedbackFragment
 import com.example.scannerqr.ui.utils.Constants
 import com.scan.scannerqr.R
 import com.scan.scannerqr.databinding.FragmentSettingsBinding
@@ -24,13 +25,15 @@ class SettingsFragment : BaseFragmentWithBinding<FragmentSettingsBinding>() {
     }
 
     override fun init() {
-        adapter = SettingsAdapter(viewModel)
+        adapter = SettingsAdapter(viewModel){
+            openFragment(it,null,true)
+        }
         binding.rvView.adapter = adapter
         binding.rvView.setHasFixedSize(true)
     }
 
     override fun initData() {
-        viewModel.initDataSetting()
+        viewModel.initDataSetting(requireActivity())
 
         viewModel.listAddSettings.observe(viewLifecycleOwner) {it->
             adapter.submitList(it)

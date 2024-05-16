@@ -101,7 +101,6 @@ class EventFragment : BaseFragmentWithBinding<FragmentEventBinding>() {
         binding.txtEndTime.setOnClickListener {
             showTimePickerEnd()
         }
-
     }
 
 
@@ -150,7 +149,6 @@ class EventFragment : BaseFragmentWithBinding<FragmentEventBinding>() {
         val sdf = SimpleDateFormat(myFormat, Locale.getDefault())
         binding.txtEndDay.text = sdf.format(calendar.time)
     }
-
 
     private fun showTimePickerStart() {
         val hourOfDay = 23
@@ -208,9 +206,14 @@ class EventFragment : BaseFragmentWithBinding<FragmentEventBinding>() {
     }
 
     fun dateStringToLong(dateString: String, pattern: String): Long {
-        val dateFormat = SimpleDateFormat(pattern, Locale.getDefault())
-        val date = dateFormat.parse(dateString)
-        return date?.time ?: -1
+        return try {
+            val dateFormat = SimpleDateFormat(pattern, Locale.getDefault())
+            val date = dateFormat.parse(dateString)
+            date?.time ?: -1
+        } catch (e: Throwable) {
+            -1
+        }
+
     }
 
 }

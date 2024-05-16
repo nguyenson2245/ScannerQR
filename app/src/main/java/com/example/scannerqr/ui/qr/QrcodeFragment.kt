@@ -6,6 +6,7 @@ import android.graphics.Bitmap
 import android.media.MediaPlayer
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.os.Handler
 import android.os.Looper
 import android.os.VibrationEffect
@@ -107,7 +108,7 @@ class QrcodeFragment : BaseFragmentWithBinding<FragmentQrcodeBinding>(), Scanner
                 }
 
                 else -> {
-                    toast("showDialog")
+                    Log.d("checkPermissionX", "No - checkPermissionX:  ")
                 }
             }
     }
@@ -256,15 +257,11 @@ class QrcodeFragment : BaseFragmentWithBinding<FragmentQrcodeBinding>(), Scanner
         }
     }
 
-
-
-
     override fun onPause() {
         binding.scannerView.flash = false
         flashLightStatus = false
         super.onPause()
     }
-
 }
 
 enum class TypeValue() {

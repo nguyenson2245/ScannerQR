@@ -6,5 +6,7 @@ data class Settings(
     val description: String = "",
     val showButtonSwitch: Boolean = false,
     val switchEnabled: Boolean = false,
-    val key : String =""
+    val key : String ="",
+    val fragmentOpen : Class<*>?= null,
+    val action : (()-> Unit)? = null
 )

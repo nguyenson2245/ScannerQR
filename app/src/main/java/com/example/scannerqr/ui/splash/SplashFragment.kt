@@ -22,12 +22,10 @@ class SplashFragment : BaseFragmentWithBinding<FragmentSplashBinding>() {
         return FragmentSplashBinding.inflate(inflater)
     }
 
-
-
     override fun init() {
         Handler(Looper.getMainLooper()).postDelayed({
             openFragment(MainFragment::class.java, null, false)
-        }, 0)
+        }, 2000)
     }
 
     override fun initData() {

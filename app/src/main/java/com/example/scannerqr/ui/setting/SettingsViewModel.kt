@@ -1,9 +1,13 @@
 package com.example.scannerqr.ui.setting
 
+import android.content.Context
+import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.example.scannerqr.application.MainApp
 import com.example.scannerqr.local.Preferences
 import com.example.scannerqr.model.Settings
+import com.example.scannerqr.ui.creatqr.shareinotherapp.ShareInOtherAppsFragment
+import com.example.scannerqr.ui.qr.help.HelpAndFeedbackFragment
 import com.example.scannerqr.ui.utils.Constants
 import com.example.socialmedia.base.BaseViewModel
 import com.scan.scannerqr.R
@@ -15,11 +19,10 @@ class SettingsViewModel : BaseViewModel() {
 
     val preferences = Preferences.getInstance(MainApp.newInstance())
 
-    fun initDataSetting() {
+    fun initDataSetting(context: Context) {
         listSettings.clear()
         listSettings.add(Settings(title = "General", icon = R.drawable.ic_general))
-        listSettings.add(Settings(title = "Display", description = "System default options"))
-        listSettings.add(Settings(title = "Help and Feedback"))
+        listSettings.add(Settings(title = "Help and Feedback", fragmentOpen =  HelpAndFeedbackFragment::class.java))
         listSettings.add(Settings(title = "Scan control", icon = R.drawable.ic_control))
 
         listSettings.add(
@@ -70,30 +73,9 @@ class SettingsViewModel : BaseViewModel() {
             )
         )
 
-        listSettings.add(
-            Settings(
-                title = "Copy to clipboard",
-                showButtonSwitch = true,
-                switchEnabled = preferences.getBoolean(Constants.COPY) ?: false,   key = Constants.COPY
-            )
-        )
-
-        listSettings.add(Settings(title = "Product barcode", icon = R.drawable.ic_settings_barcode))
-
-        listSettings.add(
-            Settings(
-                title = "Country to search for products",
-                description = "System default options"
-            )
-        )
-        listSettings.add(
-            Settings(
-                title = "Product information",
-                description = "Display product information and price if available ",
-                showButtonSwitch = true, switchEnabled =  preferences.getBoolean(Constants.PRODUCT) ?: false,   key = Constants.PRODUCT
-            )
-        )
-        listSettings.add(Settings(title = "Introduce", icon = R.drawable.ic_introduce))
+        listSettings.add(Settings(title = "Introduce", icon = R.drawable.ic_introduce, action = {
+            Toast.makeText(context, "Functionality is currently under development", Toast.LENGTH_SHORT).show()
+        }))
         listSettings.add(Settings(title = "Introduce"))
         listSettings.add(Settings(title = "Open source license"))
         listSettings.add(Settings(title = "Privacy policy"))
