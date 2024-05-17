@@ -54,13 +54,14 @@ class DialogCreateQr(val fragment: BaseFragmentWithBinding<*>, val inputValue: S
         var bitmapQRCode: Bitmap? = null
         bitMatrix = when (type) {
             BarcodeFormat.QR_CODE -> {
-                val qrgEncoder = QRGEncoder(inputValue, null, QRGContents.Type.TEXT, 300)
+                val qrgEncoder = QRGEncoder(inputValue, null, QRGContents.Type.TEXT, 300.dpToPx(context.resources))
                 try {
                     bitmapQRCode = qrgEncoder.getBitmap()
                 } catch (e: Throwable) {
 
                 }
                 null
+
             }
 
             BarcodeFormat.DATA_MATRIX -> MultiFormatWriter().encode(
