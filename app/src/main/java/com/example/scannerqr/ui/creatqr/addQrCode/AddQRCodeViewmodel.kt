@@ -2,7 +2,6 @@ package com.example.scannerqr.ui.creatqr.addQrCode
 
 import androidx.lifecycle.MutableLiveData
 import com.example.scannerqr.model.AddQRCode
-import com.example.scannerqr.ui.creatqr.addQrCode.app.AppFragment
 import com.example.scannerqr.ui.creatqr.addQrCode.text.DocumentFragment
 import com.example.scannerqr.ui.creatqr.addQrCode.email.EmailFragment
 import com.example.scannerqr.ui.creatqr.addQrCode.sms.SMSFragment
