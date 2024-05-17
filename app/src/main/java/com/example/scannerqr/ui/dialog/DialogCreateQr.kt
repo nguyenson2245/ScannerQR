@@ -1,25 +1,17 @@
 package com.example.scannerqr.ui.dialog
 
-import android.Manifest
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.app.Dialog
 import android.content.Context
-import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.os.Environment
 import android.view.LayoutInflater
-import android.widget.Toast
-import androidx.core.app.ActivityCompat
-import androidx.core.app.ActivityCompat.requestPermissions
-import androidx.core.content.ContextCompat
+import androidmads.library.qrgenearator.QRGContents
+import androidmads.library.qrgenearator.QRGEncoder
 import com.example.scannerqr.base.BaseFragmentWithBinding
-import com.example.socialmedia.base.utils.checkPermission
 import com.example.socialmedia.base.utils.click
 import com.example.socialmedia.base.utils.dpToPx
-import com.example.socialmedia.base.utils.gone
-import com.example.socialmedia.base.utils.visible
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.MultiFormatWriter
 import com.google.zxing.common.BitMatrix
@@ -47,7 +39,6 @@ class DialogCreateQr(val fragment: BaseFragmentWithBinding<*>, val inputValue: S
         binding.imageQr.setImageBitmap(createImage(inputValue, type))
 
         binding.btnSave.click {
-            checkPermission()
             val bitmap = createImage(inputValue, type)
             saveBitmapToStorage(context, bitmap, "${System.currentTimeMillis()}qrcode.png")
             dismiss()
@@ -60,11 +51,17 @@ class DialogCreateQr(val fragment: BaseFragmentWithBinding<*>, val inputValue: S
 
     fun createImage(message: String?, type: BarcodeFormat): Bitmap {
         var bitMatrix: BitMatrix? = null
+        var bitmapQRCode: Bitmap? = null
         bitMatrix = when (type) {
-            BarcodeFormat.QR_CODE -> MultiFormatWriter().encode(
-                message, BarcodeFormat.QR_CODE,
-                300.dpToPx(context.resources), 300.dpToPx(context.resources)
-            )
+            BarcodeFormat.QR_CODE -> {
+                val qrgEncoder = QRGEncoder(inputValue, null, QRGContents.Type.TEXT, 300)
+                try {
+                    bitmapQRCode = qrgEncoder.getBitmap()
+                } catch (e: Throwable) {
+
+                }
+                null
+            }
 
             BarcodeFormat.DATA_MATRIX -> MultiFormatWriter().encode(
                 message, BarcodeFormat.DATA_MATRIX,
@@ -152,7 +149,11 @@ class DialogCreateQr(val fragment: BaseFragmentWithBinding<*>, val inputValue: S
                 300.dpToPx(context.resources), 300.dpToPx(context.resources)
             )
         }
-        val width = bitMatrix.width
+        if (bitmapQRCode != null) {
+            return bitmapQRCode
+        }
+        if (bitMatrix != null) {
+            val width = bitMatrix.width
         val height = bitMatrix.height
         val pixels = IntArray(width * height)
         for (i in 0 until height) {
@@ -166,8 +167,12 @@ class DialogCreateQr(val fragment: BaseFragmentWithBinding<*>, val inputValue: S
         }
         val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
         bitmap.setPixels(pixels, 0, width, 0, 0, width, height)
-        return bitmap
+            return bitmap
+        }
+        return Bitmap.createBitmap(0, 0, Bitmap.Config.ARGB_8888)
     }
+
+
 
 
     private fun saveBitmapToStorage(context: Context, bitmap: Bitmap, fileName: String) {
@@ -189,14 +194,9 @@ class DialogCreateQr(val fragment: BaseFragmentWithBinding<*>, val inputValue: S
             outputStream?.close()
         }
     }
-
-    fun checkPermission(){
-        if (ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(fragment.requireActivity(), arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 100)
-        } else {
-            Toast.makeText(context, "", Toast.LENGTH_SHORT).show()
-        }
-    }
-
-
 }
+
+
+
+
+

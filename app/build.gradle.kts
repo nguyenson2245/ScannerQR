@@ -89,4 +89,6 @@ dependencies {
 
     implementation("com.karumi:dexter:6.2.3")
     implementation("com.vanniktech:android-image-cropper:4.5.0")
+
+    implementation ("androidmads.library.qrgenearator:QRGenearator:1.0.4")
 }

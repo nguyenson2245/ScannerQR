@@ -125,7 +125,7 @@ class ContactFragment : BaseFragmentWithBinding<FragmentContactBinding>() {
         }
         editText()
 
-        binding.toolbar.click {
+        binding.toolbar.setNavigationOnClickListener {
             onBackPressed()
         }
 
@@ -141,8 +141,9 @@ class ContactFragment : BaseFragmentWithBinding<FragmentContactBinding>() {
                 context?.let { it1 ->
                     val vCardData = """
     BEGIN:VCARD
-    FullName:${binding.fullName.text};${binding.title.text}
+    FullName:${binding.fullName.text}
     Company:${binding.company.text}
+    Title:${binding.title.text}
     Telephone:${binding.phoneNumber.text}
     Email:${binding.email.text}
     Address:${binding.address.text}
