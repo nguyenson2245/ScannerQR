@@ -24,6 +24,5 @@ class MainApp : Application() {
             }
             return instance!!
         }
-
     }
 }

@@ -1,7 +1,7 @@
-
 package com.example.scannerqr.base
 
 
+import android.Manifest
 import android.os.Build
 import android.widget.Toast
 import androidx.viewbinding.ViewBinding
@@ -13,20 +13,20 @@ import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 
 abstract class PermissionFragment<VB : ViewBinding> : BaseFragmentWithBinding<VB>() {
 
-     var arrPermissions = if (Build.VERSION.SDK_INT >= 33) arrayOf(
-        "android.permission.READ_MEDIA_IMAGES"
+    var arrPermissions = if (Build.VERSION.SDK_INT >= 33) arrayOf(
+        Manifest.permission.WRITE_EXTERNAL_STORAGE,
     ) else arrayOf(
-        "android.permission.READ_EXTERNAL_STORAGE",
+        Manifest.permission.WRITE_EXTERNAL_STORAGE,
     )
 
 
-    open fun openGallery(callback : ()->Unit) {
+    open fun openGallery(callback: () -> Unit) {
         Dexter.withContext(context).withPermissions(*arrPermissions)
             .withListener(object : MultiplePermissionsListener {
                 override fun onPermissionsChecked(p0: MultiplePermissionsReport) {
                     if (p0.areAllPermissionsGranted()) {
                         callback.invoke()
-                }
+                    }
                 }
 
                 override fun onPermissionRationaleShouldBeShown(

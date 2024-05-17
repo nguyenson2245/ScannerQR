@@ -23,7 +23,7 @@ import java.io.IOException
 import java.io.OutputStream
 
 
-class DialogCreateQr(val fragment: BaseFragmentWithBinding<*>, val inputValue: String, val type: BarcodeFormat) : Dialog(fragment.requireContext()) {
+class DialogCreateQr(val fragment: BaseFragmentWithBinding<*>, val inputValue: String, val type: BarcodeFormat) : Dialog(fragment.requireActivity()) {
     private lateinit var binding: DialogCreatQrBinding
     @SuppressLint("UseCompatLoadingForDrawables")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,7 +54,7 @@ class DialogCreateQr(val fragment: BaseFragmentWithBinding<*>, val inputValue: S
         var bitmapQRCode: Bitmap? = null
         bitMatrix = when (type) {
             BarcodeFormat.QR_CODE -> {
-                val qrgEncoder = QRGEncoder(inputValue, null, QRGContents.Type.TEXT, 300)
+                val qrgEncoder = QRGEncoder(inputValue, null, QRGContents.Type.TEXT, 300.dpToPx(context.resources))
                 try {
                     bitmapQRCode = qrgEncoder.getBitmap()
                 } catch (e: Throwable) {
