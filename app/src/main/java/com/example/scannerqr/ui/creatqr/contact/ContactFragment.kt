@@ -136,7 +136,7 @@ class ContactFragment : BaseFragmentWithBinding<FragmentContactBinding>() {
             }
         }
 
-        binding.toolbar.click {
+        binding.toolbar.setNavigationOnClickListener {
             onBackPressed()
         }
 

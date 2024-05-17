@@ -48,7 +48,7 @@ class WifiFragment : BaseFragmentWithBinding<FragmentWifiBinding>() {
 
         }
 
-        binding.toolbar.click {
+        binding.toolbar.setNavigationOnClickListener {
             onBackPressed()
         }
 

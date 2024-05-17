@@ -26,7 +26,7 @@ class SettingsFragment : BaseFragmentWithBinding<FragmentSettingsBinding>() {
 
     override fun init() {
         adapter = SettingsAdapter(viewModel,{
-            toast("clcik")
+            toast("click")
         }){
             openFragment(it,null,true)
         }

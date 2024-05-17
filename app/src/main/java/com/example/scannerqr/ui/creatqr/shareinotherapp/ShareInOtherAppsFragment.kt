@@ -19,15 +19,11 @@ class ShareInOtherAppsFragment : BaseFragmentWithBinding<FragmentShareInOtherApp
         return FragmentShareInOtherAppsBinding.inflate(inflater)
     }
 
-
     override fun init() {
-
-
-
     }
 
     override fun initData() {
-        binding.toolbar.click {
+        binding.toolbar.setNavigationOnClickListener {
             onBackPressed()
         }
     }

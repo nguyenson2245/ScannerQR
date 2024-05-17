@@ -29,7 +29,7 @@ class OpenSupportedCodesFragment : BaseFragmentWithBinding<FragmentOpenSupported
         }
 
         binding.edtTitle.doOnTextChanged { text, start, before, count ->
-            val input = text?.trim().toString()
+            val input = binding.edtTitle.text.trim().toString()
             when (title) {
 
                 BarcodeFormat.QR_CODE -> {
@@ -152,7 +152,7 @@ class OpenSupportedCodesFragment : BaseFragmentWithBinding<FragmentOpenSupported
                     binding.edtTitle.hint = "Capitalized text has no special characters"
 
                     val capitalizedTextRegex = Regex("^[A-Z]+$")
-                    if (!capitalizedTextRegex.matches(input)) {
+                    if (!capitalizedTextRegex.matches(input) && input.length < 2) {
                         binding.edtTitle.error = "Text without special characters!"
                     } else {
                         binding.edtTitle.error = null

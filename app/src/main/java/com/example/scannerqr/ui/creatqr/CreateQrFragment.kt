@@ -35,15 +35,6 @@ class CreateQrFragment : BaseFragmentWithBinding<FragmentCreatQrBinding>() {
     }
 
     override fun init() {
-
-        if (context?.checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == true) {
-            val intent = Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI)
-            startActivityForResult(intent, 1)
-        } else {
-            requestPermissions(arrayOf(Manifest.permission.READ_CONTACTS), 200)
-
-        }
-
         adapter = CreateQrAdapter() {
             openFragment(it, null, true)
         }

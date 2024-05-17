@@ -57,7 +57,7 @@ class ContentFromClipboardFragment :
     }
 
     override fun initAction() {
-        binding.toolbar.click {
+        binding.toolbar.setNavigationOnClickListener {
             onBackPressed()
         }
     }

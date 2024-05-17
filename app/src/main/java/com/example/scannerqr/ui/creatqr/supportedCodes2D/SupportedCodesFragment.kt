@@ -40,7 +40,7 @@ class SupportedCodesFragment : BaseFragmentWithBinding<FragmentSupportedSodesBin
     }
 
     override fun initAction() {
-        binding.toolbar.click { onBackPressed() }
+        binding.toolbar.setNavigationOnClickListener { onBackPressed() }
     }
 
 }

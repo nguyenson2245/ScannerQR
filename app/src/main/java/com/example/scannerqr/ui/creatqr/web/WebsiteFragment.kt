@@ -64,7 +64,7 @@ class WebsiteFragment : BaseFragmentWithBinding<FragmentWebsiteBinding>() {
             }
         }
 
-        binding.toolbar.click {
+        binding.toolbar.setNavigationOnClickListener {
             onBackPressed()
         }
 
