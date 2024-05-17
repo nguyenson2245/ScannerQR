@@ -15,7 +15,6 @@ import com.scan.scannerqr.databinding.ItemSettingsBinding
 
 class SettingsAdapter(
     val viewModel: SettingsViewModel,
-    val onClickOpenFragment: (Class<*>) -> Unit,
     val click: (Class<*>) -> Unit
 ) :
     BaseRecyclerAdapter<Settings, SettingsAdapter.SettingsViewHolder>() {

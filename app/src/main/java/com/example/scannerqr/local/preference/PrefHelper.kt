@@ -17,6 +17,8 @@ class PrefHelper(private val sharedPreferences: SharedPreferences) {
     private val KEY_FIRST_INSTALL = "KEY_FIRST_INSTALL" // coin
     private val INT_ZERO = 0 // coin
 
+
+
     fun setValueTypeOne(value: String?) {
         sharedPreferences.edit().putString(KEY_TYPE_ONE, value).apply()
     }

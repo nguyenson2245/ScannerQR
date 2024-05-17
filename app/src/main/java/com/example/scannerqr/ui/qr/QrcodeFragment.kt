@@ -21,6 +21,7 @@ import androidx.fragment.app.viewModels
 import com.example.scannerqr.base.BaseFragmentWithBinding
 import com.example.scannerqr.custom.ScannerView
 import com.example.scannerqr.local.Preferences
+import com.example.scannerqr.local.preference.PrefHelper
 import com.example.scannerqr.model.History
 import com.example.scannerqr.ui.MainViewModel
 import com.example.scannerqr.ui.dialog.DialogPermission
@@ -54,6 +55,9 @@ class QrcodeFragment : BaseFragmentWithBinding<FragmentQrcodeBinding>(), Scanner
         fun newInstance() = QrcodeFragment()
     }
 
+    private lateinit var pref: PrefHelper
+    private var currentCoin = 0
+
     private val viewModel: MainViewModel by activityViewModels()
     private val qrcodeViewModel: QrcodeViewModel by viewModels()
     private var flashLightStatus: Boolean = false
@@ -62,10 +66,19 @@ class QrcodeFragment : BaseFragmentWithBinding<FragmentQrcodeBinding>(), Scanner
         return FragmentQrcodeBinding.inflate(inflater)
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        pref = PrefHelper.getInstance(requireContext())!!
+        currentCoin = pref.getValueCoin()
+    }
+
     override fun init() {
+        binding.tvCurrentCoin.text = pref.getValueCoin().toString()
+
         preferences = context?.let { Preferences.getInstance(it) }
         checkPermissionCamera()
     }
+
 
     override fun initData() {
         viewModel.bitmap.observe(viewLifecycleOwner) {
@@ -88,6 +101,54 @@ class QrcodeFragment : BaseFragmentWithBinding<FragmentQrcodeBinding>(), Scanner
                 binding.scannerView.resumeCameraPreview(this)
 
             }
+        }
+    }
+
+    override fun initAction() {
+
+        binding.openFlash.click {
+            binding.scannerView.flash = !flashLightStatus
+            flashLightStatus = !flashLightStatus
+        }
+
+        binding.btnOpenLibrary.click {
+            openFragment(GalleryImageFragment::class.java, null, true)
+        }
+
+        binding.btnHelp.click {
+            openFragment(HelpAndFeedbackFragment::class.java, null, true)
+        }
+        binding.btnZoomIn.setOnClickListener {
+            binding.seekBar.progress += 10
+        }
+
+        binding.seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                binding.scannerView.zoom(progress)
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {
+            }
+
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+            }
+
+        })
+
+        binding.btnZoomOut.setOnClickListener {
+            binding.seekBar.progress -= 10
+        }
+
+        binding.scanWithCamera.click {
+            checkPermissionCamera()
+
+        }
+        binding.scanImages.click {
+            openFragment(GalleryImageFragment::class.java, null, true)
+        }
+
+        binding.btnStore.click {
+            startActivity(Intent(context, PurchaseActivity::class.java))
         }
     }
 
@@ -178,51 +239,31 @@ class QrcodeFragment : BaseFragmentWithBinding<FragmentQrcodeBinding>(), Scanner
         return contents
     }
 
-    override fun initAction() {
 
-        binding.openFlash.click {
-            binding.scannerView.flash = !flashLightStatus
-            flashLightStatus = !flashLightStatus
+
+
+    private fun shakeItBaby() {
+        if (Build.VERSION.SDK_INT >= 26) {
+            (context?.getSystemService(VIBRATOR_SERVICE) as Vibrator?)?.vibrate(
+                VibrationEffect.createOneShot(
+                    150,
+                    VibrationEffect.DEFAULT_AMPLITUDE
+                )
+            )
+        } else {
+            (context?.getSystemService(VIBRATOR_SERVICE) as Vibrator?)?.vibrate(150)
         }
+    }
 
-        binding.btnOpenLibrary.click {
-            openFragment(GalleryImageFragment::class.java, null, true)
-        }
-
-        binding.btnHelp.click {
-            openFragment(HelpAndFeedbackFragment::class.java, null, true)
-        }
-        binding.btnZoomIn.setOnClickListener {
-            binding.seekBar.progress += 10
-        }
-
-        binding.seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                binding.scannerView.zoom(progress)
-            }
-
-            override fun onStartTrackingTouch(seekBar: SeekBar?) {
-            }
-
-            override fun onStopTrackingTouch(seekBar: SeekBar?) {
-            }
-
-        })
-
-        binding.btnZoomOut.setOnClickListener {
-            binding.seekBar.progress -= 10
-        }
-
-        binding.scanWithCamera.click {
-            checkPermissionCamera()
-
-        }
-        binding.scanImages.click {
-            openFragment(GalleryImageFragment::class.java, null, true)
-        }
-
-        binding.btnStore.click {
-            startActivity(Intent(context, PurchaseActivity::class.java))
+    private fun checkTypeValue(contents: String): TypeValue {
+        return when {
+            contents.startsWith("WIFI:") -> TypeValue.TYPE_WIFI
+            contents.startsWith("BEGIN:VCARD") -> TypeValue.TYPE_VCARD
+            contents.startsWith("http://") || contents.startsWith("https://") -> TypeValue.TYPE_WEB
+            contents.startsWith("BEGIN:VEVENT") -> TypeValue.TYPE_EVENT
+            contents.startsWith("mailto:") -> TypeValue.TYPE_MAIL
+            contents.startsWith("smsto:") -> TypeValue.TYPE_SMS
+            else -> TypeValue.TYPE_CONTENT
         }
     }
 
@@ -254,31 +295,6 @@ class QrcodeFragment : BaseFragmentWithBinding<FragmentQrcodeBinding>(), Scanner
             bundle.putSerializable("type_value", checkTypeValue(contents))
             viewModel.isPlayCamera.postValue(false)
             openFragment(DetailFragment::class.java, bundle, true)
-        }
-    }
-
-    private fun shakeItBaby() {
-        if (Build.VERSION.SDK_INT >= 26) {
-            (context?.getSystemService(VIBRATOR_SERVICE) as Vibrator?)?.vibrate(
-                VibrationEffect.createOneShot(
-                    150,
-                    VibrationEffect.DEFAULT_AMPLITUDE
-                )
-            )
-        } else {
-            (context?.getSystemService(VIBRATOR_SERVICE) as Vibrator?)?.vibrate(150)
-        }
-    }
-
-    private fun checkTypeValue(contents: String): TypeValue {
-        return when {
-            contents.startsWith("WIFI:") -> TypeValue.TYPE_WIFI
-            contents.startsWith("BEGIN:VCARD") -> TypeValue.TYPE_VCARD
-            contents.startsWith("http://") || contents.startsWith("https://") -> TypeValue.TYPE_WEB
-            contents.startsWith("BEGIN:VEVENT") -> TypeValue.TYPE_EVENT
-            contents.startsWith("mailto:") -> TypeValue.TYPE_MAIL
-            contents.startsWith("smsto:") -> TypeValue.TYPE_SMS
-            else -> TypeValue.TYPE_CONTENT
         }
     }
 

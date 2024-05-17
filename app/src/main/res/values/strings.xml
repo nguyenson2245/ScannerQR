@@ -71,5 +71,24 @@
     <string name="goto_setting_and_grant_permission">Settings -  Permissions and grant permissions to the app.</string>
 
     <string name="message_purchase_one">%s</string>
+    <string name="introduce">Introduce</string>
+    <string name="introduce1">This is a mobile application designed to help users scan QR codes and save the information encoded in them. Some key features of this application include:</string>
+    <string name="introduce2"> + Scan QR codes easily and quickly using your device\'s camera</string>
+    <string name="introduce3"> + Display information encoded in a QR code, such as website links, contact information, text, and more.</string>
+    <string name="introduce4"> + Allows users to record important information from that QR code</string>
+    <string name="introduce5"> + Store history of scanned QR codes and accompanying notes</string>
+    <string name="introduce6">"+ Search and retrieve previously saved notes"</string>
+    <string name="introduce7">The main users of this application may include:</string>
+    <string name="introduce8"> + People who need to scan and store information from QR codes effectively</string>
+    <string name="introduce9"> + Businessmen and businesses want to provide product/service information via QR codes</string>
+    <string name="introduce10"> + Those interested in storing and managing encrypted information</string>
+    <string name="openSourceLicense">Open Source License</string>
+    <string name="privacyPolicy">Privacy Policy</string>
+    <string name="privacyPolicy1">When an application uses an open source license, ensuring user privacy becomes even more important. Here are some key points this app\'s privacy policy may cover:</string>
+    <string name="privacyPolicy2">" + Information collection: Lists the types of user information (e.g. QR code scan data, notes, device information, etc.) that the app collects and the purposes for which it is used."</string>
+    <string name="privacyPolicy3">" + Information security: Explains measures to secure users' personal information, such as data encryption, access rights management, etc."</string>
+    <string name="privacyPolicy4">" + Information sharing: Clearly state the circumstances in which the app may share user information (e.g. with developers, service providers, etc.) and the purpose of that sharing."</string>
+    <string name="privacyPolicy5">" +User rights: Clearly state user rights such as requesting access, modification, deletion of personal information, etc."</string>
+    <string name="privacyPolicy6">" + Compliance with the law: Committed to complying with current privacy protection laws."</string>
 
 </resources>

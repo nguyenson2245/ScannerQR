@@ -6,8 +6,9 @@ import androidx.lifecycle.MutableLiveData
 import com.example.scannerqr.application.MainApp
 import com.example.scannerqr.local.Preferences
 import com.example.scannerqr.model.Settings
-import com.example.scannerqr.ui.creatqr.shareinotherapp.ShareInOtherAppsFragment
 import com.example.scannerqr.ui.qr.help.HelpAndFeedbackFragment
+import com.example.scannerqr.ui.setting.introduce.IntroduceFragment
+import com.example.scannerqr.ui.setting.privacyPolicy.PrivacyPolicyFragment
 import com.example.scannerqr.ui.utils.Constants
 import com.example.socialmedia.base.BaseViewModel
 import com.scan.scannerqr.R
@@ -76,9 +77,9 @@ class SettingsViewModel : BaseViewModel() {
         listSettings.add(Settings(title = "Introduce", icon = R.drawable.ic_introduce, action = {
             Toast.makeText(context, "Functionality is currently under development", Toast.LENGTH_SHORT).show()
         }))
-        listSettings.add(Settings(title = "Introduce"))
-        listSettings.add(Settings(title = "Open source license"))
-        listSettings.add(Settings(title = "Privacy policy"))
+        listSettings.add(Settings(title = "Introduce", fragmentOpen =  IntroduceFragment::class.java))
+        listSettings.add(Settings(title = "Privacy policy", fragmentOpen =  PrivacyPolicyFragment::class.java))
+
         listSettings.add(Settings(title = "App version", description = "Version 1.1"))
 
         listAddSettings.postValue(listSettings)
