@@ -1,5 +1,7 @@
 package com.example.scannerqr.ui.creatqr.supportedCodes2D.open
 
+import android.Manifest
+import android.os.Build
 import android.text.InputFilter
 import android.text.InputType
 import android.util.Log
@@ -7,6 +9,7 @@ import android.view.LayoutInflater
 import androidx.core.widget.doOnTextChanged
 import com.example.scannerqr.base.BaseFragmentWithBinding
 import com.example.scannerqr.ui.dialog.DialogCreateQr
+import com.example.socialmedia.base.utils.checkPermission
 import com.example.socialmedia.base.utils.click
 import com.google.zxing.BarcodeFormat
 import com.scan.scannerqr.databinding.FragmentOpenSupportedCodesBinding
@@ -205,11 +208,13 @@ class OpenSupportedCodesFragment : BaseFragmentWithBinding<FragmentOpenSupported
         binding.save.click {
             val input = binding.edtTitle.text.trim().toString()
             if (input.isNotEmpty() && binding.edtTitle.error == null) {
+                if(context?.checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == true  || Build.VERSION.SDK_INT> Build.VERSION_CODES.S_V2)
                     DialogCreateQr(
                         this,
                         binding.edtTitle.text.toString(),
                         title
                     ).show()
+                else requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),200)
             } else
                 if (input.isEmpty())
                     binding.edtTitle.error = "not value"

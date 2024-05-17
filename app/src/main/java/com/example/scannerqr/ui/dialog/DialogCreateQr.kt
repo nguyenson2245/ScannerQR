@@ -11,6 +11,7 @@ import androidmads.library.qrgenearator.QRGContents
 import androidmads.library.qrgenearator.QRGEncoder
 import com.example.scannerqr.base.BaseFragmentWithBinding
 import com.example.socialmedia.base.utils.click
+import com.example.socialmedia.base.utils.doSendBroadcast
 import com.example.socialmedia.base.utils.dpToPx
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.MultiFormatWriter
@@ -41,7 +42,7 @@ class DialogCreateQr(val fragment: BaseFragmentWithBinding<*>, val inputValue: S
         binding.btnSave.click {
             val bitmap = createImage(inputValue, type)
             saveBitmapToStorage(context, bitmap, "${System.currentTimeMillis()}qrcode.png")
-            dismiss()
+
         }
 
         binding.btnCancle.click {
@@ -177,8 +178,7 @@ class DialogCreateQr(val fragment: BaseFragmentWithBinding<*>, val inputValue: S
 
 
     private fun saveBitmapToStorage(context: Context, bitmap: Bitmap, fileName: String) {
-        val directory =
-            File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES), "MyImages")
+        val directory = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), context.getString(R.string.app_name))
         if (!directory.exists()) {
             directory.mkdirs()
         }
@@ -189,6 +189,7 @@ class DialogCreateQr(val fragment: BaseFragmentWithBinding<*>, val inputValue: S
         try {
             outputStream = FileOutputStream(file)
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
+            fragment.context?.doSendBroadcast(fileName)
         } catch (e: IOException) {
             e.printStackTrace()
         } finally {

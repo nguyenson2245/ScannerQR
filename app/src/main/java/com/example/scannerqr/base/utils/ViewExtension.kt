@@ -3,8 +3,10 @@ package com.example.socialmedia.base.utils
 import android.Manifest
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.Resources
+import android.net.Uri
 import android.os.SystemClock
 import android.text.Editable
 import android.text.TextWatcher
@@ -13,6 +15,8 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
+import java.io.File
 
 class SafeClickListener(
     private var defaultInterval: Long = 1000, private val onSafeCLick: (View) -> Unit
@@ -94,5 +98,9 @@ fun Context.checkPermissionCamera(context: Context): Boolean {
 fun Int.dpToPx(resources: Resources): Int {
     val scale = resources.displayMetrics.density
     return (this * scale + 0.5f).toInt()
+}
+fun Context.doSendBroadcast(filePath: String) {
+    val intent = Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(File(filePath)))
+    sendBroadcast(intent)
 }
 

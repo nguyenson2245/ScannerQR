@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.provider.ContactsContract
 import android.provider.Settings
 import android.view.LayoutInflater
@@ -163,14 +164,16 @@ class ContactFragment : BaseFragmentWithBinding<FragmentContactBinding>() {
     END:VCARD
 """.trimIndent()
 
-                    context?.let { it1 ->
+                    if (context?.checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == true || Build.VERSION.SDK_INT > Build.VERSION_CODES.S_V2)
                         DialogCreateQr(
                             this@ContactFragment,
                             vCardData,
                             BarcodeFormat.QR_CODE
                         ).show()
-                    }
-
+                    else requestPermissions(
+                        arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                        200
+                    )
                 }
             } else
                 if (fullName.isEmpty()
