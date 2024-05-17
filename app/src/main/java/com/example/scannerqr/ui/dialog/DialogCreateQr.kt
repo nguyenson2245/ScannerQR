@@ -42,7 +42,7 @@ class DialogCreateQr(val fragment: BaseFragmentWithBinding<*>, val inputValue: S
         binding.btnSave.click {
             val bitmap = createImage(inputValue, type)
             saveBitmapToStorage(context, bitmap, "${System.currentTimeMillis()}qrcode.png")
-
+dismiss()
         }
 
         binding.btnCancle.click {
