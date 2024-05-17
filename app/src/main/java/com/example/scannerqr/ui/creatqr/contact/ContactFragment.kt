@@ -38,9 +38,7 @@ class ContactFragment : BaseFragmentWithBinding<FragmentContactBinding>() {
 
     }
 
-
     override fun initData() {
-
     }
 
     @SuppressLint("Range")

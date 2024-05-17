@@ -49,7 +49,7 @@ class EmailFragment : BaseFragmentWithBinding<FragmentEmailBinding>() {
         }
 
 
-        binding.toolbar.click {
+        binding.toolbar.setNavigationOnClickListener {
             onBackPressed()
         }
     }

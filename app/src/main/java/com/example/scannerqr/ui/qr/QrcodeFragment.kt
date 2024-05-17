@@ -2,8 +2,10 @@ package com.example.scanqr.ui.qr
 
 import android.Manifest
 import android.content.Context.VIBRATOR_SERVICE
+import android.content.Intent
 import android.graphics.Bitmap
 import android.media.MediaPlayer
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -11,6 +13,7 @@ import android.os.Handler
 import android.os.Looper
 import android.os.VibrationEffect
 import android.os.Vibrator
+import android.provider.Settings
 import android.view.LayoutInflater
 import android.widget.SeekBar
 import androidx.fragment.app.activityViewModels
@@ -20,6 +23,7 @@ import com.example.scannerqr.custom.ScannerView
 import com.example.scannerqr.local.Preferences
 import com.example.scannerqr.model.History
 import com.example.scannerqr.ui.MainViewModel
+import com.example.scannerqr.ui.dialog.DialogPermission
 import com.example.scannerqr.ui.qr.detail.DetailFragment
 import com.example.scannerqr.ui.qr.help.HelpAndFeedbackFragment
 import com.example.scannerqr.ui.utils.Constants
@@ -59,7 +63,7 @@ class QrcodeFragment : BaseFragmentWithBinding<FragmentQrcodeBinding>(), Scanner
 
     override fun init() {
         preferences = context?.let { Preferences.getInstance(it) }
-        checkPermissionX()
+        checkPermissionCamera()
     }
 
     override fun initData() {
@@ -88,29 +92,19 @@ class QrcodeFragment : BaseFragmentWithBinding<FragmentQrcodeBinding>(), Scanner
 
     override fun onStart() {
         super.onStart()
-        checkPermissionX()
+        checkPermissionCamera()
     }
 
-    private fun checkPermissionX() {
+    private fun checkPermissionCamera() {
         if (context?.checkPermission(Manifest.permission.CAMERA) == true) {
             binding.scannerView.setResultHandler(this)
             binding.scannerView.startCamera();
             binding.viewScanner.visible()
             binding.noScanCheckPer.gone()
         } else
-            when {
-                context?.checkPermission(Manifest.permission.CAMERA) == false -> {
-                    requestPermissions(arrayOf(Manifest.permission.CAMERA), 200)
-                }
+            requestPermissions(arrayOf(Manifest.permission.CAMERA), 200)
 
-                shouldShowRequestPermissionRationale(Manifest.permission.CAMERA) -> {
-                    requestPermissions(arrayOf(Manifest.permission.CAMERA), 200)
-                }
 
-                else -> {
-                    Log.d("checkPermissionX", "No - checkPermissionX:  ")
-                }
-            }
     }
 
     override fun onRequestPermissionsResult(
@@ -127,8 +121,36 @@ class QrcodeFragment : BaseFragmentWithBinding<FragmentQrcodeBinding>(), Scanner
             } else {
                 binding.viewScanner.gone()
                 binding.noScanCheckPer.visible()
+                if (!shouldShowRequestPermissionRationale(Manifest.permission.CAMERA,))
+                    openActSettingDialog()
             }
         }
+    }
+
+    private var showSetting = false
+    private fun openActSettingDialog() {
+        val dialog = DialogPermission(
+            requireContext(),
+            getString(R.string.anser_grant_permission) + "\n" + getString(R.string.goto_setting_and_grant_permission)
+        )
+        dialog.setPositiveButtonClickListener {
+            openSettingApp()
+        }
+
+        dialog.setNegativeButtonClickListener {
+
+        }
+
+        dialog.show()
+    }
+
+    private fun openSettingApp() {
+        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+        toast(getString(R.string.please_grant_read_external_storage))
+        val uri = Uri.fromParts("package", context?.packageName, null)
+        intent.data = uri
+        startActivity(intent)
+        showSetting = true
     }
 
     private fun readQRImage(bMap: Bitmap): String? {
@@ -156,10 +178,12 @@ class QrcodeFragment : BaseFragmentWithBinding<FragmentQrcodeBinding>(), Scanner
     }
 
     override fun initAction() {
+
         binding.openFlash.click {
             binding.scannerView.flash = !flashLightStatus
             flashLightStatus = !flashLightStatus
         }
+
         binding.btnOpenLibrary.click {
             openFragment(GalleryImageFragment::class.java, null, true)
         }
@@ -189,7 +213,7 @@ class QrcodeFragment : BaseFragmentWithBinding<FragmentQrcodeBinding>(), Scanner
         }
 
         binding.scanWithCamera.click {
-            checkPermissionX()
+            checkPermissionCamera()
 
         }
         binding.scanImages.click {

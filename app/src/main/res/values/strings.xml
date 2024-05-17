@@ -68,6 +68,6 @@
     <string name="please_grant_read_external_storage">Please grant read external storage permission</string>
     <string name="permissionssetting">Permissions have not been granted to the application!\n Go to settings -> grant permissions</string>
     <string name="anser_grant_permission">If you do not grant permission, you cannot use this application.</string>
-    <string name="goto_setting_and_grant_permission"><![CDATA[Goto Setting -> Permission and grant read external storage permission !]]></string>
+    <string name="goto_setting_and_grant_permission">Settings -  Permissions and grant permissions to the app.</string>
 
 </resources>

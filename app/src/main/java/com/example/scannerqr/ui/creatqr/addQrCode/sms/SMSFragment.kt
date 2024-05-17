@@ -24,7 +24,7 @@ class SMSFragment : BaseFragmentWithBinding<FragmentSMSBinding>() {
     }
 
     override fun initAction() {
-        binding.toolbar.click { onBackPressed() }
+        binding.toolbar.setNavigationOnClickListener { onBackPressed() }
 
 
         binding.save.click {

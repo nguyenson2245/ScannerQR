@@ -198,7 +198,7 @@ class OpenSupportedCodesFragment : BaseFragmentWithBinding<FragmentOpenSupported
 
     override fun initAction() {
 
-        binding.toolbar.click {
+        binding.toolbar.setNavigationOnClickListener {
             onBackPressed()
         }
 

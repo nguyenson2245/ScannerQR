@@ -40,11 +40,21 @@ class GalleryImageFragment : PermissionFragment<FragmentGalleryImageBinding>() {
         }
     }
 
+    override fun initAction() {
+
+        binding.ivBack.click {
+            onBackPressed()
+        }
+
+        binding.btnNext.click {
+            onBackPressed()
+        }
+    }
+
     @SuppressLint("NotifyDataSetChanged")
     override fun initData() {
         viewModel.imageAllGrallery.observe(viewLifecycleOwner) {
             val listImage = it?.toMutableList()?.reversed()
-            Log.d(TAG, "initData: "+ it?.size)
             galleryAdapter.submitList(listImage)
             if (listImage?.isNotEmpty() == true) {
                 binding.rcvView.visible()
@@ -53,16 +63,6 @@ class GalleryImageFragment : PermissionFragment<FragmentGalleryImageBinding>() {
                 binding.layoutNoData.visible()
                 binding.rcvView.gone()
             }
-        }
-
-    }
-
-    override fun initAction() {
-        binding.materialToolbar.click {
-            onBackPressed()
-        }
-        binding.btnNext.click {
-            onBackPressed()
         }
     }
 }

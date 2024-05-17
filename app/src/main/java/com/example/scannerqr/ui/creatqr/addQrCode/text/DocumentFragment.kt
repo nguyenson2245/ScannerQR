@@ -23,7 +23,7 @@ class DocumentFragment : BaseFragmentWithBinding<FragmentDocumentBinding>() {
     }
 
     override fun initAction() {
-        binding.toolbar.click {
+        binding.toolbar.setNavigationOnClickListener {
             onBackPressed()
         }
 
@@ -48,25 +48,5 @@ class DocumentFragment : BaseFragmentWithBinding<FragmentDocumentBinding>() {
             }
 
         }
-
-
     }
-
-//    override fun onRequestPermissionsResult(
-//        requestCode: Int,
-//        permissions: Array<out String>,
-//        grantResults: IntArray
-//    ) {
-//        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-//        if (requestCode == DialogCreateQr.REQUEST_CODE_STORAGE_PERMISSION) {
-//            if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-//                initAction()
-//            } else {
-//
-//            }
-//        }
-//
-//    }
-
-
 }
