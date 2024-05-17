@@ -46,7 +46,7 @@ class WebsiteFragment : BaseFragmentWithBinding<FragmentWebsiteBinding>() {
 
             if (input.isNotEmpty() && binding.editText.error == null) {
                 context?.let { it1 ->
-                    if (!input.startsWith("http://")) {
+                    if (!input.startsWith("http")) {
                         binding.editText.setText("")
                         binding.editText.error = "Please enter the HTTP link"
                     } else {

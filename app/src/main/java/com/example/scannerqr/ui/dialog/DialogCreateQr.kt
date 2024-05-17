@@ -23,7 +23,7 @@ import java.io.IOException
 import java.io.OutputStream
 
 
-class DialogCreateQr(val fragment: BaseFragmentWithBinding<*>, val inputValue: String, val type: BarcodeFormat) : Dialog(fragment.requireContext()) {
+class DialogCreateQr(val fragment: BaseFragmentWithBinding<*>, val inputValue: String, val type: BarcodeFormat) : Dialog(fragment.requireActivity()) {
     private lateinit var binding: DialogCreatQrBinding
     @SuppressLint("UseCompatLoadingForDrawables")
     override fun onCreate(savedInstanceState: Bundle?) {

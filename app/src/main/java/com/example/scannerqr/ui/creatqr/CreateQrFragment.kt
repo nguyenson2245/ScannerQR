@@ -68,6 +68,4 @@ class CreateQrFragment : BaseFragmentWithBinding<FragmentCreatQrBinding>() {
                     Log.d("TAG", "onRequestPermissionsResult: +Grant permissions ")
             }
     }
-
-
 }
