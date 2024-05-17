@@ -91,7 +91,7 @@ class DetailFragment : BaseFragmentWithBinding<FragmentDetailBinding>() {
 
     override fun initAction() {
 
-        binding.toolbar.click {
+        binding.toolbar.setNavigationOnClickListener {
             mainViewModel.isPlayCamera.postValue(true)
             onBackPressed()
 

@@ -15,7 +15,8 @@ import com.scan.scannerqr.databinding.ItemSettingsBinding
 
 class SettingsAdapter(
     val viewModel: SettingsViewModel,
-    val onClickOpenFragment: (Class<*>) -> Unit
+    val onClickOpenFragment: (Class<*>) -> Unit,
+    val click: (Class<*>) -> Unit
 ) :
     BaseRecyclerAdapter<Settings, SettingsAdapter.SettingsViewHolder>() {
 
@@ -57,11 +58,7 @@ class SettingsAdapter(
                     viewModel.initDataSetting(itemView.context)
                 }
             }
-            onItemClickListener {
-                if (itemData?.fragmentOpen != null)
-                    onClickOpenFragment.invoke(itemData.fragmentOpen)
-                itemData?.action?.invoke()
-            }
+            onItemClickListener { itemData?.fragmentOpen?.let { click.invoke(it) } }
         }
     }
 

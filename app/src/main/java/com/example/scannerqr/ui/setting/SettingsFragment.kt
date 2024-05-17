@@ -25,9 +25,12 @@ class SettingsFragment : BaseFragmentWithBinding<FragmentSettingsBinding>() {
     }
 
     override fun init() {
-        adapter = SettingsAdapter(viewModel){
+        adapter = SettingsAdapter(viewModel,{
+            toast("clcik")
+        }){
             openFragment(it,null,true)
         }
+
         binding.rvView.adapter = adapter
         binding.rvView.setHasFixedSize(true)
     }

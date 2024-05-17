@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import com.example.scannerqr.base.BaseFragmentWithBinding
 import com.example.scannerqr.ui.dialog.DialogCreateQr
+import com.example.scannerqr.ui.dialog.DialogPermission
 import com.example.socialmedia.base.utils.checkPermission
 import com.example.socialmedia.base.utils.click
 import com.google.zxing.BarcodeFormat
@@ -84,6 +85,7 @@ class ContactFragment : BaseFragmentWithBinding<FragmentContactBinding>() {
         }
     }
 
+    @SuppressLint("SuspiciousIndentation")
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -95,13 +97,24 @@ class ContactFragment : BaseFragmentWithBinding<FragmentContactBinding>() {
                 startActivityForResult(intent, 1)
             } else {
                 if (!shouldShowRequestPermissionRationale(Manifest.permission.READ_CONTACTS))
-                openActSettingDialog()
+                    openActSettingDialog()
             }
     }
 
-
     private fun openActSettingDialog() {
+        val dialog = DialogPermission(
+            requireContext(),
+            getString(R.string.anser_grant_permission) + "\n" + getString(R.string.goto_setting_and_grant_permission)
+        )
+        dialog.setPositiveButtonClickListener {
+            openSettingApp()
+        }
 
+        dialog.setNegativeButtonClickListener {
+
+        }
+
+        dialog.show()
     }
 
     private fun openSettingApp() {
@@ -114,7 +127,6 @@ class ContactFragment : BaseFragmentWithBinding<FragmentContactBinding>() {
     }
 
     override fun initAction() {
-
         binding.contact.click {
             if (context?.checkPermission(Manifest.permission.READ_CONTACTS) == true) {
                 val intent = Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI)
@@ -123,12 +135,10 @@ class ContactFragment : BaseFragmentWithBinding<FragmentContactBinding>() {
                 requestPermissions(arrayOf(Manifest.permission.READ_CONTACTS), 200)
             }
         }
-        editText()
 
         binding.toolbar.click {
             onBackPressed()
         }
-
 
         binding.save.click {
             val fullName = binding.fullName.text.trim().toString()
@@ -171,10 +181,6 @@ class ContactFragment : BaseFragmentWithBinding<FragmentContactBinding>() {
                 }
         }
 
-
     }
 
-    private fun editText() {
-
-    }
 }

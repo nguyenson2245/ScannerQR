@@ -53,6 +53,8 @@ class CropImageFragment : BaseFragmentWithBinding<FragmentCropImageBinding>() {
     }
 
     override fun initAction() {
-
+        binding.toolbar.setNavigationOnClickListener {
+            onBackPressed()
+        }
     }
 }

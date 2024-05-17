@@ -1,6 +1,5 @@
 package com.example.socialmedia.base
 
-
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.graphics.drawable.ColorDrawable
@@ -12,7 +11,6 @@ import androidx.viewbinding.ViewBinding
 
 import com.example.socialmedia.base.utils.hideKeyboard
 import com.scan.scannerqr.R
-
 
 abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
     lateinit var binding: VB
@@ -28,7 +26,6 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
 
     abstract fun getViewBinding(inflater: LayoutInflater): VB
     abstract fun init()
-
 
     @Throws
     open fun openFragment(
@@ -82,4 +79,5 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
     fun hideLoadingDialog() {
         loadingDialog?.hide()
     }
+
 }
