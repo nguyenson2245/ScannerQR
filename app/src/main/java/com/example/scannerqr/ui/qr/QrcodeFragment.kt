@@ -24,6 +24,7 @@ import com.example.scannerqr.local.Preferences
 import com.example.scannerqr.model.History
 import com.example.scannerqr.ui.MainViewModel
 import com.example.scannerqr.ui.dialog.DialogPermission
+import com.example.scannerqr.ui.inapp.PurchaseActivity
 import com.example.scannerqr.ui.qr.detail.DetailFragment
 import com.example.scannerqr.ui.qr.help.HelpAndFeedbackFragment
 import com.example.scannerqr.ui.utils.Constants
@@ -221,7 +222,7 @@ class QrcodeFragment : BaseFragmentWithBinding<FragmentQrcodeBinding>(), Scanner
         }
 
         binding.btnStore.click {
-            toast("Store")
+            startActivity(Intent(context, PurchaseActivity::class.java))
         }
     }
 

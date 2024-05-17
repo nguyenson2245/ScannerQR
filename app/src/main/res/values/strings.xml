@@ -70,4 +70,6 @@
     <string name="anser_grant_permission">If you do not grant permission, you cannot use this application.</string>
     <string name="goto_setting_and_grant_permission">Settings -  Permissions and grant permissions to the app.</string>
 
+    <string name="message_purchase_one">%s</string>
+
 </resources>

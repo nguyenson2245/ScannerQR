@@ -61,6 +61,7 @@ class DialogCreateQr(val fragment: BaseFragmentWithBinding<*>, val inputValue: S
 
                 }
                 null
+
             }
 
             BarcodeFormat.DATA_MATRIX -> MultiFormatWriter().encode(
