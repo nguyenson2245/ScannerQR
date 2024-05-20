@@ -6,8 +6,6 @@
         android:name="android.hardware.camera"
         android:required="false" />
 
-    <uses-permission android:name="com.android.vending.BILLING" />
-
     <uses-permission android:name="android.permission.FLASHLIGHT"/>
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -34,8 +32,6 @@
         android:requestLegacyExternalStorage="true"
         tools:targetApi="31">
 
-        <activity android:name="com.example.scannerqr.ui.inapp.PurchaseActivity"
-            android:exported="false"/>
         <activity
             android:name="com.example.scannerqr.ui.MainActivity"
             android:exported="true">

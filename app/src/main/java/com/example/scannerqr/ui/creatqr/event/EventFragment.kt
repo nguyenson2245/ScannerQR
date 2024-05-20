@@ -5,13 +5,18 @@ import android.R
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.ContentValues.TAG
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.net.Uri
+import android.provider.Settings
 import android.util.Log
 import android.view.LayoutInflater
 import android.widget.DatePicker
 import com.example.scannerqr.base.BaseFragmentWithBinding
 import com.example.scannerqr.ui.dialog.DialogCreateQr
+import com.example.scannerqr.ui.dialog.DialogPermission
+import com.example.socialmedia.base.utils.checkPermission
 import com.example.socialmedia.base.utils.click
 import com.google.zxing.BarcodeFormat
 import com.scan.scannerqr.databinding.FragmentEventBinding
@@ -168,7 +173,6 @@ class EventFragment : BaseFragmentWithBinding<FragmentEventBinding>() {
         _timePickerDialog?.show()
     }
 
-
     private fun showTimePickerEnd() {
         val hourOfDay = 23
         val minute = 55
@@ -215,6 +219,43 @@ class EventFragment : BaseFragmentWithBinding<FragmentEventBinding>() {
             -1
         }
 
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        if (requestCode == 200) {
+            if (context?.checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == true) {
+
+            } else {
+                if (!shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE))
+                    openActSettingDialog()
+            }
+        }
+    }
+
+    private var showSetting = false
+    private fun openActSettingDialog() {
+        val dialog = DialogPermission(
+            requireContext(),
+            getString(com.scan.scannerqr.R.string.anser_grant_permission) + "\n" + getString(com.scan.scannerqr.R.string.goto_setting_and_grant_permission)
+        )
+        dialog.setPositiveButtonClickListener {
+            openSettingApp()
+        }
+
+        dialog.setNegativeButtonClickListener {
+
+        }
+
+        dialog.show()
+    }
+
+    private fun openSettingApp() {
+        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+        toast(getString(com.scan.scannerqr.R.string.please_grant_read_external_storage))
+        val uri = Uri.fromParts("package", context?.packageName, null)
+        intent.data = uri
+        startActivity(intent)
+        showSetting = true
     }
 
 }

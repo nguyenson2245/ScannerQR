@@ -1,6 +1,5 @@
 package com.example.socialmedia.base
 
-
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
@@ -8,7 +7,6 @@ import android.view.View.OnTouchListener
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.socialmedia.base.utils.hideKeyboard
-
 
 abstract class BaseFragment : Fragment() {
     private var activity : BaseActivity<*>? = null

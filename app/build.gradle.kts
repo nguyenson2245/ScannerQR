@@ -93,8 +93,4 @@ dependencies {
 
     implementation ("androidmads.library.qrgenearator:QRGenearator:1.0.4")
 
-    implementation("com.android.billingclient:billing:6.2.1")
-    implementation("commons-io:commons-io:2.11.0")
-    implementation("com.google.firebase:firebase-database:21.0.0")
-    implementation("com.google.firebase:firebase-common-ktx:21.0.0")
 }

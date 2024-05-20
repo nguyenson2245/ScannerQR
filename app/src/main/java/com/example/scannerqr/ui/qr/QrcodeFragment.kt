@@ -8,7 +8,6 @@ import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.os.Handler
 import android.os.Looper
 import android.os.VibrationEffect
@@ -21,11 +20,9 @@ import androidx.fragment.app.viewModels
 import com.example.scannerqr.base.BaseFragmentWithBinding
 import com.example.scannerqr.custom.ScannerView
 import com.example.scannerqr.local.Preferences
-import com.example.scannerqr.local.preference.PrefHelper
 import com.example.scannerqr.model.History
 import com.example.scannerqr.ui.MainViewModel
 import com.example.scannerqr.ui.dialog.DialogPermission
-import com.example.scannerqr.ui.inapp.PurchaseActivity
 import com.example.scannerqr.ui.qr.detail.DetailFragment
 import com.example.scannerqr.ui.qr.help.HelpAndFeedbackFragment
 import com.example.scannerqr.ui.utils.Constants
@@ -55,29 +52,19 @@ class QrcodeFragment : BaseFragmentWithBinding<FragmentQrcodeBinding>(), Scanner
         fun newInstance() = QrcodeFragment()
     }
 
-    private lateinit var pref: PrefHelper
-    private var currentCoin = 0
-
     private val viewModel: MainViewModel by activityViewModels()
     private val qrcodeViewModel: QrcodeViewModel by viewModels()
     private var flashLightStatus: Boolean = false
-    private  var preferences : Preferences ? = null
+    private var preferences: Preferences? = null
     override fun getViewBinding(inflater: LayoutInflater): FragmentQrcodeBinding {
         return FragmentQrcodeBinding.inflate(inflater)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        pref = PrefHelper.getInstance(requireContext())!!
-        currentCoin = pref.getValueCoin()
-    }
-
     override fun init() {
-        binding.tvCurrentCoin.text = pref.getValueCoin().toString()
+
 
         preferences = context?.let { Preferences.getInstance(it) }
     }
-
 
     override fun initData() {
         viewModel.bitmap.observe(viewLifecycleOwner) {
@@ -146,9 +133,6 @@ class QrcodeFragment : BaseFragmentWithBinding<FragmentQrcodeBinding>(), Scanner
             openFragment(GalleryImageFragment::class.java, null, true)
         }
 
-        binding.btnStore.click {
-            startActivity(Intent(context, PurchaseActivity::class.java))
-        }
     }
 
     override fun onStart() {
@@ -164,15 +148,9 @@ class QrcodeFragment : BaseFragmentWithBinding<FragmentQrcodeBinding>(), Scanner
             binding.noScanCheckPer.gone()
         } else
             requestPermissions(arrayOf(Manifest.permission.CAMERA), 200)
-
-
     }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         if (requestCode == 200) {
             if (context?.checkPermission(Manifest.permission.CAMERA) == true) {
                 binding.scannerView.setResultHandler(this)
@@ -214,6 +192,7 @@ class QrcodeFragment : BaseFragmentWithBinding<FragmentQrcodeBinding>(), Scanner
         showSetting = true
     }
 
+
     private fun readQRImage(bMap: Bitmap): String? {
         var contents: String? = null
         try {
@@ -237,9 +216,6 @@ class QrcodeFragment : BaseFragmentWithBinding<FragmentQrcodeBinding>(), Scanner
         }
         return contents
     }
-
-
-
 
     private fun shakeItBaby() {
         if (Build.VERSION.SDK_INT >= 26) {
@@ -265,6 +241,13 @@ class QrcodeFragment : BaseFragmentWithBinding<FragmentQrcodeBinding>(), Scanner
             else -> TypeValue.TYPE_CONTENT
         }
     }
+
+    override fun onPause() {
+        binding.scannerView.flash = false
+        flashLightStatus = false
+        super.onPause()
+    }
+
 
     override fun handleResult(rawResult: Result?) {
         val contents = rawResult.toString()
@@ -295,12 +278,6 @@ class QrcodeFragment : BaseFragmentWithBinding<FragmentQrcodeBinding>(), Scanner
             viewModel.isPlayCamera.postValue(false)
             openFragment(DetailFragment::class.java, bundle, true)
         }
-    }
-
-    override fun onPause() {
-        binding.scannerView.flash = false
-        flashLightStatus = false
-        super.onPause()
     }
 }
 

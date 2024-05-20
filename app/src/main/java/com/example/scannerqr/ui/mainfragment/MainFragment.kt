@@ -36,7 +36,7 @@ class MainFragment : BaseFragmentWithBinding<FragmentMainBinding>() {
         adapter = PagerAdapter(childFragmentManager)
         adapter.setData(listFragment)
         binding.viewPager.adapter = adapter
-        binding.viewPager.offscreenPageLimit = 4
+        binding.viewPager.offscreenPageLimit = 0
     }
 
     override fun initData() {

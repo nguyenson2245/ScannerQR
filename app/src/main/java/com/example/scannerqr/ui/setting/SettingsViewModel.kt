@@ -28,26 +28,10 @@ class SettingsViewModel : BaseViewModel() {
 
         listSettings.add(
             Settings(
-                title = "Open web pages automatically",
-                showButtonSwitch = true,
-                switchEnabled = preferences.getBoolean(Constants.OPEN_WEB) ?: false,
-                key = Constants.OPEN_WEB
-            )
-        )
-        listSettings.add(
-            Settings(
                 title = "Scan continuously",
                 description = "Only add scans to history",
                 showButtonSwitch = true,
                 switchEnabled = preferences.getBoolean(Constants.SCAN) ?: false,   key = Constants.SCAN
-            )
-        )
-        listSettings.add(
-            Settings(
-                title = "Duplicate barcodes",
-                description = "Save duplicate barcodes in history",
-                showButtonSwitch = true,
-                switchEnabled = preferences.getBoolean(Constants.DUPLICATION) ?: false,   key = Constants.DUPLICATION
             )
         )
         listSettings.add(
