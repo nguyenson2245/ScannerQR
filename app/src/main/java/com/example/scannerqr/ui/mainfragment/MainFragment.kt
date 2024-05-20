@@ -1,6 +1,5 @@
 package com.example.scannerqr.ui.mainfragment
 
-import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
@@ -11,7 +10,6 @@ import com.example.scanqr.ui.qr.QrcodeFragment
 import com.example.scannerqr.base.BaseFragmentWithBinding
 import com.scan.scannerqr.R
 import com.scan.scannerqr.databinding.FragmentMainBinding
-
 
 class MainFragment : BaseFragmentWithBinding<FragmentMainBinding>() {
 
@@ -36,7 +34,7 @@ class MainFragment : BaseFragmentWithBinding<FragmentMainBinding>() {
         adapter = PagerAdapter(childFragmentManager)
         adapter.setData(listFragment)
         binding.viewPager.adapter = adapter
-        binding.viewPager.offscreenPageLimit = 0
+        binding.viewPager.offscreenPageLimit = 1
     }
 
     override fun initData() {

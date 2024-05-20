@@ -19,6 +19,7 @@ class CreateQrViewModel : BaseViewModel() {
     val listCreateQRLiveData: MutableLiveData<ArrayList<CreateQR>> = MutableLiveData()
 
     fun initDataCreateQr() {
+        listCreateQR.clear()
         listCreateQR.add(CreateQR("Use “Share” in other apps", R.drawable.ic_share, ShareInOtherAppsFragment::class.java))
         listCreateQR.add(CreateQR("Content from clipboard", R.drawable.ic_coppy_content, ContentFromClipboardFragment::class.java))
         listCreateQR.add(CreateQR("Website", R.drawable.ic_web, WebsiteFragment::class.java))
