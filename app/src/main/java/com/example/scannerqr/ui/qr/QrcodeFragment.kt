@@ -76,7 +76,6 @@ class QrcodeFragment : BaseFragmentWithBinding<FragmentQrcodeBinding>(), Scanner
         binding.tvCurrentCoin.text = pref.getValueCoin().toString()
 
         preferences = context?.let { Preferences.getInstance(it) }
-        checkPermissionCamera()
     }
 
 
@@ -183,7 +182,7 @@ class QrcodeFragment : BaseFragmentWithBinding<FragmentQrcodeBinding>(), Scanner
             } else {
                 binding.viewScanner.gone()
                 binding.noScanCheckPer.visible()
-                if (!shouldShowRequestPermissionRationale(Manifest.permission.CAMERA,))
+                if (!shouldShowRequestPermissionRationale(Manifest.permission.CAMERA))
                     openActSettingDialog()
             }
         }
