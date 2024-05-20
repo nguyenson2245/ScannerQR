@@ -42,8 +42,8 @@ class EmailFragment : PermissionFragment<FragmentEmailBinding>() {
                     binding.editEmail.error = "not value"
             }
 
-
         }
+
 
 
         binding.toolbar.setNavigationOnClickListener {
