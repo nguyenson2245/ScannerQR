@@ -64,7 +64,6 @@ class QrcodeFragment : BaseFragmentWithBinding<FragmentQrcodeBinding>(), Scanner
 
     override fun init() {
         preferences = context?.let { Preferences.getInstance(it) }
-        checkPermissionCamera()
     }
 
     override fun initData() {
@@ -122,7 +121,7 @@ class QrcodeFragment : BaseFragmentWithBinding<FragmentQrcodeBinding>(), Scanner
             } else {
                 binding.viewScanner.gone()
                 binding.noScanCheckPer.visible()
-                if (!shouldShowRequestPermissionRationale(Manifest.permission.CAMERA,))
+                if (!shouldShowRequestPermissionRationale(Manifest.permission.CAMERA))
                     openActSettingDialog()
             }
         }
